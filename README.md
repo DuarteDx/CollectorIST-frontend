@@ -1,6 +1,6 @@
-# scholar-frontend
+# CollectorIST-frontend
 
-> The FenixEdu Scholar frontend application
+> The Collector IST frontend application
 
 ## Build Setup
 
