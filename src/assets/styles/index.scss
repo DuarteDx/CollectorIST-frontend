@@ -1,0 +1,21 @@
+@import "colors";    
+@import "position";
+@import "spacings";
+@import "fonts";
+@import "size";
+@import "text";
+@import "border";
+@import "overlay";
+@import "display";
+
+body
+{
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+html{
+    position: relative;
+    min-height: 100%;
+}

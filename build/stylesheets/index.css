@@ -1,0 +1,220 @@
+@import url("https://fonts.googleapis.com/css?family=Quicksand");
+@import url("https://fonts.googleapis.com/css?family=Sarabun");
+@import url("https://fonts.googleapis.com/css?family=Raleway");
+.background--primary {
+  background-color: #ee1b24;
+}
+.background--secondary {
+  background-color: #F3D6D6;
+}
+.background--default {
+  background-color: #898989;
+}
+
+.text--red {
+  color: #ee1b24;
+}
+.text--white {
+  color: #ffffff !important;
+}
+
+.left {
+  left: 0;
+}
+
+.top {
+  top: 0;
+}
+
+.right {
+  right: 0;
+}
+
+.bottom {
+  bottom: 0;
+}
+
+.horizontal-center {
+  margin: 0 auto;
+}
+
+.vertical--center {
+  margin: auto 0;
+}
+
+.relative {
+  position: relative;
+}
+
+.absolute {
+  position: absolute;
+}
+
+.justify-space-between {
+  justify-content: space-between;
+}
+
+.align-items--center {
+  align-items: center;
+}
+
+.overflow--hiden {
+  overflow: hidden;
+}
+
+.font--light {
+  font-weight: lighter;
+}
+.font--bold {
+  font-weight: bold;
+}
+.font--quicksand {
+  font-family: "Quicksand", sans-serif;
+}
+.font--sarabun {
+  font-family: "Sarabun", sans-serif;
+}
+.font--raleway {
+  font-family: "Raleway", sans-serif;
+}
+
+.size--150-150 {
+  width: 150px;
+  height: 150px;
+}
+.size--250-250 {
+  width: 250px;
+  height: 250px;
+}
+.size--full {
+  width: 100%;
+  height: 100%;
+}
+.size--max-width-1500 {
+  max-width: 1500px;
+}
+.size--max-width--none {
+  max-width: none !important;
+}
+
+.height--60 {
+  height: 60px;
+}
+.height--full {
+  height: 100vh;
+}
+
+.width--full {
+  width: 100%;
+}
+
+.background--primary {
+  background-color: #ee1b24;
+}
+.background--secondary {
+  background-color: #F3D6D6;
+}
+.background--default {
+  background-color: #898989;
+}
+
+.text--red {
+  color: #ee1b24;
+}
+.text--white {
+  color: #ffffff !important;
+}
+
+.text--red-primary {
+  color: #ee1b24;
+}
+.text--white {
+  color: #ffffff;
+}
+.text--black {
+  color: #000000;
+}
+.text--no-decoration {
+  text-decoration: none;
+}
+.text--ar-hel-ss {
+  font-family: Arial, Helvetica, sans-serif;
+}
+.text--bold {
+  font-weight: bold;
+}
+
+.background--primary {
+  background-color: #ee1b24;
+}
+.background--secondary {
+  background-color: #F3D6D6;
+}
+.background--default {
+  background-color: #898989;
+}
+
+.text--red {
+  color: #ee1b24;
+}
+.text--white {
+  color: #ffffff !important;
+}
+
+.border--red {
+  border: 1px solid red;
+}
+.border--green {
+  border: 1px solid green;
+}
+.border--black {
+  border: 1px solid black;
+}
+.border--grey-2 {
+  border: 2px solid grey;
+}
+.border--red-2 {
+  border: 2px solid red;
+}
+.border--r5 {
+  border-radius: 5px;
+}
+.border-bottom--2white {
+  border-bottom: 2px solid white;
+}
+.border-right--1grey {
+  border-right: 1px solid grey;
+}
+
+.overlay {
+  background: rgba(0, 0, 0, 0.8);
+}
+.overlay--light {
+  background: rgba(0, 0, 0, 0.25);
+}
+
+.display--flex {
+  display: flex;
+}
+.display--flex--column {
+  flex-direction: column;
+}
+.display--no-bullets {
+  list-style-type: none !important;
+}
+.display-cursor--pointer {
+  cursor: pointer;
+}
+
+body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+/*# sourceMappingURL=index.css.map */

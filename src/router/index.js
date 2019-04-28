@@ -2,12 +2,6 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import PageWithNavBarAndFooterLayout from '@/layouts/PageWithNavBarAndFooterLayout'
 
-// import SearchPage from '@/pages/SearchPage'
-
-// import SearchResultsPage from '@/pages/SearchResultsPage'
-// import AssetPage from '@/pages/AssetPage'
-// import RegisterAssetPage from '@/pages/RegisterAssetPage'
-
 Vue.use(Router)
 
 export default new Router({
@@ -16,12 +10,6 @@ export default new Router({
     {
       path: '/',
       component: PageWithNavBarAndFooterLayout,
-      /* children: [{
-        path: '/',
-        name: 'SearchPage',
-        component: SearchPage
-      }
-      ] */
     }
   ],
   scrollBehavior () {

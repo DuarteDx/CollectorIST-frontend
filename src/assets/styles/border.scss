@@ -1,0 +1,50 @@
+@import "colors";
+
+.border
+{
+    &--red
+    {
+        border: 1px solid red;
+    }
+
+    &--green
+    {
+        border: 1px solid green;
+    }
+
+    &--black
+    {
+        border: 1px solid black;
+    }
+
+    &--grey-2
+    {
+        border: 2px solid grey;
+    }
+
+    &--red-2
+    {
+        border: 2px solid red;
+    }
+
+    &--r5
+    {
+        border-radius: 5px;
+    }
+
+    &-bottom
+    {
+        &--2white
+        {
+            border-bottom: 2px solid white;
+        }
+    }
+
+    &-right
+    {
+        &--1grey
+        {
+            border-right: 1px solid grey;
+        }
+    }
+}

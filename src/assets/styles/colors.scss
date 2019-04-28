@@ -1,0 +1,37 @@
+$primary-red: #ee1b24;
+$secondary-red: #F3D6D6;
+$grey: #898989;
+$white: #ffffff;
+$black: #000000;
+
+.background
+{
+    &--primary
+    {
+        background-color: $primary-red;
+    }
+
+    &--secondary
+    {
+        background-color: $secondary-red;
+    }
+
+    &--default
+    {
+        background-color: $grey;
+        
+    }
+}
+
+.text
+{
+    &--red
+    {
+        color: $primary-red;
+    }
+
+    &--white
+    {
+        color: $white !important;
+    }
+}

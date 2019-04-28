@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css?family=Quicksand');
+@import url('https://fonts.googleapis.com/css?family=Sarabun');
+@import url('https://fonts.googleapis.com/css?family=Raleway');
+
+.font
+{
+    &--light
+    {
+        font-weight: lighter;
+    }
+    &--bold
+    {
+        font-weight: bold;
+    }
+
+    &--quicksand
+    {
+        font-family: 'Quicksand', sans-serif;
+    }
+    &--sarabun
+    {
+        font-family: 'Sarabun', sans-serif;
+    }
+    &--raleway
+    {
+        font-family: 'Raleway', sans-serif;
+    }
+}
