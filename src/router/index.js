@@ -1,8 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-// import PageWithNavBarAndFooterLayout from '@/layouts/PageWithNavBarAndFooterLayout'
-
-import HelloWorld from '@/components/HelloWorld.vue'
+import PageWithNavBarAndFooterLayout from '@/layouts/PageWithNavBarAndFooterLayout'
 
 // import SearchPage from '@/pages/SearchPage'
 
@@ -17,7 +15,7 @@ export default new Router({
   routes: [
     {
       path: '/',
-      component: HelloWorld,
+      component: PageWithNavBarAndFooterLayout,
       /* children: [{
         path: '/',
         name: 'SearchPage',
