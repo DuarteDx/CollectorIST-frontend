@@ -28,7 +28,7 @@
                 navBarItems: [
                     {
                         title: 'PESQUISAR',
-                        path: '/',
+                        path: '/search',
                         index: 1
                     },
                     {
