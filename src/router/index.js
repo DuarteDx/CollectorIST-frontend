@@ -8,11 +8,11 @@ import Search from '@/views/Search'
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   mode: 'history',
   routes: [
     {
-      path: '/',
+      path: '/search',
       component: Search,
     },
     {
@@ -28,3 +28,8 @@ export default new Router({
     return { x: 0, y: 0 }
   }
 })
+
+// Redirect from '/' to '/search'
+router.replace('/search')
+
+export default router
