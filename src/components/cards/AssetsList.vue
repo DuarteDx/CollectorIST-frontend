@@ -16,7 +16,7 @@
                 </v-flex>
 
                 <v-flex md1 style="font-size: 25px;">
-                    <font-awesome-icon @click.stop="" icon="trash" style="cursor: pointer;"/>
+                    <font-awesome-icon @click.stop="deleteAsset(asset._id)" icon="trash" style="cursor: pointer;"/>
                 </v-flex>
             </v-layout>
         </v-card>
@@ -38,8 +38,12 @@ export default {
             const response = await api().get('/assets')
             this.assetsList = response.data
         },
-        async deleteAsset() {
-            // ToDO
+        async deleteAsset(assetId) {
+            console.log(assetId)
+            const response = await api().delete('/assets', {data: {
+                id: assetId
+            }})
+            console.log(response)
         }
     },
     created() {
