@@ -1,13 +1,22 @@
 <template>
 	<v-toolbar app>
-      <v-toolbar-title class="headline text-uppercase">
-          <img class="logo-ist" src="@/assets/images/logo-tecnico.svg" alt="Logo IST">
-      </v-toolbar-title>
-      <v-spacer></v-spacer>
-      <router-link v-for="navItem in navBarItems" :to="navItem.path" v-bind:key='navItem.index' 
-      class="navItem" @click.native="changeUnderlining(navItem.index)" v-bind:class="{ selected: navItem.index == currentMenuOnDisplay }">
+
+        <v-toolbar-title class="headline text-uppercase">
+            <router-link :to="navBarItems[0].path" @click.native="currentMenuOnDisplay = 1">
+                <img class="logo-ist" src="@/assets/images/logo-tecnico.svg" alt="Logo IST">
+            </router-link>
+        </v-toolbar-title>
+
+        <v-spacer></v-spacer>
+
+        <router-link v-for="navItem in navBarItems" :to="navItem.path" v-bind:key='navItem.index' 
+        class="navItem" @click.native="changeUnderlining(navItem.index)" 
+        v-bind:class="{ selected: navItem.index == currentMenuOnDisplay }">
+
             {{ navItem.title}}
-      </router-link>
+
+        </router-link>
+        
     </v-toolbar>
 </template>
 
