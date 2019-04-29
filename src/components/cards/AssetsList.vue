@@ -5,10 +5,10 @@
                 <v-flex md11>
                     <v-layout wrap>
                     <template v-for="(value, key) in asset">
-                        <v-flex md1 v-bind:key="key">
+                        <v-flex md1 offset-md1 v-bind:key="key">
                             <p>{{ key }}</p>
                         </v-flex>
-                        <v-flex md11 v-bind:key="value">
+                        <v-flex md10 v-bind:key="value">
                             <p>{{ value }}</p>
                         </v-flex>
                     </template>
@@ -16,7 +16,7 @@
                 </v-flex>
 
                 <v-flex md1 style="font-size: 25px;">
-                    X
+                    <font-awesome-icon @click.stop="" icon="trash" style="cursor: pointer;"/>
                 </v-flex>
             </v-layout>
         </v-card>
