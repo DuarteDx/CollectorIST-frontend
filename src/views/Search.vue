@@ -1,13 +1,17 @@
 <template>
     <div>
-        SEARCH VIEW!
+        <v-layout justify-center>
+            <v-flex md2 style="font-size: 20px; margin: 20px 0 10px 0;">
+                List of assets in database
+            </v-flex>
+        </v-layout>
         <SingleAsset/>
     </div>
 </template>
 
 <script>
 
-import SingleAsset from '@/components/cards/SingleAsset'
+import SingleAsset from '@/components/cards/AssetsList'
 
 export default {
 	name: 'Search',
@@ -16,11 +20,3 @@ export default {
 	}
 }
 </script>
-
-<style scoped>
-
-    .card {
-        margin: 10px 40px 10px 40px;
-    }
-
-</style>
