@@ -1,6 +1,5 @@
 <template>
     <div>
-        INSERT ASSETS VIEW!
         <InsertSingleAsset/>
     </div>
 </template>

@@ -2,13 +2,13 @@
     <div>
         <v-card v-for="asset in assetsList" v-bind:key="asset._id" class="single-asset">
             <v-layout align-center>
-                <v-flex md11>
+                <v-flex sm11 md11>
                     <v-layout wrap>
                     <template v-for="(value, key) in asset">
-                        <v-flex md1 offset-md1 v-bind:key="key">
+                        <v-flex sm1 md1 offset-sm1 offset-md1 v-bind:key="key">
                             <p>{{ key }}</p>
                         </v-flex>
-                        <v-flex md10 v-bind:key="value">
+                        <v-flex sm10 md10 v-bind:key="value">
                             <p>{{ value }}</p>
                         </v-flex>
                     </template>
