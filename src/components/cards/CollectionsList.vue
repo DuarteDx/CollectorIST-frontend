@@ -1,10 +1,10 @@
 <template>
     <div>
-        <v-card v-for="asset in assetsList" v-bind:key="asset._id" class="single-asset">
+        <v-card v-for="collection in collectionsList" v-bind:key="collection._id" class="single-collection">
             <v-layout align-center>
                 <v-flex sm11 md11>
                     <v-layout wrap>
-                    <template v-for="(value, key) in asset">
+                    <template v-for="(value, key) in collection">
                         <v-flex sm1 md1 offset-sm1 offset-md1 v-bind:key="key">
                             <p>{{ key }}</p>
                         </v-flex>
@@ -16,7 +16,7 @@
                 </v-flex>
 
                 <v-flex md1 style="font-size: 25px;">
-                    <font-awesome-icon @click.stop="deleteAsset(asset._id)" icon="trash" style="cursor: pointer;"/>
+                    <font-awesome-icon @click.stop="deleteCollection(collection._id)" icon="trash" style="cursor: pointer;"/>
                 </v-flex>
             </v-layout>
         </v-card>
@@ -27,37 +27,27 @@
 import api from '@/api/api'
 
 export default {
-    name: 'AssetsList',
+    name: 'CollectionsList',
     data() {
         return {
-            assetsList: []
+            collectionsList: []
         }
     },
     methods: {
-        async fetchListOfAssets() {
-            const response = await api().get('/assets')
-            this.assetsList = response.data
+        async fetchListOfCollections() {
+            const response = await api().get('/collection/all')
+            this.collectionsList = response.data
         },
-        async deleteAsset(assetId) {
-            console.log(assetId)
-            const response = await api().delete('/assets', {data: {
-                id: assetId
+        async deleteCollection(collectionId) {
+            console.log(collectionId)
+            const response = await api().delete('/collection', {data: {
+                id: collectionId
             }})
             console.log(response)
         }
     },
     created() {
-        this.fetchListOfAssets()
+        this.fetchListOfCollections()
     }
 }
-
-
 </script>
-
-<style>
-
-    .single-asset {
-        margin: 10px 40px 10px 40px;
-    }
-
-</style>

@@ -5,18 +5,18 @@
                 List of assets in database
             </v-flex>
         </v-layout>
-        <SingleAsset/>
+        <AssetsList/>
     </div>
 </template>
 
 <script>
 
-import SingleAsset from '@/components/cards/AssetsList'
+import AssetsList from '@/components/cards/AssetsList'
 
 export default {
 	name: 'Search',
 	components: {
-		SingleAsset
+		AssetsList
 	}
 }
 </script>
