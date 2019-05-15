@@ -27,8 +27,8 @@
             return {
                 navBarItems: [
                     {
-                        title: 'PESQUISAR',
-                        path: '/search',
+                        title: 'PEÇAS',
+                        path: '/assets',
                         index: 1
                     },
                     {

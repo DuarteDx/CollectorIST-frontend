@@ -14,7 +14,7 @@
 import AssetsList from '@/components/cards/AssetsList'
 
 export default {
-	name: 'Search',
+	name: 'Assets',
 	components: {
 		AssetsList
 	}

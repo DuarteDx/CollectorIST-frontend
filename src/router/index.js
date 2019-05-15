@@ -3,8 +3,8 @@ import Router from 'vue-router'
 
 // Views
 import Collections from '@/views/Collections'
-import InsertAssets from '@/views/InsertAssets'
-import Search from '@/views/Search'
+import Insert from '@/views/Insert'
+import Assets from '@/views/Assets'
 
 Vue.use(Router)
 
@@ -12,8 +12,12 @@ const router = new Router({
   mode: 'history',
   routes: [
     {
-      path: '/search',
-      component: Search,
+      path: '/',
+      redirect: '/assets'
+    },
+    {
+      path: '/assets',
+      component: Assets,
     },
     {
       path: '/collections',
@@ -21,15 +25,12 @@ const router = new Router({
     },
     {
       path: '/insert',
-      component: InsertAssets,
+      component: Insert,
     },
   ],
   scrollBehavior () {
     return { x: 0, y: 0 }
   }
 })
-
-// Redirect from '/' to '/search'
-router.replace('/search')
 
 export default router

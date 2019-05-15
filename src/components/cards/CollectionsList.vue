@@ -40,10 +40,13 @@ export default {
         },
         async deleteCollection(collectionId) {
             console.log(collectionId)
-            const response = await api().delete('/collection', {data: {
+            /*const response = await api().delete('/collection', {data: {
                 id: collectionId
             }})
-            console.log(response)
+            console.log(response)*/
+            var deletedIndex = this.collectionsList.findIndex(x => x == collectionId)
+            this.collectionsList.splice(deletedIndex, 1)
+            console.log(deletedIndex)
         }
     },
     created() {
