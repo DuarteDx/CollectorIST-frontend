@@ -5,6 +5,8 @@ import Router from 'vue-router'
 import Collections from '@/views/Collections'
 import Insert from '@/views/Insert'
 import Assets from '@/views/Assets'
+import Login from '@/views/Login'
+import Users from '@/views/Users'
 
 Vue.use(Router)
 
@@ -27,6 +29,14 @@ const router = new Router({
       path: '/insert',
       component: Insert,
     },
+    {
+      path: '/login',
+      component: Login
+    },
+    {
+      path: '/users',
+      component: Users
+    }
   ],
   scrollBehavior () {
     return { x: 0, y: 0 }

@@ -40,6 +40,16 @@
                         title: 'INSERIR',
                         path: '/insert',
                         index: 3
+                    },
+                    {
+                        title: 'LOGIN',
+                        path: '/login',
+                        index: 4
+                    },
+                    {
+                        title: 'USERS',
+                        path: '/users',
+                        index: 5
                     }
                 ],
                 currentMenuOnDisplay: 1
