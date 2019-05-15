@@ -39,18 +39,35 @@ export default {
             this.collectionsList = response.data
         },
         async deleteCollection(collectionId) {
-            console.log(collectionId)
-            /*const response = await api().delete('/collection', {data: {
-                id: collectionId
-            }})
-            console.log(response)*/
-            var deletedIndex = this.collectionsList.findIndex(x => x == collectionId)
-            this.collectionsList.splice(deletedIndex, 1)
-            console.log(deletedIndex)
-        }
+            if(this.confirmDeletion()){
+                console.log(collectionId)
+                const response = await api().delete('/collection', {data: {
+                    id: collectionId
+                }})
+                console.log(response)
+                var deletedIndex = this.collectionsList.findIndex(x => x._id == collectionId)
+                this.collectionsList.splice(deletedIndex, 1)
+                console.log(deletedIndex)
+            }
+        },
+        confirmDeletion() {
+            if (confirm('Tem a certeza que pretende apagar esta coleção?')) {
+                    return true
+                } else {
+                    return false
+                }
+            }
     },
     created() {
         this.fetchListOfCollections()
     }
 }
 </script>
+
+<style>
+
+    .single-collection {
+        margin: 10px 40px 10px 40px;
+    }
+
+</style>

@@ -39,12 +39,23 @@ export default {
             this.assetsList = response.data
         },
         async deleteAsset(assetId) {
-            console.log(assetId)
-            const response = await api().delete('/assets', {data: {
-                id: assetId
-            }})
-            console.log(response)
-        }
+            if(this.confirmDeletion()){
+                console.log(assetId)
+                const response = await api().delete('/assets', {data: {
+                    id: assetId
+                }})
+                console.log(response)
+                var deletedIndex = this.assetsList.findIndex(x => x._id == assetId)
+                this.assetsList.splice(deletedIndex, 1)
+            }
+        },
+        confirmDeletion() {
+            if (confirm('Tem a certeza que pretende apagar esta peça?')) {
+                    return true
+                } else {
+                    return false
+                }
+            }
     },
     created() {
         this.fetchListOfAssets()
