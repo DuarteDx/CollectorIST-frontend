@@ -8,7 +8,7 @@
                         <v-flex sm1 md1 offset-sm1 offset-md1 v-bind:key="key">
                             <p>{{ key }}</p>
                         </v-flex>
-                        <v-flex sm10 md10 v-bind:key="value">
+                        <v-flex sm10 md10 v-bind:key="value + 1">
                             <p>{{ value }}</p>
                         </v-flex>
                     </template>
@@ -37,12 +37,13 @@ export default {
         async fetchListOfUsers() {
             const response = await api().get('/users/all')
             this.usersList = response.data
+            console.log(response)
         },
         async deleteUser(userId) {
             if(this.confirmDeletion()){
                 console.log(userId)
-                const response = await api().delete('/user', {data: {
-                    id: userId
+                const response = await api().delete('/users', {data: {
+                    _id: userId
                 }})
                 console.log(response)
                 var deletedIndex = this.usersList.findIndex(x => x._id == userId)
@@ -59,7 +60,7 @@ export default {
             }
     },
     created() {
-        this.fetchListOfUsers
+        this.fetchListOfUsers()
     }
 }
 </script>
