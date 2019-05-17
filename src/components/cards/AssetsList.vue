@@ -1,24 +1,26 @@
 <template>
     <div>
         <v-card v-for="asset in assetsList" v-bind:key="asset._id" class="single-asset">
-            <v-layout align-center>
-                <v-flex sm11 md11>
-                    <v-layout wrap>
-                    <template v-for="(value, key) in asset">
-                        <v-flex sm1 md1 offset-sm1 offset-md1 v-bind:key="key">
-                            <p>{{ key }}</p>
-                        </v-flex>
-                        <v-flex sm10 md10 v-bind:key="value">
-                            <p>{{ value }}</p>
-                        </v-flex>
-                    </template>
-                </v-layout>
-                </v-flex>
+            <router-link :to="'/assets/' + asset._id" class="text--no-decoration single-asset-link">
+                <v-layout align-center>
+                    <v-flex sm11 md11>
+                        <v-layout wrap>
+                        <template v-for="(value, key) in asset">
+                            <v-flex sm1 md1 offset-sm1 offset-md1 v-bind:key="key">
+                                <p>{{ key }}</p>
+                            </v-flex>
+                            <v-flex sm10 md10 v-bind:key="value">
+                                <p>{{ value }}</p>
+                            </v-flex>
+                        </template>
+                    </v-layout>
+                    </v-flex>
 
-                <v-flex md1 style="font-size: 25px;">
-                    <font-awesome-icon @click.stop="deleteAsset(asset._id)" icon="trash" style="cursor: pointer;"/>
-                </v-flex>
-            </v-layout>
+                    <v-flex md1 style="font-size: 25px;">
+                        <font-awesome-icon @click.stop="deleteAsset(asset._id)" icon="trash" style="cursor: pointer;"/>
+                    </v-flex>
+                </v-layout>
+            </router-link>
         </v-card>
     </div>
 </template>
@@ -69,6 +71,15 @@ export default {
 
     .single-asset {
         margin: 10px 40px 10px 40px;
+    }
+
+    .single-asset:hover {
+        padding: 5px;
+    }
+
+    .single-asset-link {
+        text-decoration: none;
+        color: black;
     }
 
 </style>
