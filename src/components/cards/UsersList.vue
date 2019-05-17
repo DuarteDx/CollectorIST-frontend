@@ -71,4 +71,8 @@ export default {
         margin: 10px 40px 10px 40px;
     }
 
+    .single-user:hover {
+        padding: 5px;
+    }
+
 </style>
