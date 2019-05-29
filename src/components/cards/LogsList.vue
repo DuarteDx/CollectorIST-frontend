@@ -39,7 +39,7 @@ export default {
     },
     methods: {
         async fetchListOfLogs() {
-            const response = await api().get('/logs/all')
+            const response = await api().get('/logs')
             this.logsList = response.data
         },
         async deleteLog(logId) {
