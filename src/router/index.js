@@ -3,8 +3,13 @@ import Router from 'vue-router'
 
 // Views
 import Collections from '@/views/Collections'
-import InsertAssets from '@/views/InsertAssets'
-import Search from '@/views/Search'
+import Collection from '@/views/Collection'
+import Insert from '@/views/Insert'
+import Assets from '@/views/Assets'
+import Asset from '@/views/Asset'
+import Login from '@/views/Login'
+import Users from '@/views/Users'
+import Logs from '@/views/Logs'
 
 Vue.use(Router)
 
@@ -12,24 +17,45 @@ const router = new Router({
   mode: 'history',
   routes: [
     {
-      path: '/search',
-      component: Search,
+      path: '/',
+      redirect: '/assets'
+    },
+    {
+      path: '/assets',
+      component: Assets,
+    },
+    {
+      path: '/assets/:id',
+      component: Asset
     },
     {
       path: '/collections',
       component: Collections,
     },
     {
-      path: '/insert',
-      component: InsertAssets,
+      path: '/collections/:id',
+      component: Collection
     },
+    {
+      path: '/insert',
+      component: Insert,
+    },
+    {
+      path: '/login',
+      component: Login
+    },
+    {
+      path: '/users',
+      component: Users
+    },
+    {
+    path: '/logs',
+    component: Logs
+    }
   ],
   scrollBehavior () {
     return { x: 0, y: 0 }
   }
 })
-
-// Redirect from '/' to '/search'
-router.replace('/search')
 
 export default router

@@ -1,17 +1,20 @@
 <template>
     <div>
         <InsertSingleAsset/>
+		<InsertSingleCollection/>
     </div>
 </template>
 
 <script>
 
 import InsertSingleAsset from '@/components/forms/InsertSingleAsset'
+import InsertSingleCollection from '@/components/forms/InsertSingleCollection'
 
 export default {
-	name: 'InsertAsset',
+	name: 'Insert',
 	components: {
-		InsertSingleAsset
+		InsertSingleAsset,
+		InsertSingleCollection
 	}
 }
 </script>

@@ -1,11 +1,6 @@
 <template>
     <form style="margin: 90px;">
-        <h2>Inserir nova peça</h2>
-    <v-text-field
-      v-model="creator"
-      label="Autor"
-      required
-    ></v-text-field>
+        <h2>Inserir nova coleção</h2>
     <v-text-field
       v-model="title"
       label="Título"
@@ -15,7 +10,7 @@
     <v-btn @click="submit()">submit</v-btn>
     <v-btn @click="clear()">clear</v-btn>
 
-    <p v-if="inserted">New asset inserted!</p>
+    <p v-if="inserted">New collection inserted!</p>
   </form>
 
 
@@ -25,28 +20,26 @@
 import api from '@/api/api'
 
 export default {
-    name: 'InsertSingleAsset',
+    name: 'InsertSingleCollection',
     data() {
         return {
-            creator: '',
-            title: '',
-            inserted: false
+            collectionName: '',
+            inserted: false,
+            title: ''
         }
     },
     methods: {
         async submit() {
-            const response = await api().post('/assets', {
-                author: this.creator,
+            const response = await api().post('/collection', {
                 title: this.title
             })
             console.log(response)
             if(response.status == 200) {
                 this.inserted = true
             }
-            this.clear;
+            this.clear();
         },
         clear() {
-            this.creator = ''
             this.title = ''
         }
     }

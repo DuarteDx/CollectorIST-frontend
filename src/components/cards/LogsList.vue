@@ -1,12 +1,12 @@
 <template>
     <div>
-        <v-card v-for="asset in assetsList" v-bind:key="asset._id" class="single-asset">
+        <v-card v-for="log in logsList" v-bind:key="log._id" class="single-log">
                 <v-layout align-center>
-                    
+
                     <v-flex sm11 md11>
-                        <router-link :to="'/assets/' + asset._id" class="text--no-decoration single-asset-link">
+                        <router-link :to="'logs/' + log._id" class="single-log-link">
                             <v-layout wrap>
-                                <template v-for="(value, key) in asset">
+                                <template v-for="(value, key) in log">
                                     <v-flex sm1 md1 offset-sm1 offset-md1 v-bind:key="key">
                                         <p>{{ key }}</p>
                                     </v-flex>
@@ -17,10 +17,11 @@
                             </v-layout>
                         </router-link>
                     </v-flex>
-
+            
                     <v-flex md1 style="font-size: 25px;">
-                        <font-awesome-icon @click.stop="deleteAsset(asset._id)" icon="trash" style="cursor: pointer;"/>
+                        <font-awesome-icon @click.stop="deleteLog(log._id)" icon="trash" style="cursor: pointer;"/>
                     </v-flex>
+
                 </v-layout>
         </v-card>
     </div>
@@ -30,30 +31,31 @@
 import api from '@/api/api'
 
 export default {
-    name: 'AssetsList',
+    name: 'LogsList',
     data() {
         return {
-            assetsList: []
+            logsList: []
         }
     },
     methods: {
-        async fetchListOfAssets() {
-            const response = await api().get('/assets')
-            this.assetsList = response.data
+        async fetchListOfLogs() {
+            const response = await api().get('/logs/all')
+            this.logsList = response.data
         },
-        async deleteAsset(assetId) {
+        async deleteLog(logId) {
             if(this.confirmDeletion()){
-                console.log(assetId)
-                const response = await api().delete('/assets', {data: {
-                    id: assetId
+                console.log(logId)
+                const response = await api().delete('/logs', {data: {
+                    id: logId
                 }})
                 console.log(response)
-                var deletedIndex = this.assetsList.findIndex(x => x._id == assetId)
-                this.assetsList.splice(deletedIndex, 1)
+                var deletedIndex = this.logsList.findIndex(x => x._id == logId)
+                this.logsList.splice(deletedIndex, 1)
+                console.log(deletedIndex)
             }
         },
         confirmDeletion() {
-            if (confirm('Tem a certeza que pretende apagar esta peça?')) {
+            if (confirm('Tem a certeza que pretende apagar este log?')) {
                     return true
                 } else {
                     return false
@@ -61,24 +63,22 @@ export default {
             }
     },
     created() {
-        this.fetchListOfAssets()
+        this.fetchListOfLogs()
     }
 }
-
-
 </script>
 
 <style>
 
-    .single-asset {
+    .single-log {
         margin: 10px 40px 10px 40px;
     }
 
-    .single-asset:hover {
+    .single-log:hover {
         padding: 5px;
     }
 
-    .single-asset-link {
+    .single-log-link {
         text-decoration: none;
         color: black;
     }

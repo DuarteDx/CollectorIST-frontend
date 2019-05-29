@@ -27,8 +27,8 @@
             return {
                 navBarItems: [
                     {
-                        title: 'PESQUISAR',
-                        path: '/search',
+                        title: 'PEÇAS',
+                        path: '/assets',
                         index: 1
                     },
                     {
@@ -40,6 +40,21 @@
                         title: 'INSERIR',
                         path: '/insert',
                         index: 3
+                    },
+                    {
+                        title: 'LOGIN',
+                        path: '/login',
+                        index: 4
+                    },
+                    {
+                        title: 'USERS',
+                        path: '/users',
+                        index: 5
+                    },
+                    {
+                        title: 'LOGS',
+                        path: '/logs',
+                        index: 6
                     }
                 ],
                 currentMenuOnDisplay: 1
