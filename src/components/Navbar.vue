@@ -50,6 +50,11 @@
                         title: 'USERS',
                         path: '/users',
                         index: 5
+                    },
+                    {
+                        title: 'LOGS',
+                        path: '/logs',
+                        index: 6
                     }
                 ],
                 currentMenuOnDisplay: 1

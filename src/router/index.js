@@ -9,6 +9,7 @@ import Assets from '@/views/Assets'
 import Asset from '@/views/Asset'
 import Login from '@/views/Login'
 import Users from '@/views/Users'
+import Logs from '@/views/Logs'
 
 Vue.use(Router)
 
@@ -46,6 +47,10 @@ const router = new Router({
     {
       path: '/users',
       component: Users
+    },
+    {
+    path: '/logs',
+    component: Logs
     }
   ],
   scrollBehavior () {
