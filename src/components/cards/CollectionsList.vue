@@ -39,7 +39,7 @@ export default {
     },
     methods: {
         async fetchListOfCollections() {
-            const response = await api().get('/collection/all')
+            const response = await api().get('/collection')
             this.collectionsList = response.data
         },
         async deleteCollection(collectionId) {

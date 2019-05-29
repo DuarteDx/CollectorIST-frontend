@@ -17,10 +17,6 @@
                             </v-layout>
                         </router-link>
                     </v-flex>
-            
-                    <v-flex md1 style="font-size: 25px;">
-                        <font-awesome-icon @click.stop="deleteLog(log._id)" icon="trash" style="cursor: pointer;"/>
-                    </v-flex>
 
                 </v-layout>
         </v-card>
@@ -39,7 +35,8 @@ export default {
     },
     methods: {
         async fetchListOfLogs() {
-            const response = await api().get('/logs/all')
+            const response = await api().get('/logs')
+            response.data.reverse()
             this.logsList = response.data
         },
         async deleteLog(logId) {
