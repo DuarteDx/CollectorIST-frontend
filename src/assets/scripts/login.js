@@ -2,6 +2,7 @@ var Credentials = {
     username: null,
     id: -1,
     rank: 0,
+    loggedIn: false,
     getUsername: function() {
         return this.username
     },

@@ -42,7 +42,11 @@ const router = new Router({
     },
     {
       path: '/login',
-      redirect: 'www.google.com'
+      component: Login
+    },
+    {
+      path: '/auth',
+      beforeEnter() {location.href = 'https://fenix.tecnico.ulisboa.pt/oauth/userdialog?client_id=1414440104755271&redirect_uri=http://localhost:8080/login'} 
     },
     {
       path: '/users',
