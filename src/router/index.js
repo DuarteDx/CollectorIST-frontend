@@ -42,7 +42,7 @@ const router = new Router({
     },
     {
       path: '/login',
-      component: Login
+      redirect: 'www.google.com'
     },
     {
       path: '/users',

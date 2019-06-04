@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import LogsList from '@/components/cards/LogsList.vue'
+import LogsList from '@/components/logs/LogsList.vue'
 
 export default {
     name: 'Logs',

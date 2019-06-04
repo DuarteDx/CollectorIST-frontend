@@ -11,7 +11,7 @@
 
 <script>
 
-import AssetsList from '@/components/cards/AssetsList'
+import AssetsList from '@/components/assets/search/AssetsList'
 
 export default {
 	name: 'Assets',

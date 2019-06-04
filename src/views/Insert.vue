@@ -7,8 +7,8 @@
 
 <script>
 
-import InsertSingleAsset from '@/components/forms/InsertSingleAsset'
-import InsertSingleCollection from '@/components/forms/InsertSingleCollection'
+import InsertSingleAsset from '@/components/assets/insertion/InsertSingleAsset'
+import InsertSingleCollection from '@/components/collections/insertion/InsertSingleCollection'
 
 export default {
 	name: 'Insert',

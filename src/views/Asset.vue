@@ -6,8 +6,8 @@
 </template>
 
 <script>
-import AssetGlobal from '@/components/asset/AssetGlobal'
-import AssetSpecific from '@/components/asset/AssetSpecific'
+import AssetGlobal from '@/components/assets/singleAsset/AssetGlobal'
+import AssetSpecific from '@/components/assets/singleAsset/AssetSpecific'
 
 export default {
     name: 'Asset',
