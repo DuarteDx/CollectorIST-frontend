@@ -43,7 +43,7 @@
                     },
                     {
                         title: 'LOGIN',
-                        path: '/login',
+                        path: '/auth',
                         index: 4
                     },
                     {

@@ -2,7 +2,9 @@ var Credentials = {
     username: null,
     id: -1,
     rank: 0,
-    loggedIn: false,
+    token: null,
+
+
     getUsername: function() {
         return this.username
     },
@@ -26,6 +28,9 @@ var Credentials = {
             return true
         else
             return false
+    },
+    setToken(newToken) {
+        this.token = newToken
     }
 }
 
