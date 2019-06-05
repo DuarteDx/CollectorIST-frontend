@@ -11,6 +11,9 @@ import Login from '@/views/Login'
 import Users from '@/views/Users'
 import Logs from '@/views/Logs'
 
+// Front-end variables
+import Credentials from '@/assets/scripts/login.js'
+
 Vue.use(Router)
 
 const router = new Router({
@@ -42,6 +45,7 @@ const router = new Router({
     },
     {
       path: '/login',
+      name: 'login',
       component: Login
     },
     {
@@ -59,6 +63,19 @@ const router = new Router({
   ],
   scrollBehavior () {
     return { x: 0, y: 0 }
+  }
+})
+
+// Execute this before going to any route
+// Redirects to login page if user doesn't have a jwt token
+router.beforeEach(async function(to, from, next) {
+  if(Credentials.token || to.path == '/auth' || to.path == '/login') {
+    next()
+    console.log('User is logged in')
+  }
+  else {
+    next({ path: '/auth'})
+    console.log('User is not logged in, redirecting to login page')
   }
 })
 
