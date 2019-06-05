@@ -35,12 +35,12 @@ export default {
                     var userIstInfo = axios.get(getUserIstInfoUrl)
                         .then(function(response) {
                             console.log(response.data.username)
+                            component.$router.push('/assets')
                         })
                         .catch(function(error){
                             console.log('Error getting user info')
                             component.message = 'Error getting user info'
                         })
-                    component.$router.push('/assets')
                 })
                 .catch(function(error) {
                     console.log('Error getting token')
