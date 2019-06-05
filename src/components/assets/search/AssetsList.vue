@@ -28,6 +28,7 @@
 
 <script>
 import api from '@/api/api'
+import Credentials from '@/assets/scripts/login'
 
 export default {
     name: 'AssetsList',
@@ -62,6 +63,7 @@ export default {
     },
     created() {
         this.fetchListOfAssets()
+        console.log('assetsList: ' + Credentials.token)
     }
 }
 
