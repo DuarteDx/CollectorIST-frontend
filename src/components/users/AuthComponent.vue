@@ -26,10 +26,20 @@ export default {
             var response = await axios.post(getTokenUrl)
                 .then(function(response) {
                     console.log('Got token!')
-                    console.log(response.data.access_token)
+                    console.log('access_token: ' + response.data.access_token)
+                    console.log('refresh_tokeN: ' + response.data.refresh_token)
                     Credentials.setToken(response.data.access_token)
                     console.log('Credentials.token: ' + Credentials.token)
                     component.message = 'Got token from IST'
+                    var getUserIstInfoUrl = 'https://fenix.tecnico.ulisboa.pt/api/fenix/v1/person?access_token=' + response.data.access_token + '&refresh_token=' + response.data.refresh_token
+                    var userIstInfo = axios.get(getUserIstInfoUrl)
+                        .then(function(response) {
+                            console.log(response.data.username)
+                        })
+                        .catch(function(error){
+                            console.log('Error getting user info')
+                            component.message = 'Error getting user info'
+                        })
                     component.$router.push('/assets')
                 })
                 .catch(function(error) {
