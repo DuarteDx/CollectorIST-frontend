@@ -48,13 +48,18 @@
                     },
                     {
                         title: 'USERS',
-                        path: '/users',
+                        path: '/users/list',
                         index: 5
+                    },
+                    {
+                        title: 'MANAGE_USERS',
+                        path: '/users/manage',
+                        index: 6
                     },
                     {
                         title: 'LOGS',
                         path: '/logs',
-                        index: 6
+                        index: 7
                     }
                 ],
                 currentMenuOnDisplay: 1

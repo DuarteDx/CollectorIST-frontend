@@ -63,7 +63,6 @@ export default {
     },
     created() {
         this.fetchListOfAssets()
-        console.log('assetsList: ' + Credentials.token)
     }
 }
 

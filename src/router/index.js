@@ -10,6 +10,7 @@ import Asset from '@/views/Asset'
 import Login from '@/views/Login'
 import Users from '@/views/Users'
 import Logs from '@/views/Logs'
+import ManageUsers from '@/views/ManageUsers'
 
 // Front-end variables
 import Credentials from '@/assets/scripts/login.js'
@@ -53,12 +54,16 @@ const router = new Router({
       beforeEnter() {location.href = 'https://fenix.tecnico.ulisboa.pt/oauth/userdialog?client_id=1414440104755271&redirect_uri=http://localhost:8080/login'} 
     },
     {
-      path: '/users',
+      path: '/users/list',
       component: Users
     },
     {
     path: '/logs',
     component: Logs
+    },
+    {
+    path: '/users/manage',
+    component: ManageUsers
     }
   ],
   scrollBehavior () {
@@ -68,15 +73,15 @@ const router = new Router({
 
 // Execute this before going to any route
 // Redirects to login page if user doesn't have a jwt token
-router.beforeEach(async function(to, from, next) {
+/* router.beforeEach(async function(to, from, next) {
   if(Credentials.token || to.path == '/auth' || to.path == '/login') {
     next()
-    console.log('User is logged in')
+    // console.log('User is logged in')
   }
   else {
     next({ path: '/auth'})
     console.log('User is not logged in, redirecting to login page')
   }
-})
+}) */
 
 export default router
