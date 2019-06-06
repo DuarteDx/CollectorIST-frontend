@@ -1,27 +1,27 @@
 <template>
     <div>
-        <v-card class="single-card">
+        <v-card v-for="person in usersList" v-bind:key="person.username" class="single-card">
             <v-container>
                 <v-layout>
                     <v-flex md2>
-                        <img class="image" src="http://pics3.pof.com/thumbnails/size220/1136/22/57/311935dd6-93d4-46f0-beda-2c9b5a1d1b06.jpg" style="width: 100px;height:100px;">
+                        <img class="image" :src="'data:image/jpeg;base64,' + person.picture.data" style="width: 100px;height:100px;">
                     </v-flex>
                     <v-flex md9>
                         <v-layout column>
                             <v-flex class="person-name">
-                                Maria Pinto
+                                {{ person.name }}
                             </v-flex>
                             <v-flex class="person-rank">
-                                Rank: Administrador
+                                {{ convertRank(person.rank) }}
                             </v-flex>
                             <v-flex class="person-id">
-                                ist14214
+                                {{ person.username }}
                             </v-flex>
                             <v-flex class="person-collections">
                                 Coleções:
-                                <span class="single-collection">Pinturas</span>
-                                <span class="single-collection">Esculturas</span>
-                                <span class="single-collection">Máquinas</span>
+                                <div v-for="(collection, index) in person.collections" v-bind:key="index">
+                                    <span class="single-collection">{{ collection }}</span>
+                                </div>
                             </v-flex>
                         </v-layout>
                     </v-flex>
@@ -42,8 +42,43 @@
 </template>
 
 <script>
+import Credentials from '@/assets/scripts/login.js'
+import api from '@/api/api'
+
 export default {
-    name: 'ManageUsersList'
+    name: 'ManageUsersList',
+    data() {
+        return {
+            usersList: []
+        }
+    },
+    methods: {
+        async fetchUsersList() {
+            var component = this
+            await api().get('/users/all/' + Credentials.getToken())
+                .then(function(response) {
+                    component.usersList = response.data
+                })
+                .catch(function(error) {
+                    console.log(error)
+                })
+        },
+        convertRank(number) {
+            switch(number) {
+                case 0:
+                    return 'Visualizador'
+                case 1:
+                    return 'Editor'
+                case 2:
+                    return 'Administrador'
+                default:
+                    return 'Indefinido'
+            }
+        }
+    },
+    created() {
+        this.fetchUsersList()
+    }
 }
 </script>
 
@@ -72,7 +107,6 @@ export default {
 }
 
 .person-id {
-    font-family: Raleway;
     font-size: 16px;
 }
 

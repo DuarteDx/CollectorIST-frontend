@@ -73,7 +73,7 @@ const router = new Router({
 
 // Execute this before going to any route
 // Redirects to login page if user doesn't have a jwt token
-/* router.beforeEach(async function(to, from, next) {
+router.beforeEach(async function(to, from, next) {
   if(Credentials.token || to.path == '/auth' || to.path == '/login') {
     next()
     // console.log('User is logged in')
@@ -82,6 +82,6 @@ const router = new Router({
     next({ path: '/auth'})
     console.log('User is not logged in, redirecting to login page')
   }
-}) */
+})
 
 export default router
