@@ -1,3 +1,5 @@
+import api from '@/api/api'
+
 var Credentials = {
     token: null,
     loggingIn: false,
@@ -13,6 +15,15 @@ var Credentials = {
     },
     isNotLoggingIn() {
         this.loggingIn = false
+    },
+    async checkIfAdmin() {
+        return await api().get('users/checkIfAdmin/' + Credentials.getToken())
+            .then(function(response) {
+                return response.data
+            })
+            .catch(function() {
+                return false
+            })
     }
 }
 

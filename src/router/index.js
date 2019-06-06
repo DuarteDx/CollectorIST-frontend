@@ -59,7 +59,11 @@ const router = new Router({
     },
     {
     path: '/users/manage',
-    component: ManageUsers
+    component: ManageUsers,
+    async beforeEnter(to, from, next) {
+      if(await Credentials.checkIfAdmin()) {next()}
+      else {next('/')}
+      }
     },
     {
       path: '/users/manage/:istId',
