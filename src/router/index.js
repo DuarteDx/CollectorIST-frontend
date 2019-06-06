@@ -8,7 +8,6 @@ import Insert from '@/views/Insert'
 import Assets from '@/views/Assets'
 import Asset from '@/views/Asset'
 import Login from '@/views/Login'
-import Users from '@/views/Users'
 import Logs from '@/views/Logs'
 import ManageUsers from '@/views/ManageUsers'
 
@@ -52,10 +51,6 @@ const router = new Router({
     {
       path: '/auth',
       beforeEnter() {location.href = 'https://fenix.tecnico.ulisboa.pt/oauth/userdialog?client_id=1414440104755271&redirect_uri=http://localhost:8080/login'} 
-    },
-    {
-      path: '/users/list',
-      component: Users
     },
     {
     path: '/logs',

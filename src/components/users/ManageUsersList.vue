@@ -28,10 +28,10 @@
                     <v-flex md1>
                         <v-layout column align-center justify-center>
                             <v-flex md6>
-                                <v-icon large>edit</v-icon>
+                                <v-icon large @click.stop="editUser(user._id)" style="cursor: pointer">edit</v-icon>
                             </v-flex>
                             <v-flex md6>
-                                <v-icon large>delete_forever</v-icon>
+                                <v-icon large @click.stop="deleteUser(person.username)" style="cursor: pointer">delete_forever</v-icon>
                             </v-flex>
                         </v-layout>
                     </v-flex>
@@ -74,6 +74,28 @@ export default {
                 default:
                     return 'Indefinido'
             }
+        },
+        async deleteUser(istId) {
+            if(this.confirmDeletion()){
+                console.log(istId)
+                const response = await api().delete('/users', {data: {
+                    id: istId
+                }})
+                console.log(response)
+                var deletedIndex = this.usersList.findIndex(x => x.username == istId)
+                this.usersList.splice(deletedIndex, 1)
+                console.log(deletedIndex)
+            }
+        },
+        confirmDeletion() {
+            if (confirm('Tem a certeza que pretende apagar este utilizador?')) {
+                    return true
+                } else {
+                    return false
+                }
+        },
+        async editUser() {
+
         }
     },
     created() {

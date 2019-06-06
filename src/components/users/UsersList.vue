@@ -57,7 +57,7 @@ export default {
                 } else {
                     return false
                 }
-            }
+        }
     },
     created() {
         this.fetchListOfUsers()
