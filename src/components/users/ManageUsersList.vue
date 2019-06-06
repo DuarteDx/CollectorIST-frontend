@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <v-container>
         <v-card v-for="person in usersList" v-bind:key="person.username" class="single-card">
             <v-container>
                 <v-layout>
@@ -17,18 +17,18 @@
                             <v-flex class="person-id">
                                 {{ person.username }}
                             </v-flex>
-                            <v-flex class="person-collections">
-                                Coleções:
-                                <div v-for="(collection, index) in person.collections" v-bind:key="index">
-                                    <span class="single-collection">{{ collection }}</span>
-                                </div>
+                        </v-layout>
+                        <span style="margin-bottom: 10px">Coleções:</span>
+                        <v-layout row wrap class="person-collections">
+                            <v-flex md2 class="single-collection" v-for="(collection, index) in person.collections" v-bind:key="index">
+                                    <span>{{ collection }}</span>
                             </v-flex>
                         </v-layout>
                     </v-flex>
                     <v-flex md1>
                         <v-layout column align-center justify-center>
                             <v-flex md6>
-                                <v-icon large @click.stop="editUser(user._id)" style="cursor: pointer">edit</v-icon>
+                                <v-icon large @click.stop="editUser(person.username)" style="cursor: pointer;margin-bottom: 30px;">edit</v-icon>
                             </v-flex>
                             <v-flex md6>
                                 <v-icon large @click.stop="deleteUser(person.username)" style="cursor: pointer">delete_forever</v-icon>
@@ -38,7 +38,7 @@
                 </v-layout>
             </v-container>
         </v-card>
-    </div>
+    </v-container>
 </template>
 
 <script>
@@ -94,8 +94,8 @@ export default {
                     return false
                 }
         },
-        async editUser() {
-
+        async editUser(istId) {
+            this.$router.push('/users/manage/' + istId)
         }
     },
     created() {
@@ -139,11 +139,11 @@ export default {
 }
 
 .single-collection {
-    margin-left: 8px;
-    margin-right: 0;
     background-color: #41a1e6;
-    border-radius: 20%;
+    border-radius: 13%;
+    margin: 0 5px 10px 5px;
     padding: 5px;
     font-weight: bold;
+    text-align: center;
 }
 </style>
