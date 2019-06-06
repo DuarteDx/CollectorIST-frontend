@@ -10,22 +10,32 @@
                         {{ userInfo.name}}
                     </v-flex>
                     <v-flex class="person-rank">
-                        <span class="select-rank">Visualizador</span>
-                        <span class="select-rank">Editor</span>
-                        <span class="select-rank">Administrador</span>
+                        <span @click.stop="changeRank(0)" v-bind:class="{ currentRank: userInfo.rank == 0 }" class="select-rank">Visualizador</span>
+                        <span @click.stop="changeRank(1)" v-bind:class="{ currentRank: userInfo.rank == 1 }" class="select-rank">Editor</span>
+                        <span @click.stop="changeRank(2)" v-bind:class="{ currentRank: userInfo.rank == 2 }" class="select-rank">Administrador</span>
                     </v-flex>
                     <v-flex class="person-id">
                         {{ userInfo.username}}
                     </v-flex>
-                    </v-layout>
-                    <span class="collections-key">Coleções:</span>
-                    <v-layout row wrap class="person-collections">
-                        <v-flex md2 class="single-collection" v-for="(collection, index) in userInfo.collections" v-bind:key="index">
-                                <span>{{ collection }}</span>
-                                <span @click.stop="deleteCollection(collection)" class="delete-collection">X</span>
+                </v-layout>
+                <span class="collections-key">Coleções:</span>
+                <v-layout row wrap class="person-collections">
+                    <v-flex md2 class="single-collection" v-for="(collection, index) in userInfo.collections" v-bind:key="index">
+                            <span>{{ collection }}</span>
+                            <span @click.stop="deleteCollection(collection)" class="delete-collection">X</span>
+                    </v-flex>
+                </v-layout>
+                <span class="collections-key">Adicionar coleção:</span>
+                <form style="margin-top: 30px;">
+                    <v-layout>
+                        <v-flex md8>
+                            <v-text-field v-model="newCollection" label="Nome da coleção"></v-text-field>
+                        </v-flex>
+                        <v-flex md4>
+                            <v-btn @click="addCollection()">Submeter coleção</v-btn>
                         </v-flex>
                     </v-layout>
-                    <span class="collections-key">Adicionar coleção:</span>
+                </form>
             </v-flex>
         </v-layout>
     </v-container>
@@ -48,7 +58,8 @@ export default {
                 },
                 rank: 0,
                 collections: null
-            }
+            },
+            newCollection: ''
         }
     },
     methods: {
@@ -64,9 +75,34 @@ export default {
                 })
         },
         async deleteCollection(collection) {
+            var component = this
             await api().delete('/users/' +  this.$route.params.istId + '/collections/' + collection + '/' + Credentials.getToken())
-                .then(function(response) {
-                    console.log(response)
+            .then(function() {
+                var deletedIndex = component.userInfo.collections.findIndex(x => x == collection)
+                component.userInfo.collections.splice(deletedIndex, 1)
+                })
+                .catch(function(error) {
+                    console.log(error)
+                })
+        },
+        async changeRank(newRank) {
+            var component = this
+            await api().post('users/' +  this.$route.params.istId + '/rank/' + newRank + '/' + Credentials.getToken())
+                .then(function() {
+                    component.userInfo.rank = newRank
+                })
+                .catch(function(error) {
+                    console.log(error)
+                })
+        },
+        async addCollection() {
+            var component = this
+            await api().post('users/' +  this.$route.params.istId + '/collections/' + Credentials.getToken(), {
+                newCollection: component.newCollection
+            })
+                .then(function() {
+                    component.userInfo.collections.push(component.newCollection)
+                    component.newCollection = ''
                 })
                 .catch(function(error) {
                     console.log(error)
@@ -106,6 +142,10 @@ export default {
     cursor: pointer;
 }
 
+.currentRank {
+    background-color: rgba(175, 230, 93, 0.733) !important;
+}
+
 .person-id {
     font-size: 20px;
     margin-bottom: 30px;
@@ -119,7 +159,7 @@ export default {
 .person-collections {
     font-family: Raleway;
     margin-top: 30px;
-    margin-bottom: 30px;
+    margin-bottom: 60px;
     font-size: 20px;
 }
 
