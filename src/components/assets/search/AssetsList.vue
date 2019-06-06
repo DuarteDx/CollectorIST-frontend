@@ -28,6 +28,7 @@
 
 <script>
 import api from '@/api/api'
+import Credentials from '@/assets/scripts/login'
 
 export default {
     name: 'AssetsList',

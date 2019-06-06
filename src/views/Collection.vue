@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import CollectionGlobal from '@/components/collection/CollectionGlobal'
+import CollectionGlobal from '@/components/collections/singleCollection/CollectionGlobal'
 
 export default {
     name: 'Collection',

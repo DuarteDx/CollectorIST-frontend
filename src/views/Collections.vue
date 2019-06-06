@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import CollectionsList from '@/components/cards/CollectionsList'
+import CollectionsList from '@/components/collections/search/CollectionsList'
 
 export default {
 	name: 'Collections',

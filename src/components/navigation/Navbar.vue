@@ -21,6 +21,8 @@
 </template>
 
 <script>
+import Credentials from '@/assets/scripts/login.js'
+
 	export default {
         name: 'Navbar',
         data() {
@@ -41,14 +43,14 @@
                         path: '/insert',
                         index: 3
                     },
-                    {
+                    /*{
                         title: 'LOGIN',
-                        path: '/login',
+                        path: '/auth',
                         index: 4
-                    },
+                    },*/
                     {
-                        title: 'USERS',
-                        path: '/users',
+                        title: 'MANAGE_USERS',
+                        path: '/users/manage',
                         index: 5
                     },
                     {
@@ -63,6 +65,11 @@
         methods: {
             changeUnderlining(newIndex) {
                 this.currentMenuOnDisplay = newIndex
+            }
+        },
+        async created() {
+            if(!await Credentials.checkIfAdmin()) {
+                this.navBarItems.splice(3, 2)
             }
         }
     }

@@ -1,30 +1,29 @@
+import api from '@/api/api'
+
 var Credentials = {
-    username: null,
-    id: -1,
-    rank: 0,
-    getUsername: function() {
-        return this.username
+    token: null,
+    loggingIn: false,
+
+    setToken(newToken) {
+        this.token = newToken
     },
-    setUsername: function(username) {
-        this.username = username
+    getToken() {
+        return this.token
     },
-    getId: function() {
-        return this.id
+    isLoggingIn() {
+        this.loggingIn = true
     },
-    setId: function(id) {
-        this.id = id
+    isNotLoggingIn() {
+        this.loggingIn = false
     },
-    getRank: function() {
-        return this.rank
-    },
-    setRank: function(rank) {
-        this.rank = rank
-    },
-    canEditWorks: function() {
-        if(this.rank == 1 || this.rank == 2)
-            return true
-        else
-            return false
+    async checkIfAdmin() {
+        return await api().get('users/checkIfAdmin/' + Credentials.getToken())
+            .then(function(response) {
+                return response.data
+            })
+            .catch(function() {
+                return false
+            })
     }
 }
 
