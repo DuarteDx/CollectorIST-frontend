@@ -47,19 +47,14 @@
                         index: 4
                     },
                     {
-                        title: 'USERS',
-                        path: '/users/list',
-                        index: 5
-                    },
-                    {
                         title: 'MANAGE_USERS',
                         path: '/users/manage',
-                        index: 6
+                        index: 5
                     },
                     {
                         title: 'LOGS',
                         path: '/logs',
-                        index: 7
+                        index: 6
                     }
                 ],
                 currentMenuOnDisplay: 1
