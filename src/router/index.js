@@ -50,6 +50,11 @@ const router = new Router({
       component: Login
     },
     {
+      path: '/logout',
+      name: 'logout',
+      beforeEnter() {location.href = 'id.tecnico.ulisboa.pt/cas/logout'} 
+    },
+    {
       path: '/auth',
       beforeEnter() {location.href = 'https://fenix.tecnico.ulisboa.pt/oauth/userdialog?client_id=1414440104755271&redirect_uri=http://localhost:8080/login'} 
     },

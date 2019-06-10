@@ -51,11 +51,16 @@ import Credentials from '@/assets/scripts/login.js'
                     {
                         title: 'MANAGE_USERS',
                         path: '/users/manage',
-                        index: 5
+                        index: 4
                     },
                     {
                         title: 'LOGS',
                         path: '/logs',
+                        index: 5
+                    },
+                    {
+                        title: 'LOGOUT',
+                        path: '/logout',
                         index: 6
                     }
                 ],

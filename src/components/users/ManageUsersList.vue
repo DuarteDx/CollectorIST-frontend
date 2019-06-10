@@ -12,7 +12,7 @@
                                 {{ person.name }}
                             </v-flex>
                             <v-flex class="person-rank">
-                                {{ convertRank(person.rank) }}
+                                {{ convertRank(person.role) }}
                             </v-flex>
                             <v-flex class="person-id">
                                 {{ person.username }}
@@ -20,7 +20,7 @@
                         </v-layout>
                         <span style="margin-bottom: 10px">Coleções:</span>
                         <v-layout row wrap class="person-collections">
-                            <v-flex md2 class="single-collection" v-for="(collection, index) in person.collections" v-bind:key="index">
+                            <v-flex md2 class="single-collection" v-for="(collection, index) in person.role.collections" v-bind:key="index">
                                     <span>{{ collection }}</span>
                             </v-flex>
                         </v-layout>
@@ -63,16 +63,15 @@ export default {
                     console.log(error)
                 })
         },
-        convertRank(number) {
-            switch(number) {
-                case 0:
-                    return 'Visualizador'
-                case 1:
-                    return 'Editor'
-                case 2:
-                    return 'Administrador'
-                default:
-                    return 'Indefinido'
+        convertRank(role) {
+            if(role.editor) {
+                return 'Editor'
+            }
+            if(role.admin) {
+                return 'Administrador'
+            }
+            else {
+                return 'Visualizador'
             }
         },
         async deleteUser(istId) {

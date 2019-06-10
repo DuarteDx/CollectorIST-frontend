@@ -18,6 +18,7 @@
 
 <script>
 import api from '@/api/api'
+import Credentials from '@/assets/scripts/login.js'
 
 export default {
     name: 'InsertSingleCollection',
@@ -30,9 +31,7 @@ export default {
     },
     methods: {
         async submit() {
-            const response = await api().post('/collection', {
-                title: this.title
-            })
+            const response = await api().post('/collection/' + Credentials.getToken(), { title: this.title })
             console.log(response)
             if(response.status == 200) {
                 this.inserted = true

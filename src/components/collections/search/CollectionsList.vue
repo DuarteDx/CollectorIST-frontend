@@ -29,6 +29,7 @@
 
 <script>
 import api from '@/api/api'
+import Credentials from '@/assets/scripts/login.js'
 
 export default {
     name: 'CollectionsList',
@@ -45,9 +46,7 @@ export default {
         async deleteCollection(collectionId) {
             if(this.confirmDeletion()){
                 console.log(collectionId)
-                const response = await api().delete('/collection', {data: {
-                    id: collectionId
-                }})
+                const response = await api().delete('/collection/' + collectionId + '/' + Credentials.getToken())
                 console.log(response)
                 var deletedIndex = this.collectionsList.findIndex(x => x._id == collectionId)
                 this.collectionsList.splice(deletedIndex, 1)
