@@ -1,0 +1,44 @@
+<template>
+    <form style="margin: 90px;">
+        <h2>Importar ficheiro com árvore de categorias</h2>
+        <input type="file" id="file" ref="file" class="file-input" v-on:change="handleFileUpload()"/>
+        <br>
+        <v-btn @click="uploadFile()">Submeter</v-btn>
+    </form>
+</template>
+
+<script>
+import api from '@/api/api'
+import Credentials from '@/assets/scripts/login.js'
+
+export default {
+    name: 'UploadCategoriesFile',
+    data() {
+        return {
+            file: null
+        }
+    },
+    methods: {
+    handleFileUpload(event){
+        this.file = this.$refs.file.files[0]
+        console.log(this.file)
+        var myData = JSON.parse(this.file)
+        console.log(myData)
+      },
+    async uploadFile() {
+        await api().post('/categories/' + Credentials.getToken(), { file: this.file })
+            .then(function(response) {
+                console.log(response)
+            })
+    }
+    }
+}
+</script>
+
+<style scoped>
+
+.file-input {
+    margin: 20px 0 20px 8px;
+}
+
+</style>

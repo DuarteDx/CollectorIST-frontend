@@ -2,6 +2,7 @@
     <div>
         <InsertSingleAsset/>
 		<InsertSingleCollection/>
+		<UploadCategoriesFile/>
     </div>
 </template>
 
@@ -9,12 +10,14 @@
 
 import InsertSingleAsset from '@/components/assets/insertion/InsertSingleAsset'
 import InsertSingleCollection from '@/components/collections/insertion/InsertSingleCollection'
+import UploadCategoriesFile from '@/components/categories/insertion/UploadCategoriesFile'
 
 export default {
 	name: 'Insert',
 	components: {
 		InsertSingleAsset,
-		InsertSingleCollection
+		InsertSingleCollection,
+		UploadCategoriesFile
 	}
 }
 </script>
