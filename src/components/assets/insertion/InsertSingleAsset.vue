@@ -12,6 +12,18 @@
       required
     ></v-text-field>
 
+    <!-- Select category dropdown -->
+    <v-select
+        :items="mainCategories"
+        v-model="mainCategory"
+        label="Categorias"
+    ></v-select>
+    <!--<v-select
+        v-if="mainCategory.sub-categories.length > 0"
+        :items="mainCategories"
+        label="Categorias"
+    ></v-select>-->
+
     <v-btn @click="submit()">submit</v-btn>
     <v-btn @click="clear()">clear</v-btn>
 
@@ -30,7 +42,11 @@ export default {
         return {
             creator: '',
             title: '',
-            inserted: false
+            inserted: false,
+            rawCategories: [],
+            mainCategories: [],
+            mainCategory: null,
+            subCategories: []
         }
     },
     methods: {
@@ -48,7 +64,21 @@ export default {
         clear() {
             this.creator = ''
             this.title = ''
+        },
+        async fetchCategories() {
+            var component = this
+            await api().get('/category')
+                .then(function(response) {
+                    console.log(response)
+                    component.rawCategories = response.data
+                    component.rawCategories.forEach(function(category) {
+                        component.mainCategories.push(category.title)
+                    })
+                })
         }
+    },
+    created() {
+        this.fetchCategories()
     }
 }
 </script>

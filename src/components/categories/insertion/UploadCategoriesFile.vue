@@ -22,11 +22,14 @@ export default {
     handleFileUpload(event){
         this.file = this.$refs.file.files[0]
         console.log(this.file)
-        var myData = JSON.parse(this.file)
-        console.log(myData)
       },
     async uploadFile() {
-        await api().post('/categories/' + Credentials.getToken(), { file: this.file })
+        let formData = new FormData()
+        formData.append("categories", this.file)
+        await api().post('/category/' + Credentials.getToken(), formData, {
+          headers: {
+            "Content-Type": "multipart/form-data"
+          }})
             .then(function(response) {
                 console.log(response)
             })
