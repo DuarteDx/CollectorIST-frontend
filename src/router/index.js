@@ -11,6 +11,7 @@ import Login from '@/views/Login'
 import Logs from '@/views/Logs'
 import ManageUsers from '@/views/ManageUsers'
 import EditUser from '@/views/EditUser'
+import Categories from '@/views/Categories'
 
 // Front-end variables
 import Credentials from '@/assets/scripts/login.js'
@@ -73,7 +74,11 @@ const router = new Router({
     {
       path: '/users/manage/:istId',
       component: EditUser
-      }
+    },
+    {
+      path: '/categories',
+      component: Categories
+    },
   ],
   scrollBehavior () {
     return { x: 0, y: 0 }
