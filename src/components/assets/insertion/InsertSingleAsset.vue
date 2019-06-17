@@ -13,7 +13,7 @@
     ></v-text-field>
 
     <!-- Select category dropdown -->
-    <v-select
+    <!--<v-select
         :items="mainCategories"
         v-model="selectedMainCategory"
         label="Categorias"
@@ -24,7 +24,10 @@
         v-model="selectedSubCategory"
         :items="subCategories"
         label="Categorias"
-    ></v-select>
+    ></v-select>-->
+    <CategoriesNode v-if="rawCategories.length > 0" :categories="rawCategories"/>
+
+
 
     <v-btn @click="submit()">submit</v-btn>
     <v-btn @click="clear()">clear</v-btn>
@@ -37,9 +40,13 @@
 
 <script>
 import api from '@/api/api'
+import CategoriesNode from './CategoriesNode'
 
 export default {
     name: 'InsertSingleAsset',
+    components: {
+        CategoriesNode
+    },
     data() {
         return {
             creator: '',
@@ -59,8 +66,7 @@ export default {
             const response = await api().post('/assets', {
                 author: this.creator,
                 title: this.title,
-                category: this.selectedMainCategory,
-                subCategory: this.selectedSubCategory
+                category: this.selectedMainCategory
             })
             console.log(response)
             if(response.status == 200) {
