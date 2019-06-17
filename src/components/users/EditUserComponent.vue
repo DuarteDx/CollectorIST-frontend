@@ -10,9 +10,9 @@
                         {{ userInfo.name}}
                     </v-flex>
                     <v-flex class="person-rank">
-                        <span @click.stop="changeRank(0)" v-bind:class="{ currentRank: userInfo.rank == 0 }" class="select-rank">Visualizador</span>
-                        <span @click.stop="changeRank(1)" v-bind:class="{ currentRank: userInfo.rank == 1 }" class="select-rank">Editor</span>
-                        <span @click.stop="changeRank(2)" v-bind:class="{ currentRank: userInfo.rank == 2 }" class="select-rank">Administrador</span>
+                        <span @click.stop="changeRank(0)" v-bind:class="{ currentRank: !userInfo.role.admin && !userInfo.role.editor }" class="select-rank" :key="updateRoles">Visualizador</span>
+                        <span @click.stop="changeRank(1)" v-bind:class="{ currentRank: userInfo.role.editor }" class="select-rank" :key="updateRoles+5">Editor</span>
+                        <span @click.stop="changeRank(2)" v-bind:class="{ currentRank: userInfo.role.admin }" class="select-rank" :key="updateRoles+10">Administrador</span>
                     </v-flex>
                     <v-flex class="person-id">
                         {{ userInfo.username}}
@@ -20,7 +20,7 @@
                 </v-layout>
                 <span class="collections-key">Coleções:</span>
                 <v-layout row wrap class="person-collections">
-                    <v-flex md2 class="single-collection" v-for="(collection, index) in userInfo.collections" v-bind:key="index">
+                    <v-flex md2 class="single-collection" v-for="(collection, index) in userInfo.role.collections" v-bind:key="index">
                             <span>{{ collection }}</span>
                             <span @click.stop="deleteCollection(collection)" class="delete-collection">X</span>
                     </v-flex>
@@ -56,10 +56,14 @@ export default {
                     type: null,
                     data: null
                 },
-                rank: 0,
-                collections: null
+                role: {
+                    admin: false,
+                    editor: false,
+                    collections: []
+                }
             },
-            newCollection: ''
+            newCollection: '',
+            updateRoles: 0
         }
     },
     methods: {
@@ -75,25 +79,29 @@ export default {
                 })
         },
         async deleteCollection(collection) {
-            var component = this
-            await api().delete('/users/' +  this.$route.params.istId + '/collections/' + collection + '/' + Credentials.getToken())
-            .then(function() {
-                var deletedIndex = component.userInfo.collections.findIndex(x => x == collection)
-                component.userInfo.collections.splice(deletedIndex, 1)
-                })
-                .catch(function(error) {
-                    console.log(error)
-                })
+            if(this.confirmAction('Tem a certeza que pretende apagar esta coleção?')) {
+                var component = this
+                await api().delete('/users/' +  this.$route.params.istId + '/collections/' + collection + '/' + Credentials.getToken())
+                    .then(function() {
+                    var deletedIndex = component.userInfo.role.collections.findIndex(x => x == collection)
+                    component.userInfo.role.collections.splice(deletedIndex, 1)
+                    })
+                    .catch(function(error) {
+                        console.log(error)
+                    })
+            }
         },
         async changeRank(newRank) {
-            var component = this
-            await api().post('users/' +  this.$route.params.istId + '/rank/' + newRank + '/' + Credentials.getToken())
-                .then(function() {
-                    component.userInfo.rank = newRank
-                })
-                .catch(function(error) {
-                    console.log(error)
-                })
+            if(this.confirmAction('Tem a certeza que pretende alterar as permissões deste utilizador?')) {
+                var component = this
+                await api().post('users/' +  this.$route.params.istId + '/rank/' + newRank + '/' + Credentials.getToken())
+                    .then(function() {
+                        component.updateRoles++
+                    })
+                    .catch(function(error) {
+                        console.log(error)
+                    })
+            }
         },
         async addCollection() {
             var component = this
@@ -101,12 +109,19 @@ export default {
                 newCollection: component.newCollection
             })
                 .then(function() {
-                    component.userInfo.collections.push(component.newCollection)
+                    component.userInfo.role.collections.push(component.newCollection)
                     component.newCollection = ''
                 })
                 .catch(function(error) {
                     console.log(error)
                 })
+        },
+        confirmAction(text) {
+            if (confirm(text)) {
+                    return true
+                } else {
+                    return false
+                }
         }
     },
     created() {
