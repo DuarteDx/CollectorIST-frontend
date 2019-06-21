@@ -1,13 +1,18 @@
 var locationAssetInsertion = {
 
-    locations: [],
+    selectedLocationId: null,
 
-    getSelectedCategory: function() {
-        return this.locations
+    getSelectedLocation: function() {
+        return this.selectedLocationId
     },
 
-    setSelectedCategory: function(newLocation) {
-        this.locations.push(newLocation)
+    setSelectedLocation: function(newLocation) {
+        if(newLocation != '')
+        this.selectedLocationId = newLocation
+    },
+
+    resetSelectedLocation: function() {
+        this.selectedLocationId = null
     }
 }
 

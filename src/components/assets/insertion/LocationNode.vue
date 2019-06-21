@@ -1,6 +1,7 @@
 <template>
   <div>
     <v-select
+        v-if="locationsList.length > 0"
         :items="locationsList"
         v-model="selectedLocation"
         label="Espaço"
@@ -48,7 +49,10 @@
                 component.rawLocations = response.data
                 console.log(component.rawLocations)
                 component.rawLocations.containedSpaces.forEach(function(subLocation) {
-                    component.locationsList.push(subLocation.name)
+                    if(subLocation.name != '') {
+                        component.locationsList.push(subLocation.name)
+                        locationAssetInsertion.setSelectedLocation(subLocation.id)
+                    }
                 })
             })
     }

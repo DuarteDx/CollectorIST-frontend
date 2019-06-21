@@ -130,7 +130,13 @@ export default {
                 title: this.title,
                 category: categoriesAssetInsert.getSelectedCategory(),
                 optionalId: this.optionalId,
-                location: this.location,
+                location: {
+                    coordinates: {
+                        lat: this.location.coordinates.lat,
+                        long: this.location.coordinates.long
+                    },
+                    room: locationAssetInsertion.getSelectedLocation()
+                },
                 files: this.formDocuments
             })
             console.log(response)
@@ -147,7 +153,8 @@ export default {
             this.location.coordinates.lat = null
             this.location.coordinates.long = null
             this.location.room = null
-            this.optionalId = ''
+            this.optionalId = '',
+            locationAssetInsertion.resetSelectedLocation()
         },
         async fetchCategories() {
             var component = this
