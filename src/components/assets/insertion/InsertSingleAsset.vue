@@ -1,51 +1,98 @@
 <template>
     <form style="margin: 90px;">
         <h2>Inserir nova peça</h2>
-    <v-text-field
-      v-model="creator"
-      label="Autor"
-      required
-    ></v-text-field>
-    <v-text-field
-      v-model="title"
-      label="Título"
-      required
-    ></v-text-field>
+        <h4>Informação básica</h4>
+        <!--TITLE-->
+        <v-text-field
+        v-model="title"
+        label="Título"
+        required
+        ></v-text-field>
 
-    <!-- Select category dropdown -->
-    <!--<v-select
-        :items="mainCategories"
-        v-model="selectedMainCategory"
-        label="Categorias"
-        v-on:change="getSubCategories()"
-    ></v-select>
-    <v-select
-        v-if="subCategoriesBoolean"
-        v-model="selectedSubCategory"
-        :items="subCategories"
-        label="Categorias"
-    ></v-select>-->
-    <CategoriesNode v-if="rawCategories.length > 0" :categories="rawCategories"/>
+        <!--AUTHOR-->
+        <v-text-field
+        v-model="creator"
+        label="Autor"
+        required
+        ></v-text-field>
+        <h4>Localização da peça</h4>
 
+        <!--LOCATION-->
+        <!--Coordinate-->
+        <v-layout v-if="!locationInputMethod">
+            <v-flex md5 style="margin-right: 15px;">
+                <v-text-field
+                v-model="location.coordinates.lat"
+                label="Latitude"
+                ></v-text-field>
+            </v-flex>
+            <v-flex md5>
+                <v-text-field
+                v-model="location.coordinates.long"
+                label="Longitude"
+                ></v-text-field>
+            </v-flex>
+        </v-layout>
+        <!--Room-->
+        <!--Dropdown-->
+        <template v-if="locationInputMethod">
+            <v-select
+            :items="locationsList"
+            v-model="selectedLocation"
+            label="Espaço"
+            v-on:change="getLocationId()"
+        ></v-select>
+        <!--ChildNode-->
+        <LocationNode v-if="selectedLocation.length > 0" :parentId="selectedLocationId" :key="locationChildKey"/>
+        </template>
+        <!--Toogle location input mode-->
+        <v-btn color="info" @click="toggleLocationInputMethod()">Outras opções de localização</v-btn>
 
+        <!--OLD IDs-->
+        <h4>Ids atribuídos à peça anteriormente</h4>
+        <v-text-field
+        v-model="optionalId"
+        label="Id opcional"
+        ></v-text-field>
 
-    <v-btn @click="submit()">submit</v-btn>
-    <v-btn @click="clear()">clear</v-btn>
+        <!--CATEGORY-->
+        <h4>Categoria</h4>
+        <!-- Select category dropdown | Recursive component -->
+        <CategoriesNode v-if="rawCategories.length > 0" :categories="rawCategories"/>
 
-    <p v-if="inserted">New asset inserted!</p>
-  </form>
+        <!--DOCUMENTS-->
+        <!--User can select multiple files with Ctrl+click-->
+        <h4>Anexar documentos</h4>
+        <br>
+        <input type="file" id="file" ref="file" class="file-input" multiple v-on:change="handleFileUpload()"/>
+        <div v-for="(document, index) in rawDocuments" v-bind:key="index">
+            {{ document.name }}
+        </div>
+        <br>
+
+        <v-btn @click="submit()">submit</v-btn>
+        <v-btn @click="clear()">clear</v-btn>
+
+        <p v-if="inserted">New asset inserted!</p>
+    </form>
 
 
 </template>
 
 <script>
 import api from '@/api/api'
+import axios from 'axios'
+import Credentials from '@/assets/scripts/login.js'
 import CategoriesNode from './CategoriesNode'
+import categoriesAssetInsert from '@/assets/store/selectedCategoryAssetInsertion.js'
+import LocationNode from './LocationNode'
+import locationAssetInsertion from '@/assets/store/locationAssetInsertion.js'
 
 export default {
     name: 'InsertSingleAsset',
     components: {
-        CategoriesNode
+        CategoriesNode,
+        LocationNode
     },
     data() {
         return {
@@ -53,20 +100,38 @@ export default {
             title: '',
             inserted: false,
             rawCategories: [],
-            mainCategories: [],
-            selectedMainCategory: '',
-            selectedSubCategory: '',
-            subCategories: [],
-            selectedCategoryIndex: -1,
-            subCategoriesBoolean: false
+            optionalId: '',
+            location: {
+                coordinates: {
+                    lat: null,
+                    long: null
+                },
+                room: null
+            },
+            locationInputMethod: false,
+            rawDocuments: [],
+            formDocuments: [],
+            rawLocations: [],
+            locationsList: [],
+            selectedLocation: '',
+            selectedLocationId: null,
+            locationChildKey: 0
+            
         }
     },
     methods: {
         async submit() {
-            const response = await api().post('/assets', {
+            this.formDocuments = new FormData()
+            for(var i=0; i<this.rawDocuments.length; i++) {
+                this.formDocuments.append("file" + i, this.rawDocuments[i])
+            }
+            const response = await api().post('/assets/' + Credentials.getToken() , {
                 author: this.creator,
                 title: this.title,
-                category: this.selectedMainCategory
+                category: categoriesAssetInsert.getSelectedCategory(),
+                optionalId: this.optionalId,
+                location: this.location,
+                files: this.formDocuments
             })
             console.log(response)
             if(response.status == 200) {
@@ -78,9 +143,11 @@ export default {
             // Reset all form variables
             this.creator = ''
             this.title = ''
-            this.selectedMainCategory = ''
-            this.selectedSubCategory = ''
             this.subCategoriesBoolean = false
+            this.location.coordinates.lat = null
+            this.location.coordinates.long = null
+            this.location.room = null
+            this.optionalId = ''
         },
         async fetchCategories() {
             var component = this
@@ -88,31 +155,53 @@ export default {
                 .then(function(response) {
                     console.log(response)
                     component.rawCategories = response.data
-                    component.rawCategories.forEach(function(category) {
-                        component.mainCategories.push(category.title)
+                })
+        },
+        toggleLocationInputMethod() {
+            this.locationInputMethod = !this.locationInputMethod
+            this.location.coordinates.lat = null
+            this.location.coordinates.long = null
+            this.location.room = null
+        },
+        handleFileUpload() {
+            this.rawDocuments = this.$refs.file.files
+            console.log(this.rawDocuments)
+        },
+        async getLocations() {
+            var component = this
+            await axios.get('https://fenix.tecnico.ulisboa.pt/api/fenix/v1/spaces')
+                .then(function(response) {
+                    component.rawLocations = response.data
+                    console.log(component.rawLocations)
+                    component.rawLocations.forEach(function(subLocation) {
+                        component.locationsList.push(subLocation.name)
                     })
                 })
         },
-        getSubCategories() {
-            // Gets the index of the selected category
-            this.selectedCategoryIndex = this.rawCategories.findIndex(x => x.title == this.selectedMainCategory)
-            console.log(this.selectedCategoryIndex)
+        getLocationId() {
+            // Get id of selected location
+            var selectedLocationIndex = this.rawLocations.findIndex(x => x.name == this.selectedLocation)
+            console.log(selectedLocationIndex)
+            this.selectedLocationId = this.rawLocations[selectedLocationIndex].id
+            console.log(this.selectedLocationId)
 
-            // Check if there exist subCategories for the chosen category
-            this.subCategoriesBoolean = this.rawCategories[this.selectedCategoryIndex].subCategories.length > 0 ? true : false
-
-            // Create array with subCategories titles
-            var component = this
-            this.subCategories = []
-            this.rawCategories[this.selectedCategoryIndex].subCategories.forEach(function(subCategory) {
-                component.subCategories.push(subCategory.title)
-            })
+            // Update children
+            this.locationChildKey += 1
+            console.log(this.locationChildKey)
         }
     },
     created() {
         this.fetchCategories()
+        this.getLocations()
     }
 }
 </script>
 
 
+<style scoped>
+
+.file-input {
+    margin-bottom: 20px;
+}
+
+</style>
