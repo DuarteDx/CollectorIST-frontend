@@ -5,17 +5,31 @@
                 List of categories in database
             </v-flex>
         </v-layout>
+        <v-btn color="info" @click="displayInsertionForm()">+ Inserir categorias</v-btn>
+        <UploadCategoriesFile v-if="displayInsertionFormButton"/>
         <CategoriesList/>
     </div>
 </template>
 
 <script>
 import CategoriesList from '@/components/categories/search/CategoriesList'
+import UploadCategoriesFile from '@/components/categories/insertion/UploadCategoriesFile'
 
 export default {
 	name: 'Categories',
 	components: {
-        CategoriesList
-	}
+        CategoriesList,
+        UploadCategoriesFile
+    },
+    data() {
+        return {
+            displayInsertionFormButton: false
+        }
+    },
+    methods: {
+        displayInsertionForm() {
+            this.displayInsertionFormButton = !this.displayInsertionFormButton
+        }
+    }
 }
 </script>
