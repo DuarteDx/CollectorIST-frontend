@@ -6,11 +6,11 @@
                     <v-flex sm11 md11>
                         <router-link :to="'/assets/' + asset._id" class="text--no-decoration single-asset-link">
                             <v-layout wrap>
-                                <template v-for="(value, key) in asset">
-                                    <v-flex sm1 md1 offset-sm1 offset-md1 v-bind:key="key">
+                                <template v-for="(value, key, index) in asset">
+                                    <v-flex sm1 md1 offset-sm1 offset-md1 v-bind:key="index">
                                         <p>{{ key }}</p>
                                     </v-flex>
-                                    <v-flex sm10 md10 v-bind:key="value">
+                                    <v-flex sm10 md10 v-bind:key="index+1000">
                                         <p>{{ value }}</p>
                                     </v-flex>
                                 </template>
@@ -45,9 +45,7 @@ export default {
         async deleteAsset(assetId) {
             if(this.confirmDeletion()){
                 console.log(assetId)
-                const response = await api().delete('/assets', {data: {
-                    id: assetId
-                }})
+                const response = await api().delete('/assets/' + assetId + '/' + Credentials.getToken())
                 console.log(response)
                 var deletedIndex = this.assetsList.findIndex(x => x._id == assetId)
                 this.assetsList.splice(deletedIndex, 1)

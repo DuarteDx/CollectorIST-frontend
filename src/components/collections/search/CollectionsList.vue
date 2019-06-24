@@ -6,11 +6,11 @@
                     <v-flex sm11 md11>
                         <router-link :to="'collections/' + collection._id" class="single-collection-link">
                             <v-layout wrap>
-                                <template v-for="(value, key) in collection">
-                                    <v-flex sm1 md1 offset-sm1 offset-md1 v-bind:key="key">
+                                <template v-for="(value, key, index) in collection">
+                                    <v-flex sm1 md1 offset-sm1 offset-md1 v-bind:key="index">
                                         <p>{{ key }}</p>
                                     </v-flex>
-                                    <v-flex sm10 md10 v-bind:key="value">
+                                    <v-flex sm10 md10 v-bind:key="index + 1000">
                                         <p>{{ value }}</p>
                                     </v-flex>
                                 </template>
