@@ -4,7 +4,7 @@
         v-if="locationsList.length > 0"
         :items="locationsList"
         v-model="selectedLocation"
-        label="Espaço"
+        label="Sub-espaço"
         v-on:change="getLocationId()"
     ></v-select>
 

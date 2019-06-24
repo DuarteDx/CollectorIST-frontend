@@ -15,11 +15,18 @@
         label="Autor"
         required
         ></v-text-field>
-        <h4>Localização da peça</h4>
+
+         <!--OLD IDs-->
+        <h4>Ids atribuídos à peça anteriormente</h4>
+        <v-text-field
+        v-model="optionalId"
+        label="Id opcional"
+        ></v-text-field>
 
         <!--LOCATION-->
+        <h4>Localização da peça</h4>
         <!--Coordinate-->
-        <v-layout v-if="!locationInputMethod">
+        <v-layout v-if="locationInputMethod">
             <v-flex md5 style="margin-right: 15px;">
                 <v-text-field
                 v-model="location.coordinates.lat"
@@ -35,25 +42,33 @@
         </v-layout>
         <!--Room-->
         <!--Dropdown-->
-        <template v-if="locationInputMethod">
+        <template v-if="!locationInputMethod">
             <v-select
             :items="locationsList"
             v-model="selectedLocation"
             label="Espaço"
             v-on:change="getLocationId()"
-        ></v-select>
-        <!--ChildNode-->
-        <LocationNode v-if="selectedLocation.length > 0" :parentId="selectedLocationId" :key="locationChildKey"/>
+            ></v-select>
+            <!--ChildNode-->
+            <LocationNode v-if="selectedLocation.length > 0" :parentId="selectedLocationId" :key="locationChildKey"/>
+            <!--Cabinet-->
+            <template v-if="selectedLocation.length > 0">
+                <v-text-field
+                v-model="location.cabinet"
+                label="Armário"
+                ></v-text-field>
+                <v-text-field
+                v-model="location.drawer"
+                label="Prateleira/Gaveta"
+                ></v-text-field>
+                <v-text-field
+                v-model="location.position"
+                label="Posição"
+                ></v-text-field>
+            </template>
         </template>
         <!--Toogle location input mode-->
         <v-btn color="info" @click="toggleLocationInputMethod()">Outras opções de localização</v-btn>
-
-        <!--OLD IDs-->
-        <h4>Ids atribuídos à peça anteriormente</h4>
-        <v-text-field
-        v-model="optionalId"
-        label="Id opcional"
-        ></v-text-field>
 
         <!--CATEGORY-->
         <h4>Categoria</h4>
@@ -106,7 +121,10 @@ export default {
                     lat: null,
                     long: null
                 },
-                room: null
+                room: null,
+                cabinet: null,
+                drawer: null,
+                position: null
             },
             locationInputMethod: false,
             rawDocuments: [],
@@ -135,7 +153,10 @@ export default {
                         lat: this.location.coordinates.lat,
                         long: this.location.coordinates.long
                     },
-                    room: locationAssetInsertion.getSelectedLocation()
+                    room: locationAssetInsertion.getSelectedLocation(),
+                    cabinet: this.location.cabinet,
+                    drawer: this.location.drawer,
+                    position: this.location.position
                 },
                 files: this.formDocuments
             })
