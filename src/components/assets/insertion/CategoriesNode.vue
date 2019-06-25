@@ -3,7 +3,7 @@
     <v-select
         :items="categoriesList"
         v-model="selectedCategory"
-        label="Categorias"
+        label="Categoria"
         v-on:change="getSubCategories()"
     ></v-select>
 

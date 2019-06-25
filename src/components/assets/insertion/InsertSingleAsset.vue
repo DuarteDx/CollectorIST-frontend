@@ -1,89 +1,166 @@
 <template>
-    <form style="margin: 90px;">
+    <form class="asset-insert-form">
         <h2>Inserir nova peça</h2>
-        <h4>Informação básica</h4>
-        <!--TITLE-->
-        <v-text-field
-        v-model="title"
-        label="Título"
-        required
-        ></v-text-field>
 
-        <!--AUTHOR-->
-        <v-text-field
-        v-model="creator"
-        label="Autor"
-        required
-        ></v-text-field>
+        <div class="basic-info">
+            <h3>Informação básica</h3>
+            <!--TITLE-->
+            <v-text-field
+            v-model="title"
+            label="Título"
+            required
+            ></v-text-field>
+
+            <!--AUTHOR-->
+            <v-text-field
+            v-model="creator"
+            label="Autor"
+            required
+            ></v-text-field>
+        </div>
 
          <!--OLD IDs-->
-        <h4>Ids atribuídos à peça anteriormente</h4>
-        <v-text-field
-        v-model="optionalId"
-        label="Id opcional"
-        ></v-text-field>
+         <div class="old-id">
+            <h3>Ids atribuídos à peça anteriormente</h3>
+            <v-text-field
+            v-model="optionalId"
+            label="Id opcional"
+            ></v-text-field>
+         </div>
 
         <!--LOCATION-->
-        <h4>Localização da peça</h4>
-        <!--Coordinate-->
-        <v-layout v-if="locationInputMethod">
-            <v-flex md5 style="margin-right: 15px;">
+        <div class="location">
+            <h3>Localização da peça</h3>
+            <!--USUAL LOCATION-->
+            <h4>Localização Habitual</h4>
+            <v-btn :color="usualLocationSelectedButton == 0 ? 'success' : 'info'" style="margin-left: 0px;" @click="toggleUsualLocationButton(0)">Localização IST</v-btn>
+                <v-btn :color="usualLocationSelectedButton == 1 ? 'success' : 'info'" style="margin-left: 0px;" @click="toggleUsualLocationButton(1)">Coordenadas</v-btn>
+                <v-btn :color="usualLocationSelectedButton == 2 ? 'success' : 'info'" style="margin-left: 0px;" @click="toggleUsualLocationButton(2)">Outra Localização</v-btn>
+            <!--Coordinate-->
+            <v-layout v-if="usualLocationSelectedButton == 1">
+                <v-flex md5 style="margin-right: 15px;">
+                    <v-text-field
+                    v-model="location.usual.coordinates.lat"
+                    label="Latitude"
+                    ></v-text-field>
+                </v-flex>
+                <v-flex md5>
+                    <v-text-field
+                    v-model="location.usual.coordinates.long"
+                    label="Longitude"
+                    ></v-text-field>
+                </v-flex>
+            </v-layout>
+            <!--Room-->
+            <template v-if="usualLocationSelectedButton == 0">
+                <!--Dropdown-->
+                <v-select
+                :items="locationsList"
+                v-model="usualSelectedLocation"
+                label="Espaço"
+                v-on:change="getUsualLocationId()"
+                ></v-select>
+                <!--ChildNode-->
+                <UsualLocationNode v-if="usualSelectedLocation.length > 0" :parentId="usualSelectedLocationId" :key="currentLocationChildKey"/>
+                <!--Cabinet-->
+                <template v-if="usualSelectedLocation.length > 0">
+                    <v-text-field
+                    v-model="location.usual.istSpace.cabinet"
+                    label="Armário"
+                    ></v-text-field>
+                    <v-text-field
+                    v-model="location.usual.istSpace.drawer"
+                    label="Prateleira/Gaveta"
+                    ></v-text-field>
+                    <v-text-field
+                    v-model="location.usual.istSpace.position"
+                    label="Posição"
+                    ></v-text-field>
+                </template>
+            </template>
+            <template v-if="usualLocationSelectedButton == 2">
                 <v-text-field
-                v-model="location.coordinates.lat"
-                label="Latitude"
-                ></v-text-field>
-            </v-flex>
-            <v-flex md5>
-                <v-text-field
-                v-model="location.coordinates.long"
-                label="Longitude"
-                ></v-text-field>
-            </v-flex>
-        </v-layout>
-        <!--Room-->
-        <!--Dropdown-->
-        <template v-if="!locationInputMethod">
-            <v-select
-            :items="locationsList"
-            v-model="selectedLocation"
-            label="Espaço"
-            v-on:change="getLocationId()"
-            ></v-select>
-            <!--ChildNode-->
-            <LocationNode v-if="selectedLocation.length > 0" :parentId="selectedLocationId" :key="locationChildKey"/>
-            <!--Cabinet-->
-            <template v-if="selectedLocation.length > 0">
-                <v-text-field
-                v-model="location.cabinet"
-                label="Armário"
-                ></v-text-field>
-                <v-text-field
-                v-model="location.drawer"
-                label="Prateleira/Gaveta"
-                ></v-text-field>
-                <v-text-field
-                v-model="location.position"
-                label="Posição"
+                v-model="location.usual.address.name"
+                label="Morada"
                 ></v-text-field>
             </template>
-        </template>
-        <!--Toogle location input mode-->
-        <v-btn color="info" @click="toggleLocationInputMethod()">Outras opções de localização</v-btn>
+            <!--CURRENT LOCATION-->
+            <h4>Localização atual</h4>
+            <v-btn :color="currentLocationSelectedButton == 0 ? 'success' : 'info'" style="margin-left: 0px;" @click="toggleCurrentLocationButton(0)">Localização habitual</v-btn>
+            <v-btn :color="currentLocationSelectedButton == 1 ? 'success' : 'info'" style="margin-left: 0px;" @click="toggleCurrentLocationButton(1)">Localização IST</v-btn>
+            <v-btn :color="currentLocationSelectedButton == 2 ? 'success' : 'info'" style="margin-left: 0px;" @click="toggleCurrentLocationButton(2)">Coordenadas</v-btn>
+            <v-btn :color="currentLocationSelectedButton == 3 ? 'success' : 'info'" style="margin-left: 0px;" @click="toggleCurrentLocationButton(3)">Outra Localização</v-btn>
+            <template v-if="currentLocationSelectedButton == 1">
+                <!--Dropdown-->
+                <v-select
+                :items="locationsList"
+                v-model="currentSelectedLocation"
+                label="Espaço"
+                v-on:change="getCurrentLocationId()"
+                ></v-select>
+                <!--Recursive ist current location-->
+                <CurrentLocationNode v-if="currentSelectedLocation.length > 0" :parentId="currentSelectedLocationId" :key="usualLocationChildKey"/>
+                <!--Cabinet-->
+                <template v-if="currentSelectedLocation.length > 0">
+                    <v-text-field
+                    v-model="location.current.istSpace.cabinet"
+                    label="Armário"
+                    ></v-text-field>
+                    <v-text-field
+                    v-model="location.current.istSpace.drawer"
+                    label="Prateleira/Gaveta"
+                    ></v-text-field>
+                    <v-text-field
+                    v-model="location.current.istSpace.position"
+                    label="Posição"
+                    ></v-text-field>
+                </template>
+            </template>
+            <!--Coordinate-->
+            <v-layout v-if="currentLocationSelectedButton == 2">
+                <v-flex md5 style="margin-right: 15px;">
+                    <v-text-field
+                    v-model="location.current.coordinates.lat"
+                    label="Latitude"
+                    ></v-text-field>
+                </v-flex>
+                <v-flex md5>
+                    <v-text-field
+                    v-model="location.current.coordinates.long"
+                    label="Longitude"
+                    ></v-text-field>
+                </v-flex>
+            </v-layout>
+            <template v-if="currentLocationSelectedButton == 3">
+                <v-text-field
+                v-model="location.current.address.name"
+                label="Morada"
+                ></v-text-field>
+            </template>
+        </div>
 
         <!--CATEGORY-->
-        <h4>Categoria</h4>
-        <!-- Select category dropdown | Recursive component -->
-        <CategoriesNode v-if="rawCategories.length > 0" :categories="rawCategories"/>
+        <div class="category">
+            <h3>Categoria</h3>
+            <!-- Select category dropdown | Recursive component -->
+            <CategoriesNode v-if="rawCategories.length > 0" :categories="rawCategories"/>
+        </div>
 
         <!--DOCUMENTS-->
-        <!--User can select multiple files with Ctrl+click-->
-        <h4>Anexar documentos</h4>
-        <br>
-        <input type="file" id="file" ref="file" class="file-input" multiple v-on:change="handleFileUpload()"/>
-        <div v-for="(document, index) in rawDocuments" v-bind:key="index">
-            {{ document.name }}
+        <div class="documents">
+            <!--User can select multiple files with Ctrl+click-->
+            <h3>Anexar documentos</h3>
+            <br>
+            <input type="file" id="file" ref="file" class="file-input" multiple v-on:change="handleFileUpload()"/>
+            <div v-for="(document, index) in rawDocuments" v-bind:key="index">
+                {{ document.name }}
+            </div>
+            <v-text-field
+            v-model="documentDescription"
+            label="Descrição do documento"
+            required
+            ></v-text-field>
         </div>
-        <br>
 
         <v-btn @click="submit()">submit</v-btn>
         <v-btn @click="clear()">clear</v-btn>
@@ -100,14 +177,16 @@ import axios from 'axios'
 import Credentials from '@/assets/scripts/login.js'
 import CategoriesNode from './CategoriesNode'
 import categoriesAssetInsert from '@/assets/store/selectedCategoryAssetInsertion.js'
-import LocationNode from './LocationNode'
+import UsualLocationNode from './UsualLocationNode'
+import CurrentLocationNode from './CurrentLocationNode'
 import locationAssetInsertion from '@/assets/store/locationAssetInsertion.js'
 
 export default {
     name: 'InsertSingleAsset',
     components: {
         CategoriesNode,
-        LocationNode
+        UsualLocationNode,
+        CurrentLocationNode
     },
     data() {
         return {
@@ -117,23 +196,50 @@ export default {
             rawCategories: [],
             optionalId: '',
             location: {
-                coordinates: {
-                    lat: null,
-                    long: null
+                usual: {
+                    coordinates: {
+                        lat: null,
+                        long: null
+                    },
+                    istSpace: {
+                        room: null,
+                        cabinet: null,
+                        drawer: null,
+                        position: null,
+                    },
+                    address: {
+                        name: null
+                    }
                 },
-                room: null,
-                cabinet: null,
-                drawer: null,
-                position: null
+                current: {
+                    coordinates: {
+                        lat: null,
+                        long: null
+                    },
+                    istSpace: {
+                        room: null,
+                        cabinet: null,
+                        drawer: null,
+                        position: null,
+                    },
+                    address: {
+                        name: null
+                    }
+                }
             },
-            locationInputMethod: false,
             rawDocuments: [],
             formDocuments: [],
             rawLocations: [],
             locationsList: [],
-            selectedLocation: '',
-            selectedLocationId: null,
-            locationChildKey: 0
+            usualSelectedLocation: '',
+            currentSelectedLocation: '',
+            usualSelectedLocationId: null,
+            currentSelectedLocationId: null,
+            usualLocationChildKey: 0,
+            currentLocationChildKey: 0,
+            documentDescription: null,
+            usualLocationSelectedButton: 0,
+            currentLocationSelectedButton: 0
             
         }
     },
@@ -143,20 +249,49 @@ export default {
             for(var i=0; i<this.rawDocuments.length; i++) {
                 this.formDocuments.append("file" + i, this.rawDocuments[i])
             }
+            // If user decides to clone usual location into current location
+            if(this.currentLocationSelectedButton === 0) {
+                this.location.current.istSpace.room = locationAssetInsertion.getCurrentSelectedLocation()
+                this.location.current.istSpace.cabinet = this.location.usual.istSpace.cabinet
+                this.location.current.istSpace.drawer = this.location.usual.istSpace.drawer
+                this.location.current.istSpace.position = this.location.usual.istSpace.position
+            }
             const response = await api().post('/assets/' + Credentials.getToken() , {
                 author: this.creator,
                 title: this.title,
                 category: categoriesAssetInsert.getSelectedCategory(),
                 optionalId: this.optionalId,
                 location: {
-                    coordinates: {
-                        lat: this.location.coordinates.lat,
-                        long: this.location.coordinates.long
+                    usual: {
+                        coordinates: {
+                            lat: this.location.usual.coordinates.lat,
+                            long: this.location.usual.coordinates.long
+                        },
+                        istSpace: {
+                            room: locationAssetInsertion.getUsualSelectedLocation(),
+                            cabinet: this.location.usual.cabinet,
+                            drawer: this.location.usual.drawer,
+                            position: this.location.usual.position,
+                        },
+                        address: {
+                            name: this.location.usual.address.name
+                        }
                     },
-                    room: locationAssetInsertion.getSelectedLocation(),
-                    cabinet: this.location.cabinet,
-                    drawer: this.location.drawer,
-                    position: this.location.position
+                    current: {
+                        coordinates: {
+                            lat: this.location.current.coordinates.lat,
+                            long: this.location.current.coordinates.long
+                        },
+                        istSpace: {
+                            room: locationAssetInsertion.getCurrentSelectedLocation(),
+                            cabinet: this.location.current.cabinet,
+                            drawer: this.location.current.drawer,
+                            position: this.location.current.position,
+                        },
+                        address: {
+                            name: this.location.current.address.name
+                        }
+                    }
                 },
                 files: this.formDocuments
             })
@@ -171,25 +306,31 @@ export default {
             this.creator = ''
             this.title = ''
             this.subCategoriesBoolean = false
-            this.location.coordinates.lat = null
-            this.location.coordinates.long = null
-            this.location.room = null
+            this.location.usual.coordinates.lat = null
+            this.location.usual.coordinates.long = null
+            this.location.current.coordinates.lat = null
+            this.location.current.coordinates.long = null
+            this.location.usual.istSpace.room = null
+            this.location.current.istSpace.room = null
             this.optionalId = '',
-            locationAssetInsertion.resetSelectedLocation()
+            locationAssetInsertion.resetUsualSelectedLocation()
+            locationAssetInsertion.resetCurrentSelectedLocation()
         },
         async fetchCategories() {
             var component = this
             await api().get('/category')
                 .then(function(response) {
-                    console.log(response)
                     component.rawCategories = response.data
                 })
         },
         toggleLocationInputMethod() {
             this.locationInputMethod = !this.locationInputMethod
-            this.location.coordinates.lat = null
-            this.location.coordinates.long = null
-            this.location.room = null
+            this.location.usual.coordinates.lat = null
+            this.location.usual.coordinates.long = null
+            this.location.current.coordinates.lat = null
+            this.location.current.coordinates.long = null
+            this.location.usual.istSpace.room = null
+            this.location.current.istSpace.room = null
         },
         handleFileUpload() {
             this.rawDocuments = this.$refs.file.files
@@ -200,22 +341,52 @@ export default {
             await axios.get('https://fenix.tecnico.ulisboa.pt/api/fenix/v1/spaces')
                 .then(function(response) {
                     component.rawLocations = response.data
-                    console.log(component.rawLocations)
                     component.rawLocations.forEach(function(subLocation) {
                         component.locationsList.push(subLocation.name)
                     })
                 })
         },
-        getLocationId() {
+        getUsualLocationId() {
             // Get id of selected location
-            var selectedLocationIndex = this.rawLocations.findIndex(x => x.name == this.selectedLocation)
-            console.log(selectedLocationIndex)
-            this.selectedLocationId = this.rawLocations[selectedLocationIndex].id
-            console.log(this.selectedLocationId)
+            var selectedLocationIndex = this.rawLocations.findIndex(x => x.name == this.usualSelectedLocation)
+            this.usualSelectedLocationId = this.rawLocations[selectedLocationIndex].id
+
+            // Update usual location in store
+            locationAssetInsertion.setUsualSelectedLocation(this.usualSelectedLocationId)
 
             // Update children
-            this.locationChildKey += 1
-            console.log(this.locationChildKey)
+            this.usualLocationChildKey += 1
+        },
+        getCurrentLocationId() {
+            // Get id of selected location
+            var selectedLocationIndex = this.rawLocations.findIndex(x => x.name == this.currentSelectedLocation)
+            this.currentSelectedLocationId = this.rawLocations[selectedLocationIndex].id
+
+            // Update current location in store
+            locationAssetInsertion.setCurrentSelectedLocation(this.currentSelectedLocationId)
+
+            // Update children
+            this.currentLocationChildKey += 1
+        },
+        toggleUsualLocationButton(selectedButton) {
+            this.usualLocationSelectedButton = selectedButton
+            this.location.usual.coordinates.lat = null
+            this.location.usual.coordinates.long = null
+            this.location.usual.istSpace.room = null
+            this.location.usual.istSpace.cabinet = null
+            this.location.usual.istSpace.drawer = null
+            this.location.usual.istSpace.position = null
+            this.location.usual.address.name = null
+        },
+        toggleCurrentLocationButton(selectedButton) {
+            this.currentLocationSelectedButton = selectedButton
+            this.location.current.coordinates.lat = null
+            this.location.current.coordinates.long = null
+            this.location.current.istSpace.room = null
+            this.location.current.istSpace.cabinet = null
+            this.location.current.istSpace.drawer = null
+            this.location.current.istSpace.position = null
+            this.location.current.address.name = null
         }
     },
     created() {
@@ -227,6 +398,33 @@ export default {
 
 
 <style scoped>
+
+.asset-insert-form {
+    margin: 90px;
+    background-color: rgba(128, 128, 128, 0.068);
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.basic-info {
+    margin-bottom: 40px;
+}
+
+.old-id {
+    margin-bottom: 40px;
+}
+
+.location {
+    margin-bottom: 40px;
+}
+
+.category {
+    margin-bottom: 40px;
+}
+
+.documents {
+    margin-bottom: 40px;
+}
 
 .file-input {
     margin-bottom: 20px;

@@ -1,18 +1,35 @@
 var locationAssetInsertion = {
 
-    selectedLocationId: null,
+    // Usual Location
+    selectedUsualLocationId: null,
 
-    getSelectedLocation: function() {
-        return this.selectedLocationId
+    getUsualSelectedLocation: function() {
+        return this.selectedUsualLocationId
     },
 
-    setSelectedLocation: function(newLocation) {
+    setUsualSelectedLocation: function(newLocation) {
         if(newLocation != '')
-        this.selectedLocationId = newLocation
+        this.selectedUsualLocationId = newLocation
     },
 
-    resetSelectedLocation: function() {
-        this.selectedLocationId = null
+    resetUsualSelectedLocation: function() {
+        this.selectedUsualLocationId = null
+    },
+
+    // Current Location
+    selectedCurrentLocationId: null,
+
+    getCurrentSelectedLocation: function() {
+        return this.selectedCurrentLocationId
+    },
+
+    setCurrentSelectedLocation: function(newLocation) {
+        if(newLocation != '')
+        this.selectedCurrentLocationId = newLocation
+    },
+
+    resetCurrentSelectedLocation: function() {
+        this.selectedCurrentLocationId = null
     }
 }
 

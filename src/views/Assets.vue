@@ -1,7 +1,7 @@
 <template>
     <div>
         <SearchBar/>
-        <v-btn color="info" @click="displayInsertionForm()">+ Inserir peça</v-btn>
+        <v-btn color="info" style="margin-left: 40px;" @click="displayInsertionForm()">+ Inserir peça</v-btn>
         <InsertSingleAsset v-if="displayInsertionFormButton"/>
         <AssetsList/>
         <!--<v-layout justify-center>

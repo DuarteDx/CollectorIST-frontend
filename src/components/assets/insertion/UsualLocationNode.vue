@@ -8,11 +8,11 @@
         v-on:change="getLocationId()"
     ></v-select>
 
-    <LocationNode
+    <UsualLocationNode
         v-if="selectedLocationId != null"
         :parentId="rawLocations.containedSpaces[selectedLocationId].id"
         :key="childKey"
-    ></LocationNode>
+    ></UsualLocationNode>
 
   </div>
 </template>
@@ -23,7 +23,7 @@
 
   export default { 
     props: [ 'parentId' ],
-    name: 'LocationNode',
+    name: 'UsualLocationNode',
     data() {
         return {
             rawLocations: [],
@@ -38,6 +38,9 @@
             // Get id of selected location
             this.selectedLocationId = this.rawLocations.containedSpaces.findIndex(x => x.name == this.selectedLocation)
 
+            // Set usual location in store
+            locationAssetInsertion.setUsualSelectedLocation(this.rawLocations.containedSpaces[this.selectedLocationId].id)
+
             // Update child node
             this.childKey += 1
         }
@@ -47,11 +50,9 @@
         await axios.get('https://fenix.tecnico.ulisboa.pt/api/fenix/v1/spaces/' + this.parentId)
             .then(function(response) {
                 component.rawLocations = response.data
-                console.log(component.rawLocations)
                 component.rawLocations.containedSpaces.forEach(function(subLocation) {
                     if(subLocation.name != '') {
                         component.locationsList.push(subLocation.name)
-                        locationAssetInsertion.setSelectedLocation(subLocation.id)
                     }
                 })
             })

@@ -1,7 +1,7 @@
 <template>
     <div>
         <SearchBar/>
-        <v-btn color="info" @click="displayInsertionForm()">+ Inserir coleção</v-btn>
+        <v-btn color="info" style="margin-left: 40px;" @click="displayInsertionForm()">+ Inserir coleção</v-btn>
         <InsertSingleCollection v-if="displayInsertionFormButton"/>
         <CollectionsList/>
     </div>
