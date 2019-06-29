@@ -154,12 +154,12 @@
             <input type="file" id="file" ref="file" class="file-input" multiple v-on:change="handleFileUpload()"/>
             <div v-for="(document, index) in rawDocuments" v-bind:key="index">
                 {{ document.name }}
+                <v-text-field
+                v-model="documentDescription[index]"
+                label="Descrição do documento"
+                required
+                ></v-text-field>
             </div>
-            <v-text-field
-            v-model="documentDescription"
-            label="Descrição do documento"
-            required
-            ></v-text-field>
         </div>
 
         <v-btn @click="submit()">submit</v-btn>
@@ -237,7 +237,7 @@ export default {
             currentSelectedLocationId: null,
             usualLocationChildKey: 0,
             currentLocationChildKey: 0,
-            documentDescription: null,
+            documentDescription: [],
             usualLocationSelectedButton: 0,
             currentLocationSelectedButton: 0
             
@@ -245,10 +245,6 @@ export default {
     },
     methods: {
         async submit() {
-            this.formDocuments = new FormData()
-            for(var i=0; i<this.rawDocuments.length; i++) {
-                this.formDocuments.append("file" + i, this.rawDocuments[i])
-            }
             // If user decides to clone usual location into current location
             if(this.currentLocationSelectedButton === 0) {
                 this.location.current.istSpace.room = locationAssetInsertion.getCurrentSelectedLocation()
@@ -256,7 +252,9 @@ export default {
                 this.location.current.istSpace.drawer = this.location.usual.istSpace.drawer
                 this.location.current.istSpace.position = this.location.usual.istSpace.position
             }
-            const response = await api().post('/assets/' + Credentials.getToken() , {
+
+            // Set asset parameters to send
+            var newAsset = {
                 author: this.creator,
                 title: this.title,
                 category: categoriesAssetInsert.getSelectedCategory(),
@@ -291,10 +289,29 @@ export default {
                         address: {
                             name: this.location.current.address.name
                         }
-                    }
+                    },
                 },
-                files: this.formDocuments
+                documents: {
+                        size: this.rawDocuments.length,
+                        descriptions: this.documentDescription
+                    }
+            }
+
+            newAsset = JSON.stringify(newAsset)
+            const blob = new Blob([newAsset], {
+                type: 'application/json'
             })
+
+            // Get all asset information into formData
+            var formData = new FormData()
+            // Documents
+            for(var i=0; i<this.rawDocuments.length; i++) {
+                formData.append("document" + i, this.rawDocuments[i])
+            }
+            // Other parameters
+            formData.append("assetInfo", blob)
+
+            const response = await api().post('/assets/' + Credentials.getToken(), formData)
             console.log(response)
             if(response.status == 200) {
                 this.inserted = true
