@@ -247,7 +247,7 @@ export default {
         async submit() {
             // If user decides to clone usual location into current location
             if(this.currentLocationSelectedButton === 0) {
-                this.location.current.istSpace.room = locationAssetInsertion.getCurrentSelectedLocation()
+                this.location.current.istSpace.room = locationAssetInsertion.getUsualSelectedLocation()
                 this.location.current.istSpace.cabinet = this.location.usual.istSpace.cabinet
                 this.location.current.istSpace.drawer = this.location.usual.istSpace.drawer
                 this.location.current.istSpace.position = this.location.usual.istSpace.position
@@ -281,7 +281,7 @@ export default {
                             long: this.location.current.coordinates.long
                         },
                         istSpace: {
-                            room: locationAssetInsertion.getCurrentSelectedLocation(),
+                            room: this.location.current.istSpace.room,
                             cabinet: this.location.current.cabinet,
                             drawer: this.location.current.drawer,
                             position: this.location.current.position,

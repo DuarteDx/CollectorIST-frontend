@@ -1,19 +1,17 @@
 <template>
     <div>
-        <v-layout justify-center>
-            <v-flex sm5 md3 style="font-size: 20px; margin: 20px 0 10px 0;">
-                List of categories in database
-            </v-flex>
-        </v-layout>
-        <v-btn color="info" @click="displayInsertionForm()">+ Inserir categorias</v-btn>
+        <v-btn color="info" class="insert-button" @click="displayInsertionForm()">+ Inserir categorias</v-btn>
         <UploadCategoriesFile v-if="displayInsertionFormButton"/>
-        <CategoriesList/>
+        <CategoriesList v-bind:categoriesList="categoriesList"/>
     </div>
 </template>
 
 <script>
 import CategoriesList from '@/components/categories/search/CategoriesList'
 import UploadCategoriesFile from '@/components/categories/insertion/UploadCategoriesFile'
+
+import api from '@/api/api'
+import Credentials from '@/assets/scripts/login.js'
 
 export default {
 	name: 'Categories',
@@ -23,13 +21,29 @@ export default {
     },
     data() {
         return {
-            displayInsertionFormButton: false
+            displayInsertionFormButton: false,
+            categoriesList: []
         }
     },
     methods: {
         displayInsertionForm() {
             this.displayInsertionFormButton = !this.displayInsertionFormButton
+        },
+        async fetchListOfCategories() {
+            const response = await api().get('/category')
+            this.categoriesList = response.data
         }
+    },
+    created() {
+        this.fetchListOfCategories()
     }
 }
 </script>
+
+<style scoped>
+
+    .insert-button {
+        margin: 40px 0 0 40px;
+    }
+
+</style>

@@ -37,7 +37,7 @@
             this.selectedCategoryIndex = this.categories.findIndex(x => x.title == this.selectedCategory)
 
             // Define selected category in store
-            categoriesAssetInsert.setSelectedCategory(this.selectedCategory)
+            categoriesAssetInsert.setSelectedCategory(this.categories[this.selectedCategoryIndex])
             console.log(categoriesAssetInsert.getSelectedCategory())
 
             // Update child nodes

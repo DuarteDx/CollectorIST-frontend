@@ -4,16 +4,22 @@
                 <v-layout align-center>
 
                     <v-flex sm11 md11>
-                        <router-link :to="'collections/' + collection._id" class="single-collection-link">
+                        <router-link :to="'/collections/' + collection._id" class="text--no-decoration single-collection-link">
                             <v-layout wrap>
-                                <template v-for="(value, key, index) in collection">
-                                    <v-flex sm1 md1 offset-sm1 offset-md1 v-bind:key="index">
-                                        <p>{{ key }}</p>
-                                    </v-flex>
-                                    <v-flex sm10 md10 v-bind:key="index + 1000">
-                                        <p>{{ value }}</p>
-                                    </v-flex>
-                                </template>
+                                <v-flex md2>
+                                   <v-img width="150px" :src="require('@/assets/images/image-placeholder.jpg')"></v-img> 
+                                </v-flex>
+                                <v-flex md9>
+                                    <v-layout row wrap>
+                                        <v-flex class="collection-title" xs12 sm12 md12>
+                                            <p v-if="collection.title.length > 0">{{ collection.title }}</p>
+                                            <p v-else><i>Coleção sem título</i></p>
+                                        </v-flex>
+                                        <v-flex class="collection-responsible" sx12 sm12 md12>
+                                            <p><u>Responsável:</u> {{ collection.responsible }}</p>
+                                        </v-flex>
+                                    </v-layout>
+                                </v-flex>
                             </v-layout>
                         </router-link>
                     </v-flex>
@@ -33,16 +39,12 @@ import Credentials from '@/assets/scripts/login.js'
 
 export default {
     name: 'CollectionsList',
+    props: ['collectionsList'],
     data() {
         return {
-            collectionsList: []
         }
     },
     methods: {
-        async fetchListOfCollections() {
-            const response = await api().get('/collection')
-            this.collectionsList = response.data
-        },
         async deleteCollection(collectionId) {
             if(this.confirmDeletion()){
                 console.log(collectionId)
@@ -60,9 +62,6 @@ export default {
                     return false
                 }
             }
-    },
-    created() {
-        this.fetchListOfCollections()
     }
 }
 </script>
@@ -80,6 +79,15 @@ export default {
     .single-collection-link {
         text-decoration: none;
         color: black;
+    }
+
+    .collection-title {
+        font-size: 27px;
+        margin-top: 30px;
+    }
+
+    .collection-responsible {
+        font-size: 21px;
     }
 
 </style>

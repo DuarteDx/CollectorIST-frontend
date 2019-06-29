@@ -3,12 +3,7 @@
         <SearchBar/>
         <v-btn color="info" style="margin-left: 40px;" @click="displayInsertionForm()">+ Inserir peça</v-btn>
         <InsertSingleAsset v-if="displayInsertionFormButton"/>
-        <AssetsList/>
-        <!--<v-layout justify-center>
-            <v-flex sm5 md3 style="font-size: 20px; margin: 20px 0 10px 0;">
-                List of assets in database
-            </v-flex>
-        </v-layout>-->
+        <AssetsList v-bind:assetsList="assetsList"/>
     </div>
 </template>
 
@@ -17,6 +12,9 @@
 import AssetsList from '@/components/assets/search/AssetsList'
 import SearchBar from '@/components/assets/search/SearchBar'
 import InsertSingleAsset from '@/components/assets/insertion/InsertSingleAsset'
+
+import api from '@/api/api'
+import Credentials from '@/assets/scripts/login'
 
 export default {
 	name: 'Assets',
@@ -27,13 +25,21 @@ export default {
     },
     data() {
         return {
-            displayInsertionFormButton: false
+            displayInsertionFormButton: false,
+            assetsList: []
         }
     },
     methods: {
         displayInsertionForm() {
             this.displayInsertionFormButton = !this.displayInsertionFormButton
+        },
+        async fetchListOfAssets() {
+            const response = await api().get('/assets')
+            this.assetsList = response.data
         }
+    },
+    created() {
+        this.fetchListOfAssets()
     }
 }
 </script>

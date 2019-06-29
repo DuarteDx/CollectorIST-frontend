@@ -3,17 +3,22 @@
         <v-card v-for="category in categoriesList" v-bind:key="category._id" class="single-category">
                 <v-layout align-center>
 
-                    <v-flex sm12 md12>
-                        <router-link :to="'categories/' + category._id" class="single-category-link">
+                    <v-flex sm11 md11>
+                        <router-link :to="'/categories/' + category._id" class="text--no-decoration single-category-link">
                             <v-layout wrap>
-                                <template v-for="(value, key, index) in category">
-                                    <v-flex sm1 md1 offset-sm1 offset-md1 v-bind:key="index">
-                                        <p>{{ key }}</p>
-                                    </v-flex>
-                                    <v-flex sm10 md10 v-bind:key="index + 1000">
-                                        <p>{{ value }}</p>
-                                    </v-flex>
-                                </template>
+                                <v-flex md2>
+                                   <v-img width="150px" :src="require('@/assets/images/image-placeholder.jpg')"></v-img> 
+                                </v-flex>
+                                <v-flex md9>
+                                    <v-layout row wrap>
+                                        <v-flex class="category-title" xs12 sm12 md12>
+                                            <p>{{ category.title }}</p>
+                                        </v-flex>
+                                        <v-flex class="category-category" sx12 sm12 md12>
+                                            <p>{{ category.category }}</p>
+                                        </v-flex>
+                                    </v-layout>
+                                </v-flex>
                             </v-layout>
                         </router-link>
                     </v-flex>
@@ -29,19 +34,14 @@ import Credentials from '@/assets/scripts/login.js'
 
 export default {
     name: 'CategoriesList',
+    props: ['categoriesList'],
     data() {
         return {
-            categoriesList: []
         }
     },
     methods: {
-        async fetchListOfCategories() {
-            const response = await api().get('/category')
-            this.categoriesList = response.data
-        }
     },
     created() {
-        this.fetchListOfCategories()
     }
 }
 </script>
@@ -59,6 +59,15 @@ export default {
     .single-category-link {
         text-decoration: none;
         color: black;
+    }
+
+    .category-title {
+        font-size: 27px;
+        margin-top: 30px;
+    }
+
+    .category-category {
+        font-size: 21px;
     }
 
 </style>
