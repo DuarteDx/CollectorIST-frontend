@@ -29,6 +29,11 @@
                 <span v-else><i>Documento sem descrição</i></span>
             </v-flex>
         </v-layout>
+        <v-layout v-if="asset.documents.length == 0">
+            <v-flex md12 class="category-data">
+                <span><i>Não existem documentos associados a esta obra</i></span>
+            </v-flex>
+        </v-layout>
     </v-container>
 </template>
 

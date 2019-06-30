@@ -43,12 +43,12 @@ import Credentials from '@/assets/scripts/login.js'
                         path: '/categories',
                         index: 3
                     },
-                    {
+                    /*{
                         title: 'INSERIR',
                         path: '/insert',
                         index: 4
                     },
-                    /*{
+                    {
                         title: 'LOGIN',
                         path: '/auth',
                         index: 4
@@ -56,17 +56,17 @@ import Credentials from '@/assets/scripts/login.js'
                     {
                         title: 'MANAGE_USERS',
                         path: '/users/manage',
-                        index: 5
+                        index: 4
                     },
                     {
                         title: 'LOGS',
                         path: '/logs',
-                        index: 6
+                        index: 5
                     },
                     {
                         title: 'LOGOUT',
                         path: '/logout',
-                        index: 7
+                        index: 6
                     }
                 ],
                 currentMenuOnDisplay: 1

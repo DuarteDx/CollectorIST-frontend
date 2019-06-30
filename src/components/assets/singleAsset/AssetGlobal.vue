@@ -28,21 +28,48 @@
             <v-flex md6 class="category-name">
                 <span>Localização habitual:</span>
             </v-flex>
-            <v-flex md6 class="category-data">
-                <span>Alameda > Torre Norte > Piso 3 > Sala 4{{/*asset.location[0].usual*/}}</span>
+            <!--USUAL LOCATION-->
+            <v-flex md6 v-if="asset.location[asset.location.length-1].usual.istSpace.room" class="category-data">
+                <span v-for="(space, key) in istUsualSpacesPath" v-bind:key="key" >{{space}} <span v-if="key < istUsualSpacesPath.length - 1 "> > </span> </span>
             </v-flex>
+            <template v-if="asset.location[asset.location.length-1].usual.coordinates.lat">
+                <v-flex md3 class="category-data">
+                    <span> {{asset.location[asset.location.length-1].usual.coordinates.lat}} </span>
+                </v-flex>
+                <v-flex md3 class="category-data">
+                    <span> {{asset.location[asset.location.length-1].usual.coordinates.long}} </span>
+                </v-flex>
+            </template>
+            <v-flex md6 v-if="asset.location[asset.location.length-1].usual.address.name" class="category-data">
+                <span> {{asset.location[asset.location.length-1].usual.address.name}} </span>
+            </v-flex>
+
+            <!--CURRENT LOCATION-->
             <v-flex md6 class="category-name">
                 <span>Localização atual:</span>
             </v-flex>
-            <v-flex md6 class="category-data">
-                <span>Taguspark > Pavilhão 3 > Sala de Informática 2{{/*asset.location[0].current*/}}</span>
+            <v-flex md6 v-if="asset.location[asset.location.length-1].current.istSpace.room" class="category-data">
+                <span v-for="(space, key) in istCurrentSpacesPath" v-bind:key="key" >{{space}} <span v-if="key < istCurrentSpacesPath.length - 1 "> > </span> </span>
             </v-flex>
+            <template v-if="asset.location[asset.location.length-1].current.lat">
+                <v-flex md3 class="category-data">
+                    <span> {{asset.location[asset.location.length-1].current.lat}} </span>
+                </v-flex>
+                <v-flex md3 class="category-data">
+                    <span> {{asset.location[asset.location.length-1].current.long}} </span>
+                </v-flex>
+            </template>
+            <v-flex md6 v-if="asset.location[asset.location.length-1].current.address.name" class="category-data">
+                <span> {{asset.location[asset.location.length-1].current.address.name}} </span>
+            </v-flex>
+
         </v-layout>
     </v-container>
 </template>
 
 <script>
 import api from '@/api/api'
+import axios from 'axios'
 import Credentials from '@/assets/scripts/login'
 
 export default {
@@ -50,14 +77,46 @@ export default {
     props: ['asset'],
     data() {
         return {
+            istUsualSpacesPath: [],
+            istCurrentSpacesPath: []
         }
     },
     methods: {
         async fetchLocationsTree() {
-
+            const spacesUrl = 'https://fenix.tecnico.ulisboa.pt/api/fenix/v1/spaces/'
+            var parentId = null
+            // USUAL LOCATION
+            var spaceInfo = await axios.get(spacesUrl + this.asset.location[0].usual.istSpace.room)
+            this.istUsualSpacesPath.push(spaceInfo.data.name)
+            while(spaceInfo.data.parentSpace) {
+                this.istUsualSpacesPath.push(spaceInfo.data.parentSpace.name)
+                try {
+                    parentId = spaceInfo.data.parentSpace.id
+                    spaceInfo = await axios.get(spacesUrl + parentId)
+                }
+                catch {
+                    //No more parents
+                }
+            }
+            this.istUsualSpacesPath.reverse()
+            // CURRENT LOCATION
+            var spaceInfo = await axios.get(spacesUrl + this.asset.location[0].current.istSpace.room)
+            this.istCurrentSpacesPath.push(spaceInfo.data.name)
+            while(spaceInfo.data.parentSpace) {
+                this.istCurrentSpacesPath.push(spaceInfo.data.parentSpace.name)
+                try {
+                    parentId = spaceInfo.data.parentSpace.id
+                    spaceInfo = await axios.get(spacesUrl + parentId)
+                }
+                catch {
+                    //No more parents
+                }
+            }
+            this.istCurrentSpacesPath.reverse()
         }
     },
     created() {
+        this.fetchLocationsTree()
     }
 }
 </script>
