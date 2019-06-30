@@ -34,14 +34,14 @@
             </v-flex>
             <template v-if="asset.location[asset.location.length-1].usual.coordinates.lat">
                 <v-flex md3 class="category-data">
-                    <span> {{asset.location[asset.location.length-1].usual.coordinates.lat}} </span>
+                    <span> Latitude: {{asset.location[asset.location.length-1].usual.coordinates.lat}} </span>
                 </v-flex>
                 <v-flex md3 class="category-data">
-                    <span> {{asset.location[asset.location.length-1].usual.coordinates.long}} </span>
+                    <span> Longitude: {{asset.location[asset.location.length-1].usual.coordinates.long}} </span>
                 </v-flex>
             </template>
             <v-flex md6 v-if="asset.location[asset.location.length-1].usual.address.name" class="category-data">
-                <span> {{asset.location[asset.location.length-1].usual.address.name}} </span>
+                <span> Morada: {{asset.location[asset.location.length-1].usual.address.name}} </span>
             </v-flex>
 
             <!--CURRENT LOCATION-->
@@ -53,14 +53,14 @@
             </v-flex>
             <template v-if="asset.location[asset.location.length-1].current.lat">
                 <v-flex md3 class="category-data">
-                    <span> {{asset.location[asset.location.length-1].current.lat}} </span>
+                    <span> Latitude: {{asset.location[asset.location.length-1].current.lat}} </span>
                 </v-flex>
                 <v-flex md3 class="category-data">
-                    <span> {{asset.location[asset.location.length-1].current.long}} </span>
+                    <span> Longitude: {{asset.location[asset.location.length-1].current.long}} </span>
                 </v-flex>
             </template>
             <v-flex md6 v-if="asset.location[asset.location.length-1].current.address.name" class="category-data">
-                <span> {{asset.location[asset.location.length-1].current.address.name}} </span>
+                <span> Morada: {{asset.location[asset.location.length-1].current.address.name}} </span>
             </v-flex>
 
         </v-layout>
