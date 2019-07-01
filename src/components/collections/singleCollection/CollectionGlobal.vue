@@ -19,7 +19,7 @@
                     </v-flex>
                     <v-flex md12 class="category-data">
                         <span v-if="collection.responsible" class="ml">{{collection.responsible}}</span>
-                        <span v-else class="ml"><i>Indefenido</i></span>
+                        <span v-else class="ml"><i>Indefinido</i></span>
                     </v-flex>
                 </v-layout>
             </v-flex>

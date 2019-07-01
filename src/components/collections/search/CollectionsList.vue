@@ -16,7 +16,11 @@
                                             <p v-else><i>Coleção sem título</i></p>
                                         </v-flex>
                                         <v-flex class="collection-responsible" sx12 sm12 md12>
-                                            <p><u>Responsável:</u> {{ collection.responsible }}</p>
+                                            <p>
+                                                <u>Responsável:</u> 
+                                                <span v-if="collection.responsible" class="ml"> {{ collection.responsible }}</span>
+                                                <i v-else class="ml"> Indefinido</i>
+                                            </p>
                                         </v-flex>
                                     </v-layout>
                                 </v-flex>
@@ -88,6 +92,10 @@ export default {
 
     .collection-responsible {
         font-size: 21px;
+    }
+
+    .ml {
+        margin-left: 8px;
     }
 
 </style>
