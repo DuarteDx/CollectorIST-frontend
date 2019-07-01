@@ -194,6 +194,7 @@ export default {
             title: '',
             inserted: false,
             rawCategories: [],
+            rawCollections: [],
             optionalId: '',
             location: {
                 usual: {
@@ -335,11 +336,12 @@ export default {
             locationAssetInsertion.resetCurrentSelectedLocation()
         },
         async fetchCategories() {
-            var component = this
-            await api().get('/category')
-                .then(function(response) {
-                    component.rawCategories = response.data
-                })
+            this.rawCategories = await api().get('/category')
+            this.rawCategories = this.rawCategories.data
+        },
+        async fetchCollections() {
+            this.rawCollections = await api().get('/collection')
+            this.rawCollections = this.rawCollections.data
         },
         toggleLocationInputMethod() {
             this.locationInputMethod = !this.locationInputMethod
@@ -409,6 +411,7 @@ export default {
     },
     created() {
         this.fetchCategories()
+        this.fetchCollections()
         this.getLocations()
     }
 }

@@ -8,7 +8,7 @@
     ></v-select>
 
     <CategoriesNode
-        v-if="categories[selectedCategoryIndex].subCategories.length > 0"
+        v-if="hasChildren"
         :categories="categories[selectedCategoryIndex].subCategories"
         :key="childKey"
     ></CategoriesNode>
@@ -26,9 +26,10 @@
         return {
             categoriesList: [],
             selectedCategory: '',
-            selectedCategoryIndex: 0,
+            selectedCategoryIndex: -1,
             selectedCategory: '',
-            childKey: 0
+            childKey: 0,
+            hasChildren: false
         }
     },
     methods: {
@@ -39,6 +40,15 @@
             // Define selected category in store
             categoriesAssetInsert.setSelectedCategory(this.categories[this.selectedCategoryIndex])
             console.log(categoriesAssetInsert.getSelectedCategory())
+
+            // Check if there are child nodes
+            let component = this
+            try {
+              if(this.categories[this.selectedCategoryIndex].subCategories.length > 0) {
+                this.hasChildren = true
+              } else { this.hasChildren = false }
+            }
+            catch { this.hasChildren = false}
 
             // Update child nodes
             this.childKey += 1
