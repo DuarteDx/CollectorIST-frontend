@@ -1,7 +1,16 @@
 <template>
-    <div>
-        {{ message }}
-    </div>
+    <v-container style="height: 100%;">
+        <v-layout row wrap align-center justify-center style="height: 100%;">
+            <v-flex md1>
+                <v-progress-circular
+                :size="100"
+                color="primary"
+                indeterminate
+                ></v-progress-circular>
+                <!--{{ message }}-->
+            </v-flex>
+        </v-layout >
+    </v-container>
 </template>
 
 <script>
