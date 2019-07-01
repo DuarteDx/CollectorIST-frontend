@@ -1,5 +1,5 @@
 <template>
-    <v-container style="height: 100%;">
+d    <v-container style="height: 100%;">
         <v-layout row wrap align-center justify-center style="height: 100%;">
             <v-flex md1>
                 <v-progress-circular
