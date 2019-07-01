@@ -1,9 +1,11 @@
 <template>
     <div>
+        <!--SEARCH BAR-->
         <SearchBar/>
         <v-layout>
+            <!--SIDE PANEL-->
             <v-flex md3>
-                <SidePanel/>
+                <SidePanel v-bind:categories="categoriesList" v-bind:collections="collectionsList"/>
             </v-flex>
             <v-flex md9>
                 <!--TOP "NAVBAR"-->
@@ -13,13 +15,14 @@
                     </v-flex>
                     <v-flex md2>
                         <v-pagination
-                        v-model="numberOfPages"
-                        :length="15"
-                        :total-visible="7"
+                        v-model="page"
+                        :length="10"
+                        :total-visible="5"
                         ></v-pagination>
                     </v-flex>
                 </v-layout>
                 <InsertSingleAsset v-if="displayInsertionFormButton"/>
+                <!--ASSETS LIST-->
                 <AssetsList v-bind:assetsList="assetsList"/>
                 <!--BOTTOM "NAVBAR"-->
                 <v-layout row class="mb">
@@ -59,7 +62,7 @@ export default {
             assetsList: [],
             categoriesList: [],
             collectionsList: [],
-            numberOfPages: 10
+            page: 1
         }
     },
     methods: {
@@ -72,11 +75,11 @@ export default {
         },
         async fetchCategories() {
             const response = await api().get('/category')
-            this.categoriesList = response.date
+            this.categoriesList = response.data
         },
         async fetchCollections() {
             const response = await api().get('/collection')
-            this.collectionsList = response.date
+            this.collectionsList = response.data
         }
     },
     created() {
