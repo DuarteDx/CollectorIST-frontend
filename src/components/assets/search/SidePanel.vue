@@ -14,10 +14,10 @@
             <v-list v-if="selectedSearchOption === 'Categoria'" class="bg full-width">
             <v-list-tile v-for="(category, key) in categories" @click="true" v-bind:key="key">
                 <v-list-tile-action>
-                    <v-checkbox v-model="sound"></v-checkbox>
+                    <v-checkbox v-model="garbage"></v-checkbox>
                 </v-list-tile-action>
 
-                <v-list-tile-content @click="sound = !sound">
+                <v-list-tile-content @click="true">
                     <v-list-tile-title>{{category.title}}</v-list-tile-title>
                 </v-list-tile-content>
             </v-list-tile>
@@ -26,10 +26,10 @@
             <v-list v-if="selectedSearchOption === 'Coleção'" class="bg full-width">
             <v-list-tile v-for="(collection, key) in collections" @click="true" v-bind:key="key">
                 <v-list-tile-action>
-                    <v-checkbox v-model="sound"></v-checkbox>
+                    <v-checkbox v-model="garbage"></v-checkbox>
                 </v-list-tile-action>
 
-                <v-list-tile-content @click="sound = !sound">
+                <v-list-tile-content @click="true">
                     <v-list-tile-title>{{collection.title}}</v-list-tile-title>
                 </v-list-tile-content>
             </v-list-tile>
@@ -45,12 +45,11 @@ export default {
     data() {
         return {
             searchOptions: ['Categoria', 'Coleção'],
-            selectedSearchOption: 'Categoria'
+            selectedSearchOption: 'Categoria',
+            garbage: false
         }
     },
     created() {
-        console.log(this.categories)
-        console.log(this.collections)
     }
 }
 </script>

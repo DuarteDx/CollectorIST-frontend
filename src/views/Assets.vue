@@ -1,8 +1,8 @@
 <template>
     <div>
         <!--SEARCH BAR-->
-        <SearchBar/>
-        <v-layout>
+        <SearchBar @searchBarParams="searchBarUpdate"/>
+        <v-layout class="mt">
             <!--SIDE PANEL-->
             <v-flex md3>
                 <SidePanel v-bind:categories="categoriesList" v-bind:collections="collectionsList"/>
@@ -26,11 +26,15 @@
                 <AssetsList v-bind:assetsList="assetsList"/>
                 <!--BOTTOM "NAVBAR"-->
                 <v-layout row class="mb">
-                    <v-flex md10>
+                    <v-flex md8>
                         <v-btn color="info" style="margin-left: 40px;" @click="displayInsertionForm()">+ Inserir peça</v-btn>
                     </v-flex>
                     <v-flex md2>
-                        <v-btn color="info" style="margin-left: 40px;" @click="displayInsertionForm()">+ Inserir peça</v-btn>
+                        <v-pagination
+                        v-model="page"
+                        :length="10"
+                        :total-visible="5"
+                        ></v-pagination>
                     </v-flex>
                 </v-layout>
             </v-flex>
@@ -58,6 +62,15 @@ export default {
     },
     data() {
         return {
+            searchParams: {
+                title: '',
+                id: '',
+                creator: '',
+                category: '',
+                collection: '',
+                nResultsPerPage: 15,
+                currentPage: 1
+            },
             displayInsertionFormButton: false,
             assetsList: [],
             categoriesList: [],
@@ -69,6 +82,7 @@ export default {
         displayInsertionForm() {
             this.displayInsertionFormButton = !this.displayInsertionFormButton
         },
+        // FETCH DATA FROM SERVER
         async fetchListOfAssets() {
             const response = await api().get('/assets')
             this.assetsList = response.data
@@ -80,6 +94,17 @@ export default {
         async fetchCollections() {
             const response = await api().get('/collection')
             this.collectionsList = response.data
+        },
+        // UPDATE RESULTS
+        async search() {
+            
+        },
+        searchBarUpdate(params) {
+            this.searchParams.title = params.title
+            this.searchParams.id = params.id
+            this.searchParams.creator = params.creator
+            console.log(this.searchParams)
+            // search()
         }
     },
     created() {
@@ -94,6 +119,10 @@ export default {
 
     .mb {
         margin-bottom: 20px;
+    }
+
+    .mt {
+        margin-top: 60px;
     }
 
 </style>

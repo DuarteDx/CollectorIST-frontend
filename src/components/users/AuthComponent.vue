@@ -45,7 +45,7 @@ export default {
                     }})
                         .then(function(response) {
                             Credentials.setToken(response.data)
-                            console.log('jwt token: ' + Credentials.getToken())
+                            // console.log('jwt token: ' + Credentials.getToken())
                             component.$router.push('/assets')
                         })
                         .catch(function(error) {
