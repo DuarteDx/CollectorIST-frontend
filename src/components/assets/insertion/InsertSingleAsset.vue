@@ -2,7 +2,7 @@
     <form class="asset-insert-form">
         <h2>Inserir nova peça</h2>
 
-        <div class="basic-info">
+        <div class="mb">
             <h3>Informação básica</h3>
             <!--TITLE-->
             <v-text-field
@@ -20,7 +20,7 @@
         </div>
 
          <!--OLD IDs-->
-         <div class="old-id">
+         <div class="mb">
             <h3>Ids atribuídos à peça anteriormente</h3>
             <v-text-field
             v-model="optionalId"
@@ -29,7 +29,7 @@
          </div>
 
         <!--LOCATION-->
-        <div class="location">
+        <div class="mb">
             <h3>Localização da peça</h3>
             <!--USUAL LOCATION-->
             <h4>Localização Habitual</h4>
@@ -139,15 +139,25 @@
             </template>
         </div>
 
+        <!--COLLECTION-->
+        <div class="mb">
+            <h3>Coleção</h3>
+            <v-select
+                :items="collectionsList"
+                v-model="selectedCollection"
+                label="Coleção"
+            ></v-select>
+        </div>
+
         <!--CATEGORY-->
-        <div class="category">
+        <div class="mb">
             <h3>Categoria</h3>
             <!-- Select category dropdown | Recursive component -->
             <CategoriesNode v-if="rawCategories.length > 0" :categories="rawCategories"/>
         </div>
 
         <!--DOCUMENTS-->
-        <div class="documents">
+        <div class="mb">
             <!--User can select multiple files with Ctrl+click-->
             <h3>Anexar documentos</h3>
             <br>
@@ -195,6 +205,8 @@ export default {
             inserted: false,
             rawCategories: [],
             rawCollections: [],
+            collectionsList: [],
+            selectedCollection: '',
             optionalId: '',
             location: {
                 usual: {
@@ -260,6 +272,7 @@ export default {
                 author: this.creator,
                 title: this.title,
                 category: categoriesAssetInsert.getSelectedCategory(),
+                collection: this.selectedCollection,
                 optionalId: this.optionalId,
                 location: {
                     usual: {
@@ -342,6 +355,9 @@ export default {
         async fetchCollections() {
             this.rawCollections = await api().get('/collection')
             this.rawCollections = this.rawCollections.data
+            this.rawCollections.forEach((element) => {
+                this.collectionsList.push(element.title)
+            })
         },
         toggleLocationInputMethod() {
             this.locationInputMethod = !this.locationInputMethod
@@ -427,23 +443,7 @@ export default {
     border-radius: 5px;
 }
 
-.basic-info {
-    margin-bottom: 40px;
-}
-
-.old-id {
-    margin-bottom: 40px;
-}
-
-.location {
-    margin-bottom: 40px;
-}
-
-.category {
-    margin-bottom: 40px;
-}
-
-.documents {
+.mb {
     margin-bottom: 40px;
 }
 

@@ -16,7 +16,7 @@
                                             <p v-else><i>Peça sem título</i></p>
                                         </v-flex>
                                         <v-flex class="asset-category" sx12 sm12 md12>
-                                            <p v-if="asset.category.title">{{ asset.category.title }}</p>
+                                            <p v-if="asset.category">{{ asset.category.title }}</p>
                                             <p v-else><i>Peça sem categoria</i></p>
                                         </v-flex>
                                     </v-layout>
