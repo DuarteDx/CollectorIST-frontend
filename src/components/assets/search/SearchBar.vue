@@ -65,6 +65,7 @@ export default {
         clear() {
             assetsSearchParams.clear()
             this.updateParams()
+            this.$emit('searchBarParams')
         }
     },
     created() {

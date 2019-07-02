@@ -22,7 +22,8 @@
                         ></v-pagination>
                     </v-flex>
                 </v-layout>
-                <InsertSingleAsset v-if="displayInsertionFormButton"/>
+                <!--INSERT ASSET-->
+                <InsertAsset v-if="displayInsertionFormButton"/>
                 <!--ASSETS LIST-->
                 <AssetsList v-if="assetsList.length > 0" v-bind:assetsList="assetsList"/>
                 <v-layout v-if="assetsList.length == 0" row justify-center align-center>
@@ -54,6 +55,7 @@
 import AssetsList from '@/components/assets/search/AssetsList'
 import SearchBar from '@/components/assets/search/SearchBar'
 import InsertSingleAsset from '@/components/assets/insertion/InsertSingleAsset'
+import InsertAsset from '@/components/assets/InsertAsset'
 import SidePanel from '@/components/assets/search/SidePanel'
 // Api
 import api from '@/api/api'
@@ -67,6 +69,7 @@ export default {
         AssetsList,
         SearchBar,
         InsertSingleAsset,
+        InsertAsset,
         SidePanel
     },
     data() {

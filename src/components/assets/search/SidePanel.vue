@@ -12,24 +12,24 @@
             </v-flex>
             <!--CATEGORIES-->
             <v-list v-if="selectedSearchOption === 'Categoria'" class="bg full-width">
-            <v-list-tile v-for="(category, key) in categories" @click="true" v-bind:key="key">
+            <v-list-tile v-for="(category, key) in categories" v-bind:key="key">
                 <v-list-tile-action>
-                    <v-checkbox v-model="garbage"></v-checkbox>
+                    <v-checkbox v-model="selectedCategories" :value="category._id"></v-checkbox>
                 </v-list-tile-action>
 
-                <v-list-tile-content @click="true">
+                <v-list-tile-content>
                     <v-list-tile-title>{{category.title}}</v-list-tile-title>
                 </v-list-tile-content>
             </v-list-tile>
             </v-list>
             <!--COLLECTIONS-->
             <v-list v-if="selectedSearchOption === 'Coleção'" class="bg full-width">
-            <v-list-tile v-for="(collection, key) in collections" @click="true" v-bind:key="key">
+            <v-list-tile v-for="(collection, key) in collections" v-bind:key="key">
                 <v-list-tile-action>
-                    <v-checkbox v-model="garbage"></v-checkbox>
+                    <v-checkbox v-model="selectedCollections" :value="collection._id"></v-checkbox>
                 </v-list-tile-action>
 
-                <v-list-tile-content @click="true">
+                <v-list-tile-content>
                     <v-list-tile-title>{{collection.title}}</v-list-tile-title>
                 </v-list-tile-content>
             </v-list-tile>
@@ -46,7 +46,9 @@ export default {
         return {
             searchOptions: ['Categoria', 'Coleção'],
             selectedSearchOption: 'Categoria',
-            garbage: false
+            garbage: false,
+            selectedCategories: [],
+            selectedCollections: []
         }
     },
     created() {

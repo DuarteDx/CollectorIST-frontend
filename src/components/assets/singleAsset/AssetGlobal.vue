@@ -29,7 +29,7 @@
                         <span class="ml"> Coleção:</span> 
                     </v-flex>
                     <v-flex v-if="asset.collection" md12 class="category-data">
-                        <span>{{asset.collection.title}}</span>
+                        <span class="ml">{{asset.collection}}</span>
                     </v-flex>
                     <v-flex v-if="!asset.collection" md12 class="category-data"><i class="ml">Esta peça não pertence a nenhuma coleção</i></v-flex>
                 </v-layout>
