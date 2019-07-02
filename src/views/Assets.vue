@@ -1,7 +1,7 @@
 <template>
     <div>
         <!--SEARCH BAR-->
-        <SearchBar @searchBarParams="searchBarUpdate"/>
+        <SearchBar @searchBarParams="updateParams"/>
         <v-layout class="mt">
             <!--SIDE PANEL-->
             <v-flex md3>
@@ -23,7 +23,12 @@
                 </v-layout>
                 <InsertSingleAsset v-if="displayInsertionFormButton"/>
                 <!--ASSETS LIST-->
-                <AssetsList v-bind:assetsList="assetsList"/>
+                <AssetsList v-if="assetsList.length > 0" v-bind:assetsList="assetsList"/>
+                <v-layout v-if="assetsList.length == 0" row justify-center align-center>
+                    <v-flex md12 class="no-results">
+                        <span>Não foram encontrados resultados...</span>
+                    </v-flex>
+                </v-layout>
                 <!--BOTTOM "NAVBAR"-->
                 <v-layout row class="mb">
                     <v-flex md8>
@@ -43,14 +48,16 @@
 </template>
 
 <script>
-
+// Components
 import AssetsList from '@/components/assets/search/AssetsList'
 import SearchBar from '@/components/assets/search/SearchBar'
 import InsertSingleAsset from '@/components/assets/insertion/InsertSingleAsset'
 import SidePanel from '@/components/assets/search/SidePanel'
-
+// Api
 import api from '@/api/api'
 import Credentials from '@/assets/scripts/login'
+// Store
+import assetsSearchParams from '@/assets/store/assetsSearchParams'
 
 export default {
 	name: 'Assets',
@@ -62,15 +69,7 @@ export default {
     },
     data() {
         return {
-            searchParams: {
-                title: '',
-                id: '',
-                creator: '',
-                category: '',
-                collection: '',
-                nResultsPerPage: 15,
-                currentPage: 1
-            },
+            searchParams: {},
             displayInsertionFormButton: false,
             assetsList: [],
             categoriesList: [],
@@ -102,15 +101,13 @@ export default {
             })
             this.assetsList = response.data
         },
-        searchBarUpdate(params) {
-            this.searchParams.title = params.title
-            this.searchParams.id = params.id
-            this.searchParams.creator = params.creator
-            console.log(this.searchParams)
+        updateParams() {
+            this.searchParams = assetsSearchParams.getSearchParams()
             this.search()
         }
     },
     created() {
+        this.searchParams = assetsSearchParams.getSearchParams()
         this.fetchListOfAssets()
         this.fetchCategories()
         this.fetchCollections()
@@ -128,4 +125,10 @@ export default {
         margin-top: 60px;
     }
 
+    .no-results {
+        text-align: center;
+        margin: 40px 0 40px 0;
+        font-size: 31px;
+        color: rgba(151, 150, 150, 0.644);
+    }
 </style>

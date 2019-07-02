@@ -26,12 +26,11 @@
 </template>
 
 <script>
-//import saveState from 'vue-save-state'
+import assetsSearchParams from '@/assets/store/assetsSearchParams'
 
 export default {
     name: 'SearchBar',
     props: [],
-    /*mixins: [saveState],*/
     data() {
         return {
             params: {
@@ -44,7 +43,10 @@ export default {
     },
     methods: {
         search() {
-            this.$emit('searchBarParams', this.params)
+            assetsSearchParams.setTitle(this.params.title)
+            assetsSearchParams.setId(this.params.id)
+            assetsSearchParams.setCreator(this.params.creator)
+            this.$emit('searchBarParams')
         },
         handleEnter(event) {
             if (event.keyCode === 13) {
