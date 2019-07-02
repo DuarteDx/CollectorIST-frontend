@@ -97,14 +97,17 @@ export default {
         },
         // UPDATE RESULTS
         async search() {
-            
+            const response = await api().get('/assets/search', {
+                params: this.searchParams
+            })
+            this.assetsList = response.data
         },
         searchBarUpdate(params) {
             this.searchParams.title = params.title
             this.searchParams.id = params.id
             this.searchParams.creator = params.creator
             console.log(this.searchParams)
-            // search()
+            this.search()
         }
     },
     created() {
