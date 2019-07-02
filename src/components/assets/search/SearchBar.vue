@@ -15,7 +15,7 @@
                         </v-layout>
                         <v-layout row justify-center>
                             <v-flex sm8 md8>
-                                <v-btn color="info" type="submit">Limpar</v-btn>
+                                <v-btn color="info" @click="clear()">Limpar</v-btn>
                                 <v-btn color="info" type="submit" style="margin-left: 20px;">Pesquisar</v-btn>
                             </v-flex>
                         </v-layout>
@@ -56,14 +56,19 @@ export default {
         toggleAdvanced(){
             this.advancedSearch = !this.advancedSearch
         },
-        getSaveStateConfig() {
-            return {
-                'cacheKey': 'WorkSearchComponent',
-            };
+        updateParams() {
+            let storedParams = assetsSearchParams.getSearchParams()
+            this.params.title = storedParams.title
+            this.params.id = storedParams.id
+            this.params.creator = storedParams.creator
         },
+        clear() {
+            assetsSearchParams.clear()
+            this.updateParams()
+        }
     },
     created() {
-        
+        this.updateParams()
     }
 }
 </script>

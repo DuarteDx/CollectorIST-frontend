@@ -108,7 +108,7 @@ export default {
     },
     created() {
         this.searchParams = assetsSearchParams.getSearchParams()
-        this.fetchListOfAssets()
+        this.search()
         this.fetchCategories()
         this.fetchCollections()
     }
