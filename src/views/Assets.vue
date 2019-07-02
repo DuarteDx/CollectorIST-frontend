@@ -1,7 +1,7 @@
 <template>
     <div>
         <!--SEARCH BAR-->
-        <SearchBar @searchBarParams="updateParams"/>
+        <SearchBar @searchBarParams="updateResults"/>
         <v-layout class="mt">
             <!--SIDE PANEL-->
             <v-flex md3>
@@ -16,6 +16,7 @@
                     <v-flex md2>
                         <v-pagination
                         v-model="page"
+                        @input="updatePage()"
                         :length="10"
                         :total-visible="5"
                         ></v-pagination>
@@ -37,6 +38,7 @@
                     <v-flex md2>
                         <v-pagination
                         v-model="page"
+                        @input="updatePage()"
                         :length="10"
                         :total-visible="5"
                         ></v-pagination>
@@ -101,9 +103,13 @@ export default {
             })
             this.assetsList = response.data
         },
-        updateParams() {
+        updateResults() {
             this.searchParams = assetsSearchParams.getSearchParams()
             this.search()
+        },
+        updatePage() {
+            assetsSearchParams.setCurrentPage(this.page)
+            this.updateResults()
         }
     },
     created() {
