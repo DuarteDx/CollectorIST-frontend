@@ -54,7 +54,6 @@
 // Components
 import AssetsList from '@/components/assets/search/AssetsList'
 import SearchBar from '@/components/assets/search/SearchBar'
-import InsertSingleAsset from '@/components/assets/insertion/InsertSingleAsset'
 import InsertAsset from '@/components/assets/InsertAsset'
 import SidePanel from '@/components/assets/search/SidePanel'
 // Api
@@ -68,7 +67,6 @@ export default {
 	components: {
         AssetsList,
         SearchBar,
-        InsertSingleAsset,
         InsertAsset,
         SidePanel
     },

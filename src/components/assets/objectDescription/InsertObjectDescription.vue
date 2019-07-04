@@ -13,10 +13,8 @@
 <script>
 // Api
 import api from '@/api/api'
-// Store
-import categoriesAssetInsert from '@/assets/store/selectedCategoryAssetInsertion.js'
 // Components
-import CategoriesNode from './CategoriesNode'
+import CategoriesNode from './treeNodes/CategoriesNode'
 
 export default {
     name: 'InsertObjectDescription',
@@ -39,8 +37,3 @@ export default {
     }
 }
 </script>
-
-<style scoped>
-
-</style>
-

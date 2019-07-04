@@ -2,7 +2,6 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 // Views
-import Insert from '@/views/Insert'
 import Assets from '@/views/Assets'
 import Asset from '@/views/Asset'
 import Collections from '@/views/Collections'
@@ -49,10 +48,6 @@ const router = new Router({
     {
       path: '/categories/:id',
       component: Category
-    },
-    {
-      path: '/insert',
-      component: Insert,
     },
     {
       path: '/login',

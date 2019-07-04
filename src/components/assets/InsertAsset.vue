@@ -25,7 +25,7 @@ import api from '@/api/api'
 import axios from 'axios'
 // Stores
 import Credentials from '@/assets/scripts/login.js'
-import assetInsertion from '@/assets/store/assetInsertion'
+import AssetInsertionStore from '@/assets/store/AssetInsertionStore'
 // Components
 import InsertObjectIdentification from '@/components/assets/objectIdentification/InsertObjectIdentification'
 import InsertObjectDescription from '@/components/assets/objectDescription/InsertObjectDescription'
@@ -49,13 +49,13 @@ export default {
     methods: {
         async submit() {
 
-            let newAsset = assetInsertion.getNewAsset()
+            let newAsset = AssetInsertionStore.getNewAsset()
 
             const response = await api().post('/assets/' + Credentials.getToken(), newAsset)
             console.log(response)
             if(response.status == 200) {
                 this.inserted = true
-                // assetInsertion.clear()
+                AssetInsertionStore.clear()
             }
         }
     },
