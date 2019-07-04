@@ -1,12 +1,13 @@
 <template>
-    <v-layout style="background-color: rgb(240, 209, 138);">
+    <v-layout wrap style="background-color: rgb(240, 209, 138);">
+        <h1 style="color: red;">Object Description</h1>
         <v-flex xs12 md12>
             <!--CATEGORY-->
             <v-layout align-center justify-start row wrap>
-                <v-flex md12 class="category-name">
+                <v-flex md6 class="category-name">
                     <span class="ml"> Categoria:</span> 
                 </v-flex>
-                <v-flex v-if="asset.category" md12 class="category-data">
+                <v-flex v-if="asset.category" md6 class="category-data">
                     <span v-for="(category, key, index) in asset.category.path" class="ml" v-bind:key="index">{{category}} > </span>
                     <span>{{asset.category.title}}</span>
                 </v-flex>

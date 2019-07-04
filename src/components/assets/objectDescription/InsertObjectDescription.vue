@@ -1,5 +1,6 @@
 <template>
     <div>
+        <h1 style="color: red;">Object Description</h1>
         <!--CATEGORY-->
         <div class="mb">
             <h3>Categoria</h3>

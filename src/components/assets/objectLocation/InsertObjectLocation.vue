@@ -1,5 +1,6 @@
 <template>
     <div>
+        <h1 style="color: red;">Object Location</h1>
         <!--LOCATION-->
         <div class="mb">
             <h3>Localização da peça</h3>

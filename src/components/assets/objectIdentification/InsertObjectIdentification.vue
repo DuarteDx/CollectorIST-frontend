@@ -1,5 +1,6 @@
 <template>
     <div>
+        <h1 style="color: red;">Object Identification</h1>
         <h2>Informação do objecto</h2>
         <!--TITLE-->
         <v-text-field

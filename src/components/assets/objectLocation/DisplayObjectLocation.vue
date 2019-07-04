@@ -1,7 +1,8 @@
 <template>
-    <v-layout row wrap>
+    <v-layout wrap row style="background-color: #7a99bd80;">
+        <v-flex md12> <h1 style="color: red;">Object Location</h1></v-flex>
         <v-flex md6 class="category-name">
-            <span>Localização habitual:</span>
+            <span class="ml">Localização habitual:</span>
         </v-flex>
         <!--USUAL LOCATION-->
         <v-flex md6 v-if="asset.location[asset.location.length-1].usual.istSpace.room" class="category-data">
@@ -24,7 +25,7 @@
 
         <!--CURRENT LOCATION-->
         <v-flex md6 class="category-name">
-            <span>Localização atual:</span>
+            <span class="ml">Localização atual:</span>
         </v-flex>
         <v-flex md6 v-if="asset.location[asset.location.length-1].current.istSpace.room" class="category-data">
             <span v-for="(space, key) in istCurrentSpacesPath" v-bind:key="key" >{{space}} <span v-if="key < istCurrentSpacesPath.length - 1 "> > </span> </span>
