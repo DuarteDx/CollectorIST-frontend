@@ -39,11 +39,16 @@ import Credentials from '@/assets/scripts/login.js'
                         index: 2
                     },
                     {
-                        title: 'INSERIR',
-                        path: '/insert',
+                        title: 'CATEGORIAS',
+                        path: '/categories',
                         index: 3
                     },
                     /*{
+                        title: 'INSERIR',
+                        path: '/insert',
+                        index: 4
+                    },
+                    {
                         title: 'LOGIN',
                         path: '/auth',
                         index: 4

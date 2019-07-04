@@ -6,6 +6,15 @@
       label="Título"
       required
     ></v-text-field>
+    <v-text-field
+      v-model="responsible"
+      label="Responsável"
+      required
+    ></v-text-field>
+    <v-textarea
+        v-model="description"
+        label="Descrição"
+    ></v-textarea>
 
     <v-btn @click="submit()">submit</v-btn>
     <v-btn @click="clear()">clear</v-btn>
@@ -26,12 +35,18 @@ export default {
         return {
             collectionName: '',
             inserted: false,
-            title: ''
+            title: '',
+            responsible: '',
+            description: ''
         }
     },
     methods: {
         async submit() {
-            const response = await api().post('/collection/' + Credentials.getToken(), { title: this.title })
+            const response = await api().post('/collection/' + Credentials.getToken(), {
+                title: this.title,
+                responsible: this.responsible,
+                description: this.description
+                })
             console.log(response)
             if(response.status == 200) {
                 this.inserted = true
@@ -39,7 +54,9 @@ export default {
             this.clear();
         },
         clear() {
-            this.title = ''
+            this.title = '',
+            this.responsible = '',
+            this.description = ''
         }
     }
 }

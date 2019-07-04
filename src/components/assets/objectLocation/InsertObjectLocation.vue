@@ -1,33 +1,6 @@
 <template>
-    <form class="asset-insert-form">
-        <h2>Inserir nova peça</h2>
-
-        <div class="mb">
-            <h3>Informação básica</h3>
-            <!--TITLE-->
-            <v-text-field
-            v-model="title"
-            label="Título"
-            required
-            ></v-text-field>
-
-            <!--AUTHOR-->
-            <v-text-field
-            v-model="creator"
-            label="Autor"
-            required
-            ></v-text-field>
-        </div>
-
-         <!--OLD IDs-->
-         <div class="mb">
-            <h3>Ids atribuídos à peça anteriormente</h3>
-            <v-text-field
-            v-model="optionalId"
-            label="Id opcional"
-            ></v-text-field>
-         </div>
-
+    <div>
+        <h1 style="color: red;">Object Location</h1>
         <!--LOCATION-->
         <div class="mb">
             <h3>Localização da peça</h3>
@@ -42,12 +15,14 @@
                     <v-text-field
                     v-model="location.usual.coordinates.lat"
                     label="Latitude"
+                    v-on:input="updateStoreUsualLocation()"
                     ></v-text-field>
                 </v-flex>
                 <v-flex md5>
                     <v-text-field
                     v-model="location.usual.coordinates.long"
                     label="Longitude"
+                    v-on:input="updateStoreUsualLocation()"
                     ></v-text-field>
                 </v-flex>
             </v-layout>
@@ -67,14 +42,17 @@
                     <v-text-field
                     v-model="location.usual.istSpace.cabinet"
                     label="Armário"
+                    v-on:input="updateStoreUsualLocation()"
                     ></v-text-field>
                     <v-text-field
                     v-model="location.usual.istSpace.drawer"
                     label="Prateleira/Gaveta"
+                    v-on:input="updateStoreUsualLocation()"
                     ></v-text-field>
                     <v-text-field
                     v-model="location.usual.istSpace.position"
                     label="Posição"
+                    v-on:input="updateStoreUsualLocation()"
                     ></v-text-field>
                 </template>
             </template>
@@ -82,6 +60,7 @@
                 <v-text-field
                 v-model="location.usual.address.name"
                 label="Morada"
+                v-on:input="updateStoreUsualLocation()"
                 ></v-text-field>
             </template>
             <!--CURRENT LOCATION-->
@@ -105,14 +84,17 @@
                     <v-text-field
                     v-model="location.current.istSpace.cabinet"
                     label="Armário"
+                    v-on:input="updateStoreCurrentLocation()"
                     ></v-text-field>
                     <v-text-field
                     v-model="location.current.istSpace.drawer"
                     label="Prateleira/Gaveta"
+                    v-on:input="updateStoreCurrentLocation()"
                     ></v-text-field>
                     <v-text-field
                     v-model="location.current.istSpace.position"
                     label="Posição"
+                    v-on:input="updateStoreCurrentLocation()"
                     ></v-text-field>
                 </template>
             </template>
@@ -122,12 +104,14 @@
                     <v-text-field
                     v-model="location.current.coordinates.lat"
                     label="Latitude"
+                    v-on:input="updateStoreCurrentLocation()"
                     ></v-text-field>
                 </v-flex>
                 <v-flex md5>
                     <v-text-field
                     v-model="location.current.coordinates.long"
                     label="Longitude"
+                    v-on:input="updateStoreCurrentLocation()"
                     ></v-text-field>
                 </v-flex>
             </v-layout>
@@ -135,79 +119,40 @@
                 <v-text-field
                 v-model="location.current.address.name"
                 label="Morada"
+                v-on:input="updateStoreCurrentLocation()"
                 ></v-text-field>
             </template>
         </div>
-
-        <!--COLLECTION-->
-        <div class="mb">
-            <h3>Coleção</h3>
-            <v-select
-                :items="collectionsList"
-                v-model="selectedCollection"
-                label="Coleção"
-            ></v-select>
-        </div>
-
-        <!--CATEGORY-->
-        <div class="mb">
-            <h3>Categoria</h3>
-            <!-- Select category dropdown | Recursive component -->
-            <CategoriesNode v-if="rawCategories.length > 0" :categories="rawCategories"/>
-        </div>
-
-        <!--DOCUMENTS-->
-        <div class="mb">
-            <!--User can select multiple files with Ctrl+click-->
-            <h3>Anexar documentos</h3>
-            <br>
-            <input type="file" id="file" ref="file" class="file-input" multiple v-on:change="handleFileUpload()"/>
-            <div v-for="(document, index) in rawDocuments" v-bind:key="index">
-                {{ document.name }}
-                <v-text-field
-                v-model="documentDescription[index]"
-                label="Descrição do documento"
-                required
-                ></v-text-field>
-            </div>
-        </div>
-
-        <v-btn @click="submit()">submit</v-btn>
-        <v-btn @click="clear()">clear</v-btn>
-
-        <p v-if="inserted">New asset inserted!</p>
-    </form>
-
-
+    </div>
 </template>
 
 <script>
-import api from '@/api/api'
-import axios from 'axios'
-import Credentials from '@/assets/scripts/login.js'
-import CategoriesNode from './CategoriesNode'
-import categoriesAssetInsert from '@/assets/store/selectedCategoryAssetInsertion.js'
 import UsualLocationNode from './UsualLocationNode'
 import CurrentLocationNode from './CurrentLocationNode'
+
+import axios from 'axios'
+
 import locationAssetInsertion from '@/assets/store/locationAssetInsertion.js'
+import assetInsertion from '@/assets/store/assetInsertion'
 
 export default {
-    name: 'InsertSingleAsset',
+    name: 'InsertObjectLocation',
     components: {
-        CategoriesNode,
         UsualLocationNode,
         CurrentLocationNode
     },
     data() {
         return {
-            creator: '',
-            title: '',
-            inserted: false,
-            rawCategories: [],
-            rawCollections: [],
-            collectionsList: [],
-            selectedCollection: '',
-            optionalId: '',
+            rawLocations: [],
+            locationsList: [],
+            usualSelectedLocation: '',
+            currentSelectedLocation: '',
+            usualSelectedLocationId: null,
+            currentSelectedLocationId: null,
+            usualLocationChildKey: 0,
+            currentLocationChildKey: 0,
+            usualLocationSelectedButton: 0,
+            currentLocationSelectedButton: 1,
             location: {
                 usual: {
                     coordinates: {
@@ -239,139 +184,10 @@ export default {
                         name: null
                     }
                 }
-            },
-            rawDocuments: [],
-            formDocuments: [],
-            rawLocations: [],
-            locationsList: [],
-            usualSelectedLocation: '',
-            currentSelectedLocation: '',
-            usualSelectedLocationId: null,
-            currentSelectedLocationId: null,
-            usualLocationChildKey: 0,
-            currentLocationChildKey: 0,
-            documentDescription: [],
-            usualLocationSelectedButton: 0,
-            currentLocationSelectedButton: 0
-            
+            }
         }
     },
     methods: {
-        async submit() {
-            this.location.current.istSpace.room = locationAssetInsertion.getCurrentSelectedLocation()
-            // If user decides to clone usual location into current location
-            if(this.currentLocationSelectedButton === 0) {
-                this.location.current.istSpace.room = locationAssetInsertion.getUsualSelectedLocation()
-                this.location.current.istSpace.cabinet = this.location.usual.istSpace.cabinet
-                this.location.current.istSpace.drawer = this.location.usual.istSpace.drawer
-                this.location.current.istSpace.position = this.location.usual.istSpace.position
-            }
-
-            // Set asset parameters to send
-            var newAsset = {
-                author: this.creator,
-                title: this.title,
-                category: categoriesAssetInsert.getSelectedCategory(),
-                collection: this.selectedCollection,
-                optionalId: this.optionalId,
-                location: {
-                    usual: {
-                        coordinates: {
-                            lat: this.location.usual.coordinates.lat,
-                            long: this.location.usual.coordinates.long
-                        },
-                        istSpace: {
-                            room: locationAssetInsertion.getUsualSelectedLocation(),
-                            cabinet: this.location.usual.istSpace.cabinet,
-                            drawer: this.location.usual.istSpace.drawer,
-                            position: this.location.usual.istSpace.position,
-                        },
-                        address: {
-                            name: this.location.usual.address.name
-                        }
-                    },
-                    current: {
-                        coordinates: {
-                            lat: this.location.current.coordinates.lat,
-                            long: this.location.current.coordinates.long
-                        },
-                        istSpace: {
-                            room: this.location.current.istSpace.room,
-                            cabinet: this.location.current.istSpace.cabinet,
-                            drawer: this.location.current.istSpace.drawer,
-                            position: this.location.current.istSpace.position,
-                        },
-                        address: {
-                            name: this.location.current.address.name
-                        }
-                    },
-                },
-                documents: {
-                        size: this.rawDocuments.length,
-                        descriptions: this.documentDescription
-                    }
-            }
-
-            newAsset = JSON.stringify(newAsset)
-            const blob = new Blob([newAsset], {
-                type: 'application/json'
-            })
-
-            // Get all asset information into formData
-            var formData = new FormData()
-            // Documents
-            for(var i=0; i<this.rawDocuments.length; i++) {
-                formData.append("document" + i, this.rawDocuments[i])
-            }
-            // Other parameters
-            formData.append("assetInfo", blob)
-
-            const response = await api().post('/assets/' + Credentials.getToken(), formData)
-            console.log(response)
-            if(response.status == 200) {
-                this.inserted = true
-                this.clear()
-            }
-        },
-        clear() {
-            // Reset all form variables
-            this.creator = ''
-            this.title = ''
-            this.subCategoriesBoolean = false
-            this.location.usual.coordinates.lat = null
-            this.location.usual.coordinates.long = null
-            this.location.current.coordinates.lat = null
-            this.location.current.coordinates.long = null
-            this.location.usual.istSpace.room = null
-            this.location.current.istSpace.room = null
-            this.optionalId = '',
-            locationAssetInsertion.resetUsualSelectedLocation()
-            locationAssetInsertion.resetCurrentSelectedLocation()
-        },
-        async fetchCategories() {
-            this.rawCategories = await api().get('/category')
-            this.rawCategories = this.rawCategories.data
-        },
-        async fetchCollections() {
-            this.rawCollections = await api().get('/collection')
-            this.rawCollections = this.rawCollections.data
-            this.rawCollections.forEach((element) => {
-                this.collectionsList.push(element.title)
-            })
-        },
-        toggleLocationInputMethod() {
-            this.locationInputMethod = !this.locationInputMethod
-            this.location.usual.coordinates.lat = null
-            this.location.usual.coordinates.long = null
-            this.location.current.coordinates.lat = null
-            this.location.current.coordinates.long = null
-            this.location.usual.istSpace.room = null
-            this.location.current.istSpace.room = null
-        },
-        handleFileUpload() {
-            this.rawDocuments = this.$refs.file.files
-            console.log(this.rawDocuments)
-        },
         async getLocations() {
             var component = this
             await axios.get('https://fenix.tecnico.ulisboa.pt/api/fenix/v1/spaces')
@@ -389,6 +205,7 @@ export default {
 
             // Update usual location in store
             locationAssetInsertion.setUsualSelectedLocation(this.usualSelectedLocationId)
+            this.updateStoreUsualLocation()
 
             // Update children
             this.usualLocationChildKey += 1
@@ -400,6 +217,7 @@ export default {
 
             // Update current location in store
             locationAssetInsertion.setCurrentSelectedLocation(this.currentSelectedLocationId)
+            this.updateStoreCurrentLocation()
 
             // Update children
             this.currentLocationChildKey += 1
@@ -409,46 +227,52 @@ export default {
             this.location.usual.coordinates.lat = null
             this.location.usual.coordinates.long = null
             this.location.usual.istSpace.room = null
+            this.usualSelectedLocation = ''
             this.location.usual.istSpace.cabinet = null
             this.location.usual.istSpace.drawer = null
             this.location.usual.istSpace.position = null
             this.location.usual.address.name = null
+            this.updateStoreUsualLocation()
         },
         toggleCurrentLocationButton(selectedButton) {
             this.currentLocationSelectedButton = selectedButton
             this.location.current.coordinates.lat = null
             this.location.current.coordinates.long = null
             this.location.current.istSpace.room = null
+            this.currentSelectedLocation = ''
             this.location.current.istSpace.cabinet = null
             this.location.current.istSpace.drawer = null
             this.location.current.istSpace.position = null
             this.location.current.address.name = null
+            if(selectedButton == 0) {
+                assetInsertion.setCurrentIstRoom(locationAssetInsertion.getUsualSelectedLocation())
+                this.location.current.coordinates.lat = this.location.usual.coordinates.lat
+                this.location.current.coordinates.long = this.location.usual.coordinates.long
+                this.location.current.istSpace.cabinet = this.location.usual.istSpace.cabinet
+                this.location.current.istSpace.drawer = this.location.usual.istSpace.drawer
+                this.location.current.istSpace.position = this.location.usual.istSpace.position
+                this.location.current.address.name = this.location.usual.address.name
+            }
+            this.updateStoreCurrentLocation()
+        },
+        updateStoreUsualLocation() {
+            assetInsertion.setUsualCoordinates(this.location.usual.coordinates.lat, this.location.usual.coordinates.long)
+            assetInsertion.setUsualIstSpace(this.location.usual.istSpace.cabinet, this.location.usual.istSpace.drawer, this.location.usual.istSpace.position)
+            assetInsertion.setUsualAddress(this.location.usual.address.name)
+        },
+        updateStoreCurrentLocation() {
+            assetInsertion.setCurrentCoordinates(this.location.current.coordinates.lat, this.location.current.coordinates.long)
+            assetInsertion.setCurrentIstSpace(this.location.current.istSpace.cabinet, this.location.current.istSpace.drawer, this.location.current.istSpace.position)
+            assetInsertion.setCurrentAddress(this.location.current.address.name)
         }
     },
     created() {
-        this.fetchCategories()
-        this.fetchCollections()
         this.getLocations()
     }
 }
 </script>
 
-
 <style scoped>
 
-.asset-insert-form {
-    margin: 90px;
-    background-color: rgba(128, 128, 128, 0.068);
-    padding: 20px;
-    border-radius: 5px;
-}
-
-.mb {
-    margin-bottom: 40px;
-}
-
-.file-input {
-    margin-bottom: 20px;
-}
-
 </style>
+

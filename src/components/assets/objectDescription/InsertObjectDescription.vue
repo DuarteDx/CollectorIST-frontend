@@ -1,0 +1,46 @@
+<template>
+    <div>
+        <h1 style="color: red;">Object Description</h1>
+        <!--CATEGORY-->
+        <div class="mb">
+            <h3>Categoria</h3>
+            <!-- Select category dropdown | Recursive component -->
+            <CategoriesNode v-if="rawCategories.length > 0" :categories="rawCategories"/>
+        </div>
+    </div>
+</template>
+
+<script>
+// Api
+import api from '@/api/api'
+// Store
+import categoriesAssetInsert from '@/assets/store/selectedCategoryAssetInsertion.js'
+// Components
+import CategoriesNode from './CategoriesNode'
+
+export default {
+    name: 'InsertObjectDescription',
+    components: {
+        CategoriesNode
+    },
+    data() {
+        return {
+            rawCategories: []
+        }
+    },
+    methods: {
+        async fetchCategories() {
+            this.rawCategories = await api().get('/category')
+            this.rawCategories = this.rawCategories.data
+        },
+    },
+    created() {
+        this.fetchCategories()
+    }
+}
+</script>
+
+<style scoped>
+
+</style>
+

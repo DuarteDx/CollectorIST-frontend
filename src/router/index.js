@@ -2,11 +2,13 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 // Views
-import Collections from '@/views/Collections'
-import Collection from '@/views/Collection'
 import Insert from '@/views/Insert'
 import Assets from '@/views/Assets'
 import Asset from '@/views/Asset'
+import Collections from '@/views/Collections'
+import Collection from '@/views/Collection'
+import Categories from '@/views/Categories'
+import Category from '@/views/Category'
 import Login from '@/views/Login'
 import Logs from '@/views/Logs'
 import ManageUsers from '@/views/ManageUsers'
@@ -41,6 +43,14 @@ const router = new Router({
       component: Collection
     },
     {
+      path: '/categories',
+      component: Categories
+    },
+    {
+      path: '/categories/:id',
+      component: Category
+    },
+    {
       path: '/insert',
       component: Insert,
     },
@@ -73,7 +83,7 @@ const router = new Router({
     {
       path: '/users/manage/:istId',
       component: EditUser
-      }
+    },
   ],
   scrollBehavior () {
     return { x: 0, y: 0 }

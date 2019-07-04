@@ -1,7 +1,16 @@
 <template>
-    <div>
-        {{ message }}
-    </div>
+    <v-container style="height: 100%;">
+        <v-layout row wrap align-center justify-center style="height: 100%;">
+            <v-flex md1>
+                <v-progress-circular
+                :size="100"
+                color="primary"
+                indeterminate
+                ></v-progress-circular>
+                <!--{{ message }}-->
+            </v-flex>
+        </v-layout >
+    </v-container>
 </template>
 
 <script>
@@ -36,7 +45,7 @@ export default {
                     }})
                         .then(function(response) {
                             Credentials.setToken(response.data)
-                            console.log('jwt token: ' + Credentials.getToken())
+                            // console.log('jwt token: ' + Credentials.getToken())
                             component.$router.push('/assets')
                         })
                         .catch(function(error) {

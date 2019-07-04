@@ -8,30 +8,20 @@
                 <!--TITLE-->
                 <v-layout align-center justify-space-between row>
                     <v-flex md12 class="main-title">
-                        <h1 v-if="collection.title" class="ml">{{ collection.title }}</h1>
+                        <h1 v-if="category.title" class="ml">{{ category.title }}</h1>
                         <h1 v-else class="ml"><i>Peça sem título</i></h1>
                     </v-flex>
                 </v-layout>
-                <!--RESPONSIBLE-->
+                <!--SUB-CATEGORIES-->
                 <v-layout align-center justify-start row wrap>
                     <v-flex md12 class="category-name">
-                        <span class="ml"> Responsável:</span> 
+                        <span class="ml"> Sub-categorias:</span> 
                     </v-flex>
-                    <v-flex md12 class="category-data">
-                        <span v-if="collection.responsible" class="ml">{{collection.responsible}}</span>
-                        <span v-else class="ml"><i>Indefinido</i></span>
+                    <v-flex md12  class="category-data">
+                        <span v-for="(subCategory, key) in category.subCategories" :key="key" class="ml">{{subCategory.title}}</span>
+                        <span v-if="category.subCategories.length == 0" class="ml"><i>Não existem sub-categorias para esta categoria.</i></span>
                     </v-flex>
                 </v-layout>
-            </v-flex>
-        </v-layout>
-        <v-layout row wrap justify-start>
-            <!--DESCRIPTION-->
-            <v-flex md12 class="category-name">
-                Descrição
-            </v-flex>
-            <v-flex md12 class="category-data">
-                <span v-if="collection.description">{{collection.description}}</span>
-                <span v-else><i>Não existe descrição para esta coleção.</i></span>
             </v-flex>
         </v-layout>
     </v-container>
@@ -39,8 +29,8 @@
 
 <script>
 export default {
-    name: 'CollectionGlobal',
-    props: ['collection']
+    name: 'CategoryGlobal',
+    props: ['category']
 }
 </script>
 
