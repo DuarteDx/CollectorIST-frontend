@@ -4,6 +4,7 @@ import Router from 'vue-router'
 // Views
 import Assets from '@/views/Assets'
 import Asset from '@/views/Asset'
+import EditAsset from '@/views/EditAsset'
 import Collections from '@/views/Collections'
 import Collection from '@/views/Collection'
 import Categories from '@/views/Categories'
@@ -34,6 +35,10 @@ const router = new Router({
       component: Asset
     },
     {
+      path: '/assets/:id/edit',
+      component: EditAsset
+    },
+    {
       path: '/collections',
       component: Collections,
     },
@@ -57,7 +62,7 @@ const router = new Router({
     {
       path: '/logout',
       name: 'logout',
-      beforeEnter() {location.href = 'id.tecnico.ulisboa.pt/cas/logout'} 
+      beforeEnter() {location.href = 'https://id.tecnico.ulisboa.pt/cas/logout'} 
     },
     {
       path: '/auth',

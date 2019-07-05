@@ -7,9 +7,9 @@
             <!--USUAL LOCATION-->
             <h4>Localização Habitual</h4>
             <v-btn :color="usualLocationSelectedButton == 0 ? 'success' : 'info'" style="margin-left: 0px;" @click="toggleUsualLocationButton(0)">Localização IST</v-btn>
-                <v-btn :color="usualLocationSelectedButton == 1 ? 'success' : 'info'" style="margin-left: 0px;" @click="toggleUsualLocationButton(1)">Coordenadas</v-btn>
-                <v-btn :color="usualLocationSelectedButton == 2 ? 'success' : 'info'" style="margin-left: 0px;" @click="toggleUsualLocationButton(2)">Outra Localização</v-btn>
-            <!--Coordinate-->
+            <v-btn :color="usualLocationSelectedButton == 1 ? 'success' : 'info'" style="margin-left: 0px;" @click="toggleUsualLocationButton(1)">Coordenadas</v-btn>
+            <v-btn :color="usualLocationSelectedButton == 2 ? 'success' : 'info'" style="margin-left: 0px;" @click="toggleUsualLocationButton(2)">Outra Localização</v-btn>
+            <!--Coordinates-->
             <v-layout v-if="usualLocationSelectedButton == 1">
                 <v-flex md5 style="margin-right: 15px;">
                     <v-text-field
@@ -56,6 +56,7 @@
                     ></v-text-field>
                 </template>
             </template>
+            <!--ADDRESS-->
             <template v-if="usualLocationSelectedButton == 2">
                 <v-text-field
                 v-model="location.usual.address.name"

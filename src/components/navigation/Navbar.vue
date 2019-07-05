@@ -34,6 +34,11 @@ import Credentials from '@/assets/scripts/login.js'
                         index: 1
                     },
                     {
+                        title: 'CONFIGURAR',
+                        path: '/config',
+                        index: 2
+                    },
+                    /*{
                         title: 'COLEÇÕES',
                         path: '/collections',
                         index: 2
@@ -43,7 +48,7 @@ import Credentials from '@/assets/scripts/login.js'
                         path: '/categories',
                         index: 3
                     },
-                    /*{
+                    {
                         title: 'INSERIR',
                         path: '/insert',
                         index: 4
@@ -56,17 +61,17 @@ import Credentials from '@/assets/scripts/login.js'
                     {
                         title: 'MANAGE_USERS',
                         path: '/users/manage',
-                        index: 4
+                        index: 3
                     },
-                    {
+                    /*{
                         title: 'LOGS',
                         path: '/logs',
                         index: 5
-                    },
+                    },*/
                     {
                         title: 'LOGOUT',
                         path: '/logout',
-                        index: 6
+                        index: 4
                     }
                 ],
                 currentMenuOnDisplay: 1

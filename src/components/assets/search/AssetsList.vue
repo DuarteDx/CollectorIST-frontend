@@ -12,11 +12,11 @@
                                 <v-flex md9>
                                     <v-layout row wrap>
                                         <v-flex class="asset-title" xs12 sm12 md12>
-                                            <p v-if="asset.title">{{ asset.title }}</p>
+                                            <p v-if="asset.ObjectIdentification.title">{{ asset.ObjectIdentification.title }}</p>
                                             <p v-else><i>Peça sem título</i></p>
                                         </v-flex>
                                         <v-flex class="asset-category" sx12 sm12 md12>
-                                            <p v-if="asset.category">{{ asset.category.title }}</p>
+                                            <p v-if="asset.ObjectDescription.category">{{ asset.ObjectDescription.category }}</p>
                                             <p v-else><i>Peça sem categoria</i></p>
                                         </v-flex>
                                     </v-layout>
