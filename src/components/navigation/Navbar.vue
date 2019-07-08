@@ -59,7 +59,7 @@ import Credentials from '@/assets/scripts/login.js'
                         index: 4
                     },*/
                     {
-                        title: 'MANAGE_USERS',
+                        title: 'UTILIZADORES',
                         path: '/users/manage',
                         index: 3
                     },

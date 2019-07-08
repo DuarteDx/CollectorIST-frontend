@@ -32,6 +32,11 @@
 </template>
 
 <script>
+// Api
+import api from '@/api/api'
+// Stores
+import Credentials from '@/assets/scripts/login.js'
+
 export default {
     name: 'EditObjectIdentification',
     props: ['asset'],
@@ -42,8 +47,11 @@ export default {
         }
     },
     methods: {
-        submit() {
-
+        async submit() {
+            await api().put('/assets/' + this.$route.params.id + '/object-identification/edit/' + Credentials.getToken(), {
+                title: this.title,
+                optionalId: this.optionalId
+            })
         }
     },
     created() {
