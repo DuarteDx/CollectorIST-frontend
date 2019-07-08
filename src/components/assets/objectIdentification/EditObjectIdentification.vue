@@ -20,9 +20,10 @@
         </v-flex>
         <v-flex xs12 sm12 md4>
             <v-select
-            :items="[1, 2]"
+            :items="optionalIdsOption"
             solo
             :placeholder="asset.optionalId"
+            v-model="optionalId"
             ></v-select>
         </v-flex>
         <v-flex md12>
@@ -43,19 +44,28 @@ export default {
     data() {
         return {
             title: '',
-            optionalId: ''
+            optionalId: '',
+            optionalIdsOption: [],
+            configData: {}
         }
     },
     methods: {
         async submit() {
             await api().put('/assets/' + this.$route.params.id + '/object-identification/edit/' + Credentials.getToken(), {
                 title: this.title,
-                optionalId: this.optionalId
+                optionalId: this.configData.data.optionalId.values[this.optionalId]
             })
+        },
+        async getObjectIdentificationConfig() {
+            this.configData = await api().get('assets/object-identification/' + Credentials.getToken())
+            for(let x in this.configData.data.optionalId.values) {
+                this.optionalIdsOption.push(x)
+            }
+
         }
     },
     created() {
-
+        this.getObjectIdentificationConfig()
     }
 }
 </script>
