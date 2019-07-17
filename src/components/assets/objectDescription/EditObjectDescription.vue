@@ -29,6 +29,9 @@
 import api from '@/api/api'
 // Components
 import CategoriesNode from './treeNodes/CategoriesNode'
+// Stores
+import Credentials from '@/assets/scripts/login.js'
+import AssetInsertionStore from '@/assets/store/AssetInsertionStore'
 
 export default {
     name: 'EditObjectDescription',
@@ -46,6 +49,10 @@ export default {
             this.rawCategories = await api().get('/category')
             this.rawCategories = this.rawCategories.data
         },
+        async submit() {
+            let ObjectDescription = await AssetInsertionStore.getObjectDescription()
+            await api().put('/assets/' + this.$route.params.id + '/object-description/edit/' + Credentials.getToken(), ObjectDescription)
+        }
     },
     created() {
         this.fetchCategories()

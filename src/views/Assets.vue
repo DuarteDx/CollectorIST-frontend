@@ -5,7 +5,7 @@
         <v-layout class="mt">
             <!--SIDE PANEL-->
             <v-flex md3>
-                <SidePanel v-bind:categories="categoriesList" v-bind:collections="collectionsList"/>
+                <SidePanel v-if="modulesReady" v-bind:modules="modules" @sideBarParams="updateResults"/>
             </v-flex>
             <v-flex md9>
                 <!--TOP "NAVBAR"-->
@@ -75,8 +75,8 @@ export default {
             searchParams: {},
             displayInsertionFormButton: false,
             assetsList: [],
-            categoriesList: [],
-            collectionsList: [],
+            modules: {},
+            modulesReady: false,
             page: 1
         }
     },
@@ -89,13 +89,10 @@ export default {
             const response = await api().get('/assets')
             this.assetsList = response.data
         },
-        async fetchCategories() {
-            const response = await api().get('/category')
-            this.categoriesList = response.data
-        },
-        async fetchCollections() {
-            const response = await api().get('/collection')
-            this.collectionsList = response.data
+        async fetchModules() {
+            const response = await api().get('/assets/modules')
+            this.modulesReady = true
+            this.modules = response.data
         },
         // UPDATE RESULTS
         async search() {
@@ -106,6 +103,7 @@ export default {
         },
         updateResults() {
             this.searchParams = assetsSearchParams.getSearchParams()
+            console.log(this.searchParams)
             this.search()
         },
         updatePage() {
@@ -116,8 +114,7 @@ export default {
     created() {
         this.searchParams = assetsSearchParams.getSearchParams()
         this.search()
-        this.fetchCategories()
-        this.fetchCollections()
+        this.fetchModules()
     }
 }
 </script>

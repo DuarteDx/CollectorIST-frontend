@@ -113,7 +113,7 @@
             <span class="ml">Nova Localização habitual:</span>
         </v-flex>
         <!--Room-->
-        <template v-if="currentLocationSelectedButton == 0">
+        <template v-if="currentLocationSelectedButton == 1">
             <!--Dropdown-->
             <v-select
             :items="locationsList"
@@ -143,7 +143,7 @@
             </template>
         </template>
         <!--Coordinates-->
-        <v-layout v-if="currentLocationSelectedButton == 1">
+        <v-layout v-if="currentLocationSelectedButton == 2">
             <v-flex md5 style="margin-right: 15px;">
                 <v-text-field
                 v-model="location.current.coordinates.lat"
@@ -160,7 +160,7 @@
             </v-flex>
         </v-layout>
         <!--Address-->
-        <template v-if="currentLocationSelectedButton == 2">
+        <template v-if="currentLocationSelectedButton == 3">
             <v-text-field
             v-model="location.current.address.name"
             label="Morada"
@@ -173,10 +173,21 @@
             <v-btn :color="currentLocationSelectedButton == 2 ? 'success' : 'info'" style="margin-left: 0px;" @click="toggleCurrentLocationButton(2)">Coordenadas</v-btn>
             <v-btn :color="currentLocationSelectedButton == 3 ? 'success' : 'info'" style="margin-left: 0px;" @click="toggleCurrentLocationButton(3)">Outra Localização</v-btn>
         </v-flex>
+        <br>
+        <v-flex md12>
+            <v-btn @click="submit()" color="info" >Editar</v-btn>
+        </v-flex>
     </v-layout>
 </template>
 
 <script>
+// Api
+import api from '@/api/api'
+// Store
+import Credentials from '@/assets/scripts/login.js'
+import AssetInsertionLocationStore from './store/AssetInsertionLocationStore.js'
+import AssetInsertionStore from '@/assets/store/AssetInsertionStore'
+
 export default {
     name: 'EditObjectLocation',
     props: ['asset'],
@@ -310,6 +321,10 @@ export default {
             },
             updateMainStore() {
                 AssetInsertionStore.setObjectLocation(AssetInsertionLocationStore.getLocation())
+            },
+            async submit() {
+                let ObjectLocation = await AssetInsertionStore.getObjectLocation()
+                await api().put('/assets/' + this.$route.params.id + '/object-location/edit/' + Credentials.getToken(), ObjectLocation)
             }
     },
     created() {

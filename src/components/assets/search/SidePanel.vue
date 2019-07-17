@@ -4,51 +4,41 @@
             <v-flex md12>
                 <h2 class="title">Pesquisar por:</h2>
             </v-flex>
-            <v-flex offset-md2 md8>
-                <v-select
-                    :items="searchOptions"
-                    v-model="selectedSearchOption"
-                ></v-select>
+            <!--MODULES-->
+            <v-list class="bg full-width">
+                <SearchObjectIdentification v-bind:modules="modules"/>
+                <SearchObjectDescription v-bind:modules="modules"/>
+                <SearchObjectLocation v-bind:modules="modules"/>
+                <SearchObjectHistory v-bind:modules="modules"/>
+            </v-list>
+            <v-flex md6>
+                <v-btn color="warning">Limpar filtros</v-btn>
             </v-flex>
-            <!--CATEGORIES-->
-            <v-list v-if="selectedSearchOption === 'Categoria'" class="bg full-width">
-            <v-list-tile v-for="(category, key) in categories" v-bind:key="key">
-                <v-list-tile-action>
-                    <v-checkbox v-model="selectedCategories" :value="category._id"></v-checkbox>
-                </v-list-tile-action>
-
-                <v-list-tile-content>
-                    <v-list-tile-title>{{category.title}}</v-list-tile-title>
-                </v-list-tile-content>
-            </v-list-tile>
-            </v-list>
-            <!--COLLECTIONS-->
-            <v-list v-if="selectedSearchOption === 'Coleção'" class="bg full-width">
-            <v-list-tile v-for="(collection, key) in collections" v-bind:key="key">
-                <v-list-tile-action>
-                    <v-checkbox v-model="selectedCollections" :value="collection._id"></v-checkbox>
-                </v-list-tile-action>
-
-                <v-list-tile-content>
-                    <v-list-tile-title>{{collection.title}}</v-list-tile-title>
-                </v-list-tile-content>
-            </v-list-tile>
-            </v-list>
+            <v-flex md6>
+                <v-btn color="info" @click="$emit('sideBarParams')">Pesquisar</v-btn>
+            </v-flex>
         </v-layout>
     </v-card>
 </template>
 
 <script>
+import SearchObjectIdentification from '@/components/assets/objectIdentification/SearchObjectIdentification'
+import SearchObjectDescription from '@/components/assets/objectDescription/SearchObjectDescription'
+import SearchObjectLocation from '@/components/assets/objectLocation/SearchObjectLocation'
+import SearchObjectHistory from '@/components/assets/objectHistory/SearchObjectHistory'
+
 export default {
     name: 'SidePanel',
-    props: ['categories', 'collections'],
+    props: ['modules'],
+    components: {
+        SearchObjectIdentification,
+        SearchObjectDescription,
+        SearchObjectLocation,
+        SearchObjectHistory
+    },
     data() {
         return {
-            searchOptions: ['Categoria', 'Coleção'],
-            selectedSearchOption: 'Categoria',
-            garbage: false,
-            selectedCategories: [],
-            selectedCollections: []
+
         }
     },
     created() {

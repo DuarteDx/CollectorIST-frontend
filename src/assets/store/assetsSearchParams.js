@@ -1,11 +1,10 @@
 var assetsSearchParams = {
 
     searchParams: {
-        title: '',
-        id: '',
-        creator: '',
-        category: '',
-        collection: '',
+        objectIdentification: {},
+        objectDescription: {},
+        objectLocation: {},
+        objectHistory: {},
         nResultsPerPage: 15,
         currentPage: 1
     },
@@ -14,24 +13,20 @@ var assetsSearchParams = {
         return this.searchParams
     },
 
-    setTitle: function(newTitle) {
-        this.searchParams.title = newTitle
+    setObjectIdentification: function(newObjectIdentification) {
+        this.searchParams.objectIdentification = newObjectIdentification
     },
 
-    setId: function(newId) {
-        this.searchParams.id = newId
+    setObjectDescription: function(newObjectDescription) {
+        this.searchParams.objectDescription = newObjectDescription
     },
 
-    setCreator: function(newCreator) {
-        this.searchParams.creator = newCreator
+    setObjectLocation: function(newObjectLocation) {
+        this.searchParams.objectLocation = newObjectLocation
     },
 
-    setCategory: function(newCategory) {
-        this.searchParams.category = newCategory
-    },
-
-    setCollection: function(newCollection) {
-        this.searchParams.collection = newCollection
+    setObjectHistory: function(newObjectHistory) {
+        this.searchParams.objectHistory = newObjectHistory
     },
 
     setNResultsPerPage: function(newNResultsPerPage) {
@@ -44,11 +39,10 @@ var assetsSearchParams = {
 
     clear: function() {
         this.searchParams = {
-            title: '',
-            id: '',
-            creator: '',
-            category: '',
-            collection: '',
+            objectIdentification: {},
+            objectDescription: {},
+            objectLocation: {},
+            objectHistory: {},
             nResultsPerPage: 15,
             currentPage: 1
         }
