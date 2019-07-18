@@ -1,7 +1,7 @@
 <template>
     <div>
         <!--SEARCH BAR-->
-        <SearchBar @searchBarParams="updateResults"/>
+        <!--<SearchBar @searchBarParams="updateResults"/>-->
         <v-layout class="mt">
             <!--SIDE PANEL-->
             <v-flex md3>
@@ -13,11 +13,11 @@
                     <v-flex md8>
                         <v-btn color="info" style="margin-left: 40px;" @click="displayInsertionForm()">+ Inserir peça</v-btn>
                     </v-flex>
-                    <v-flex md2>
+                    <v-flex md2 v-if="numberOfResults/15 > 1">
                         <v-pagination
                         v-model="page"
                         @input="updatePage()"
-                        :length="10"
+                        :length="Math.ceil(numberOfResults/15)"
                         :total-visible="5"
                         ></v-pagination>
                     </v-flex>
@@ -36,11 +36,11 @@
                     <v-flex md8>
                         <v-btn color="info" style="margin-left: 40px;" @click="displayInsertionForm()">+ Inserir peça</v-btn>
                     </v-flex>
-                    <v-flex md2>
+                    <v-flex md2 v-if="numberOfResults/15 > 1">
                         <v-pagination
                         v-model="page"
                         @input="updatePage()"
-                        :length="10"
+                        :length="Math.ceil(numberOfResults/15)"
                         :total-visible="5"
                         ></v-pagination>
                     </v-flex>
@@ -77,7 +77,8 @@ export default {
             assetsList: [],
             modules: {},
             modulesReady: false,
-            page: 1
+            page: 1,
+            numberOfResults: 0
         }
     },
     methods: {
@@ -96,9 +97,11 @@ export default {
         },
         // UPDATE RESULTS
         async search() {
-            const response = await api().get('/assets/search', {
+            let response = await api().get('/assets/search', {
                 params: this.searchParams
             })
+            // Get and remove number of results from asset array
+            this.numberOfResults = response.data.shift()
             this.assetsList = response.data
         },
         updateResults() {
