@@ -42,9 +42,7 @@ var AssetsSearchParams = {
             objectIdentification: {},
             objectDescription: {},
             objectLocation: {},
-            objectHistory: {},
-            nResultsPerPage: 15,
-            currentPage: 1
+            objectHistory: {}
         }
     }
 

@@ -12,6 +12,7 @@
         </v-layout>
         <!-- MODULE SEARCH INPUTS -->
         <v-layout v-if="active" row wrap>
+            <!-- Room -->
             <template v-if="selectedInputMethod === 0">
                 <!-- Dropdown -->
                 <v-select
@@ -22,17 +23,43 @@
                 ></v-select>
                 <!-- Tree Node -->
                 <SearchLocationNode v-if="selectedLocation" :parentId="selectedLocationId" :key="locationChildKey"/>
+                <!-- Cabinet/Drawer/Position -->
+                <!-- Cabinet -->
+                <v-flex sm12 md12>
+                    <v-text-field
+                    v-model="objectLocation.istSpace.cabinet"
+                    label="Armário"
+                    v-on:input="updateStoreLocation()"
+                    ></v-text-field>
+                </v-flex>
+                <!-- Drawer -->
+                <v-flex sm12 md12>
+                    <v-text-field
+                    v-model="objectLocation.istSpace.drawer"
+                    label="Gaveta"
+                    v-on:input="updateStoreLocation()"
+                    ></v-text-field>
+                </v-flex>
+                <!-- Position -->
+                <v-flex sm12 md12>
+                    <v-text-field
+                    v-model="objectLocation.istSpace.position"
+                    label="Posição"
+                    v-on:input="updateStoreLocation()"
+                    ></v-text-field>
+                </v-flex>
             </template>
+            <!-- Address -->
             <template v-if="selectedInputMethod === 1">
                 <v-layout row wrap>
                     <v-flex sm12 md12>
-                        <span>Morada:</span>
+                        <span>Moradas:</span>
                     </v-flex>
                     <v-flex sm12 md12>
                         <v-text-field
                         v-model="objectLocation.address.name"
                         label="Morada"
-                        v-on:input="getLocationId()"
+                        v-on:input="updateStoreLocation()"
                         ></v-text-field>
                     </v-flex>
                 </v-layout>
@@ -122,6 +149,7 @@ export default {
             this.selectedInputMethod = method
             this.objectLocation.istSpace.room = null
             this.selectedLocation = null
+            this.selectedLocationId = null
             this.objectLocation.istSpace.cabinet = null
             this.objectLocation.istSpace.drawer = null
             this.objectLocation.istSpace.position = null
@@ -129,6 +157,8 @@ export default {
 
             // Update location in store
             AssetSearchLocationStore.setIstId(this.selectedLocationId)
+            AssetSearchLocationStore.setIstSubLocation(this.objectLocation.istSpace.cabinet, this.objectLocation.istSpace.drawer, this.objectLocation.istSpace.position)
+            AssetSearchLocationStore.setAddress(this.objectLocation.address.name)
             AssetsSearchParams.setObjectLocation(AssetSearchLocationStore.getLocation())
 
         },

@@ -12,7 +12,7 @@
         </v-layout>
         <!-- MODULE SEARCH INPUTS -->
         <v-layout v-if="active">
-            
+            <i>Módulo ainda não desenvolvido</i>
         </v-layout>
     </div>
 </template>

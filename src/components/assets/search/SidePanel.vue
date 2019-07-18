@@ -12,7 +12,7 @@
                 <SearchObjectHistory v-bind:modules="modules"/>
             </v-list>
             <v-flex md6>
-                <v-btn color="warning">Limpar filtros</v-btn>
+                <v-btn color="warning" @click="clear()">Limpar filtros</v-btn>
             </v-flex>
             <v-flex md6>
                 <v-btn color="info" @click="$emit('sideBarParams')">Pesquisar</v-btn>
@@ -22,6 +22,9 @@
 </template>
 
 <script>
+// Store
+import AssetsSearchParams from '@/assets/store/AssetsSearchParams'
+// Modules
 import SearchObjectIdentification from '@/components/assets/objectIdentification/SearchObjectIdentification'
 import SearchObjectDescription from '@/components/assets/objectDescription/SearchObjectDescription'
 import SearchObjectLocation from '@/components/assets/objectLocation/SearchObjectLocation'
@@ -39,6 +42,11 @@ export default {
     data() {
         return {
 
+        }
+    },
+    methods: {
+        clear() {
+            AssetsSearchParams.clear()
         }
     },
     created() {

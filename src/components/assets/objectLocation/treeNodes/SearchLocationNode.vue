@@ -10,7 +10,7 @@
 
     <SearchLocationNode
         v-if="selectedLocationId"
-        :parentId="rawLocations.containedSpaces[selectedLocationId].id"
+        :parentId="selectedLocationId"
         :key="childKey"
     ></SearchLocationNode>
 
@@ -39,9 +39,10 @@
         methods: {
             getLocationId() {
                 // Get id of selected location
-                this.selectedLocationId = this.rawLocations.containedSpaces.findIndex(x => x.name == this.selectedLocation)
-
+                let selectedLocationIndex = this.rawLocations.containedSpaces.findIndex(x => x.name == this.selectedLocation)
+                
                 // Set current location in store
+                this.selectedLocationId = this.rawLocations.containedSpaces[selectedLocationIndex].id
                 AssetSearchLocationStore.setIstId(this.selectedLocationId)
                 AssetsSearchParams.setObjectLocation(AssetSearchLocationStore.getLocation())
 
@@ -54,7 +55,7 @@
                 .then((response) => {
                     this.rawLocations = response.data
                     this.rawLocations.containedSpaces.forEach((subLocation) => {
-                        if(subLocation.name != '') {
+                        if(subLocation.name) {
                             this.locationsList.push(subLocation.name)
                         }
                     })
