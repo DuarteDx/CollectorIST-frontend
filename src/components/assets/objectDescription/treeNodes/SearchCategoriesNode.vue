@@ -17,7 +17,7 @@
 </template>
 
 <script>
-  import assetsSearchParams from '@/assets/store/assetsSearchParams'
+  import AssetsSearchParams from '@/assets/store/AssetsSearchParams'
 
   export default { 
     props: [ 'categories' ],
@@ -36,7 +36,7 @@
     methods: {
         getSubCategories() {
             // Define selected category in store
-            assetsSearchParams.setObjectDescription(this.ObjectDescription)
+            AssetsSearchParams.setObjectDescription(this.ObjectDescription)
 
             // Gets the index of the selected category
             this.selectedCategoryIndex = this.categories.findIndex(x => x.title == this.ObjectDescription.category)

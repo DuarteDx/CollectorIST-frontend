@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import assetsSearchParams from '@/assets/store/assetsSearchParams'
+import AssetsSearchParams from '@/assets/store/AssetsSearchParams'
 
 export default {
     name: 'SearchObjectIdentification',
@@ -75,7 +75,7 @@ export default {
             }
         },
         updateStore() {
-            assetsSearchParams.setObjectIdentification(this.objectIdentification)
+            AssetsSearchParams.setObjectIdentification(this.objectIdentification)
         }
     },
     created() {

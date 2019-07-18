@@ -60,7 +60,7 @@ import SidePanel from '@/components/assets/search/SidePanel'
 import api from '@/api/api'
 import Credentials from '@/assets/scripts/login'
 // Store
-import assetsSearchParams from '@/assets/store/assetsSearchParams'
+import AssetsSearchParams from '@/assets/store/AssetsSearchParams'
 
 export default {
 	name: 'Assets',
@@ -102,17 +102,17 @@ export default {
             this.assetsList = response.data
         },
         updateResults() {
-            this.searchParams = assetsSearchParams.getSearchParams()
+            this.searchParams = AssetsSearchParams.getSearchParams()
             console.log(this.searchParams)
             this.search()
         },
         updatePage() {
-            assetsSearchParams.setCurrentPage(this.page)
+            AssetsSearchParams.setCurrentPage(this.page)
             this.updateResults()
         }
     },
     created() {
-        this.searchParams = assetsSearchParams.getSearchParams()
+        this.searchParams = AssetsSearchParams.getSearchParams()
         this.search()
         this.fetchModules()
     }

@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import assetsSearchParams from '@/assets/store/assetsSearchParams'
+import AssetsSearchParams from '@/assets/store/AssetsSearchParams'
 import SearchCategoriesNode from './treeNodes/SearchCategoriesNode'
 
 export default {
@@ -54,7 +54,7 @@ export default {
             }
         },
         updateStore() {
-            assetsSearchParams.setObjectDescription(this.objectDescription)
+            AssetsSearchParams.setObjectDescription(this.objectDescription)
         }
     },
     created() {

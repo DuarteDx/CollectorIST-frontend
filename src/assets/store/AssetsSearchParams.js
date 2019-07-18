@@ -1,4 +1,4 @@
-var assetsSearchParams = {
+var AssetsSearchParams = {
 
     searchParams: {
         objectIdentification: {},
@@ -50,4 +50,4 @@ var assetsSearchParams = {
 
 }
 
-export default assetsSearchParams
+export default AssetsSearchParams
