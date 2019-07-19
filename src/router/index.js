@@ -5,6 +5,7 @@ import Router from 'vue-router'
 import Assets from '@/views/Assets'
 import Asset from '@/views/Asset'
 import EditAsset from '@/views/EditAsset'
+import ConfigureModules from '@/views/ConfigureModules'
 import Collections from '@/views/Collections'
 import Collection from '@/views/Collection'
 import Categories from '@/views/Categories'
@@ -37,6 +38,10 @@ const router = new Router({
     {
       path: '/assets/:id/edit',
       component: EditAsset
+    },
+    {
+      path: '/config',
+      component: ConfigureModules
     },
     {
       path: '/collections',

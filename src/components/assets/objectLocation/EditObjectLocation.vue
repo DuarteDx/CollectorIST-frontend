@@ -34,6 +34,7 @@
             v-model="usualSelectedLocation"
             label="Espaço"
             v-on:change="getUsualLocationId()"
+            solo
             ></v-select>
             <!--ChildNode-->
             <UsualLocationNode v-if="usualSelectedLocation.length > 0" :parentId="usualSelectedLocationId" :key="currentLocationChildKey"/>
@@ -43,16 +44,19 @@
                 v-model="location.usual.istSpace.cabinet"
                 label="Armário"
                 v-on:input="updateStoreUsualLocation()"
+                solo
                 ></v-text-field>
                 <v-text-field
                 v-model="location.usual.istSpace.drawer"
                 label="Prateleira/Gaveta"
                 v-on:input="updateStoreUsualLocation()"
+                solo
                 ></v-text-field>
                 <v-text-field
                 v-model="location.usual.istSpace.position"
                 label="Posição"
                 v-on:input="updateStoreUsualLocation()"
+                solo
                 ></v-text-field>
             </template>
         </template>
@@ -63,6 +67,7 @@
                 v-model="location.usual.coordinates.lat"
                 label="Latitude"
                 v-on:input="updateStoreUsualLocation()"
+                solo
                 ></v-text-field>
             </v-flex>
             <v-flex md5>
@@ -70,6 +75,7 @@
                 v-model="location.usual.coordinates.long"
                 label="Longitude"
                 v-on:input="updateStoreUsualLocation()"
+                solo
                 ></v-text-field>
             </v-flex>
         </v-layout>
@@ -79,6 +85,7 @@
             v-model="location.usual.address.name"
             label="Morada"
             v-on:input="updateStoreUsualLocation()"
+            solo
             ></v-text-field>
         </template>
         <v-flex md12>
@@ -120,6 +127,7 @@
             v-model="currentSelectedLocation"
             label="Espaço"
             v-on:change="getCurrentLocationId()"
+            solo
             ></v-select>
             <!--ChildNode-->
             <CurrentLocationNode v-if="currentSelectedLocation.length > 0" :parentId="currentSelectedLocationId" :key="currentLocationChildKey"/>
@@ -129,16 +137,19 @@
                 v-model="location.current.istSpace.cabinet"
                 label="Armário"
                 v-on:input="updateStoreCurrentLocation()"
+                solo
                 ></v-text-field>
                 <v-text-field
                 v-model="location.current.istSpace.drawer"
                 label="Prateleira/Gaveta"
                 v-on:input="updateStoreCurrentLocation()"
+                solo
                 ></v-text-field>
                 <v-text-field
                 v-model="location.current.istSpace.position"
                 label="Posição"
                 v-on:input="updateStoreCurrentLocation()"
+                solo
                 ></v-text-field>
             </template>
         </template>
@@ -149,6 +160,7 @@
                 v-model="location.current.coordinates.lat"
                 label="Latitude"
                 v-on:input="updateStoreCurrentLocation()"
+                solo
                 ></v-text-field>
             </v-flex>
             <v-flex md5>
@@ -156,6 +168,7 @@
                 v-model="location.current.coordinates.long"
                 label="Longitude"
                 v-on:input="updateStoreCurrentLocation()"
+                solo
                 ></v-text-field>
             </v-flex>
         </v-layout>
@@ -165,6 +178,7 @@
             v-model="location.current.address.name"
             label="Morada"
             v-on:input="updateStoreCurrentLocation()"
+            solo
             ></v-text-field>
         </template>
         <v-flex md12>

@@ -7,17 +7,19 @@
                 <v-icon v-if="active" large>keyboard_arrow_down</v-icon>
             </v-flex>
             <v-flex sm10 md10>
-                <span>Descrição</span>
+                <h3>Descrição</h3>
             </v-flex>
         </v-layout>
         <!-- MODULE SEARCH INPUTS -->
-        <v-layout v-if="active" row wrap>
-            <!-- CATEGORY -->
-            <v-flex sm12 md12>
-                <span>Categoria</span>
-            </v-flex>
+        <template v-if="active">
+            <v-layout row wrap>
+                <!-- CATEGORY -->
+                <v-flex sm10 md10 offset-sm1 offset-md1>
+                    <span>Categoria</span>
+                </v-flex>
+            </v-layout>
             <SearchCategoriesNode v-if="dataAlreadyLoaded" :categories="modules[currentModuleIndex].categories.value"/>
-        </v-layout>
+        </template>
     </div>
 </template>
 

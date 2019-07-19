@@ -7,13 +7,13 @@
                 <v-icon v-if="active" large>keyboard_arrow_down</v-icon>
             </v-flex>
             <v-flex sm10 md10>
-                <span>Identificação</span>
+                <h3>Identificação</h3>
             </v-flex>
         </v-layout>
         <!-- MODULE SEARCH INPUTS -->
         <v-layout v-if="active" row wrap>
             <!-- TITLE -->
-            <v-flex sm12 md12>
+            <v-flex sm10 md10 offset-sm1 offset-md1>
                 <span>Título</span>
             </v-flex>
             <v-flex sm10 md10 offset-sm1 offset-md1>
@@ -25,7 +25,7 @@
             ></v-text-field>
             </v-flex>
             <!-- OPTIONAL ID -->
-            <v-flex sm12 md12>
+            <v-flex sm10 md10 offset-sm1 offset-md1>
                 <span>Id opcional</span>
             </v-flex>
             <v-flex sm10 md10 offset-sm1 offset-md1>

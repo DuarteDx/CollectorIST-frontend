@@ -10,9 +10,9 @@
                         {{ userInfo.name}}
                     </v-flex>
                     <v-flex class="person-rank">
-                        <span @click.stop="changeRank(0)" v-bind:class="{ currentRank: !userInfo.role.admin && !userInfo.role.editor }" class="select-rank" :key="updateRoles">Visualizador</span>
-                        <span @click.stop="changeRank(1)" v-bind:class="{ currentRank: userInfo.role.editor }" class="select-rank" :key="updateRoles+5">Editor</span>
-                        <span @click.stop="changeRank(2)" v-bind:class="{ currentRank: userInfo.role.admin }" class="select-rank" :key="updateRoles+10">Administrador</span>
+                        <v-btn @click.stop="changeRank(0)" :color="!userInfo.role.admin && !userInfo.role.editor ? 'success' : ''" :key="updateRoles">Visualizador</v-btn>
+                        <v-btn @click.stop="changeRank(1)" :color="userInfo.role.editor ? 'success' : ''" :key="updateRoles+100">Editor</v-btn>
+                        <v-btn @click.stop="changeRank(2)" :color="userInfo.role.admin  ? 'success' : ''" :key="updateRoles+200">Administrador</v-btn>
                     </v-flex>
                     <v-flex class="person-id">
                         {{ userInfo.username}}
@@ -20,16 +20,20 @@
                 </v-layout>
                 <span class="collections-key">Coleções:</span>
                 <v-layout row wrap class="person-collections">
-                    <v-flex md2 class="single-collection" v-for="(collection, index) in userInfo.role.collections" v-bind:key="index">
-                            <span>{{ collection }}</span>
-                            <span @click.stop="deleteCollection(collection)" class="delete-collection">X</span>
+                    <v-flex sm4 md2 v-for="(collection, index) in userInfo.role.collections" v-bind:key="index">
+                            <v-btn color="info" @click.stop="deleteCollection(collection)">{{ collection }} X</v-btn>
                     </v-flex>
                 </v-layout>
                 <span class="collections-key">Adicionar coleção:</span>
                 <form style="margin-top: 30px;">
                     <v-layout>
-                        <v-flex md8>
-                            <v-text-field v-model="newCollection" label="Nome da coleção"></v-text-field>
+                        <v-flex md6>
+                            <v-select
+                            :items="categoriesList"
+                            label="Nome da categoria"
+                            v-model="newCollection"
+                            solo
+                            ></v-select>
                         </v-flex>
                         <v-flex md4>
                             <v-btn @click="addCollection()">Submeter coleção</v-btn>
@@ -62,8 +66,9 @@ export default {
                     collections: []
                 }
             },
-            newCollection: '',
-            updateRoles: 0
+            newCollection: null,
+            updateRoles: 0,
+            categoriesList: []
         }
     },
     methods: {
@@ -77,6 +82,12 @@ export default {
                 .catch(function(error) {
                     console.log(error)
                 })
+        },
+        async fetchCategories() {
+            let response = await api().get('/assets/object-description')
+            response.data.forEach((categoryNode) => {
+                this.categoriesList.push(categoryNode.title)
+            })
         },
         async deleteCollection(collection) {
             if(this.confirmAction('Tem a certeza que pretende apagar esta coleção?')) {
@@ -93,14 +104,8 @@ export default {
         },
         async changeRank(newRank) {
             if(this.confirmAction('Tem a certeza que pretende alterar as permissões deste utilizador?')) {
-                var component = this
                 await api().post('users/' +  this.$route.params.istId + '/rank/' + newRank + '/' + Credentials.getToken())
-                    .then(function() {
-                        component.updateRoles++
-                    })
-                    .catch(function(error) {
-                        console.log(error)
-                    })
+                    
             }
         },
         async addCollection() {
@@ -126,6 +131,7 @@ export default {
     },
     created() {
         this.fetchUser()
+        this.fetchCategories()
     }
 
 }
@@ -172,10 +178,8 @@ export default {
 }
 
 .person-collections {
-    font-family: Raleway;
     margin-top: 30px;
     margin-bottom: 60px;
-    font-size: 20px;
 }
 
 .single-collection {

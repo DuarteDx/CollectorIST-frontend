@@ -6,6 +6,7 @@
         v-model="selectedLocation"
         label="Sub-espaço"
         v-on:change="getLocationId()"
+        solo
     ></v-select>
 
     <UsualLocationNode

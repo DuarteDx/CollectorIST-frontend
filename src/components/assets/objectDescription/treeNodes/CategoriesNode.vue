@@ -5,6 +5,7 @@
         v-model="ObjectDescription.category"
         label="Categoria"
         v-on:change="getSubCategories()"
+        solo
     ></v-select>
 
     <CategoriesNode

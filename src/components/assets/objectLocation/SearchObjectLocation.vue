@@ -7,59 +7,72 @@
                 <v-icon v-if="active" large>keyboard_arrow_down</v-icon>
             </v-flex>
             <v-flex sm10 md10>
-                <span>Localização</span>
+                <h3>Localização</h3>
             </v-flex>
         </v-layout>
         <!-- MODULE SEARCH INPUTS -->
         <v-layout v-if="active" row wrap>
-            <!-- Room -->
+            <!-- IST SPACE -->
             <template v-if="selectedInputMethod === 0">
+                <v-flex sm10 md10 offset-sm1 offset-md1>
+                    <span>Localização IST:</span>
+                </v-flex>
                 <!-- Dropdown -->
-                <v-select
-                :items="locationsList"
-                v-model="selectedLocation"
-                label="Espaço"
-                v-on:change="getLocationId()"
-                ></v-select>
+                <v-flex sm10 md10 offset-sm1 offset-md1>
+                    <v-select
+                    :items="locationsList"
+                    v-model="selectedLocation"
+                    label="Espaço"
+                    v-on:change="getLocationId()"
+                    solo
+                    ></v-select>
+                </v-flex>
                 <!-- Tree Node -->
                 <SearchLocationNode v-if="selectedLocation" :parentId="selectedLocationId" :key="locationChildKey"/>
                 <!-- Cabinet/Drawer/Position -->
+                <v-flex sm10 md10 offset-sm1 offset-md1>
+                    <span>Localização específica:</span>
+                </v-flex>
                 <!-- Cabinet -->
-                <v-flex sm12 md12>
+                <v-flex sm10 md10 offset-sm1 offset-md1>
                     <v-text-field
                     v-model="objectLocation.istSpace.cabinet"
                     label="Armário"
                     v-on:input="updateStoreLocation()"
+                    solo
                     ></v-text-field>
                 </v-flex>
                 <!-- Drawer -->
-                <v-flex sm12 md12>
+                <v-flex sm10 md10 offset-sm1 offset-md1>
                     <v-text-field
                     v-model="objectLocation.istSpace.drawer"
                     label="Gaveta"
                     v-on:input="updateStoreLocation()"
+                    solo
                     ></v-text-field>
                 </v-flex>
                 <!-- Position -->
-                <v-flex sm12 md12>
+                <v-flex sm10 md10 offset-sm1 offset-md1>
                     <v-text-field
                     v-model="objectLocation.istSpace.position"
                     label="Posição"
                     v-on:input="updateStoreLocation()"
+                    solo
                     ></v-text-field>
                 </v-flex>
             </template>
-            <!-- Address -->
+            <!-- ADDRESS -->
             <template v-if="selectedInputMethod === 1">
                 <v-layout row wrap>
-                    <v-flex sm12 md12>
-                        <span>Moradas:</span>
+                    <v-flex sm10 md10 offset-sm1 offset-md1>
+                        <span>Morada:</span>
                     </v-flex>
-                    <v-flex sm12 md12>
+                    <v-flex sm10 md10 offset-sm1 offset-md1>
                         <v-text-field
                         v-model="objectLocation.address.name"
                         label="Morada"
                         v-on:input="updateStoreLocation()"
+                        solo
                         ></v-text-field>
                     </v-flex>
                 </v-layout>

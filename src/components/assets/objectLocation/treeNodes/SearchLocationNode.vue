@@ -1,12 +1,17 @@
 <template>
   <div>
-    <v-select
-        v-if="locationsList"
-        :items="locationsList"
-        v-model="selectedLocation"
-        label="Sub-espaço"
-        v-on:change="getLocationId()"
-    ></v-select>
+    <v-layout >
+        <v-flex sm10 md10 offset-sm1 offset-md1>
+            <v-select
+                v-if="locationsList"
+                :items="locationsList"
+                v-model="selectedLocation"
+                label="Sub-espaço"
+                v-on:change="getLocationId()"
+                solo
+            ></v-select>
+        </v-flex>
+    </v-layout>
 
     <SearchLocationNode
         v-if="selectedLocationId"

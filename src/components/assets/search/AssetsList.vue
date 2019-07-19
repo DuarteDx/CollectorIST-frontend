@@ -9,7 +9,7 @@
                                 <v-flex md2>
                                    <v-img width="150px" :src="require('@/assets/images/image-placeholder.jpg')"></v-img> 
                                 </v-flex>
-                                <v-flex md9>
+                                <v-flex sm5 md9>
                                     <v-layout row wrap>
                                         <v-flex class="asset-title" xs12 sm12 md12>
                                             <p v-if="asset.ObjectIdentification.title">{{ asset.ObjectIdentification.title }}</p>

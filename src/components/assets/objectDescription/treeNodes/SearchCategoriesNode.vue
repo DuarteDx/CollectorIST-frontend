@@ -1,11 +1,16 @@
 <template>
   <div>
-    <v-select
-        :items="categoriesList"
-        v-model="ObjectDescription.category"
-        label="Categoria"
-        v-on:change="getSubCategories()"
-    ></v-select>
+    <v-layout row wrap>
+        <v-flex sm10 md10 offset-sm1 offset-md1>
+            <v-select
+                :items="categoriesList"
+                v-model="ObjectDescription.category"
+                label="Categoria"
+                v-on:change="getSubCategories()"
+                solo
+            ></v-select>
+        </v-flex>
+    </v-layout>
 
     <SearchCategoriesNode
         v-if="hasChildren"

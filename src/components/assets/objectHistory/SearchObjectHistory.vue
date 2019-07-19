@@ -7,7 +7,7 @@
                 <v-icon v-if="active" large>keyboard_arrow_down</v-icon>
             </v-flex>
             <v-flex sm10 md10>
-                <span>História</span>
+                <h3>História</h3>
             </v-flex>
         </v-layout>
         <!-- MODULE SEARCH INPUTS -->

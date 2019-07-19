@@ -57,7 +57,6 @@ export default {
 <style scoped>
 
     .template {
-        height: 900px;
         margin: 60px 0 80px 20px;
     }
 
@@ -67,7 +66,7 @@ export default {
     }
 
     .bg {
-        background-color: rgb(240, 209, 138);
+        background-color: rgb(221,221,221);
     }
 
     .full-width {
