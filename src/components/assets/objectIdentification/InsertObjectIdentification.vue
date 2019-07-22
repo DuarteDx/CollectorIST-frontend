@@ -4,41 +4,40 @@
         <h2>Informação do objecto</h2>
         <!--TITLE-->
         <v-text-field
-        v-model="title"
+        v-model="ObjectIdentification.title"
         label="Título"
         required
-        v-on:input="updateTitle()"
+        v-on:input="updateStore()"
         ></v-text-field>
 
         <!--OLD IDs-->
          <div>
             <h3>Ids atribuídos à peça anteriormente</h3>
             <v-text-field
-            v-model="optionalId"
+            v-model="ObjectIdentification.optionalId"
             label="Id opcional"
-            v-on:input="updateOptionalId()"
+            v-on:input="updateStore()"
             ></v-text-field>
          </div>
     </div>
 </template>
 
 <script>
-import assetInsertion from '@/assets/store/assetInsertion'
+import AssetInsertionStore from '@/assets/store/AssetInsertionStore'
 
 export default {
     name: 'InsertObjectIdentification',
     data() {
         return {
-            title: '',
-            optionalId: ''
+            ObjectIdentification: {
+                title: '',
+                optionalId: ''
+            }
         }
     },
     methods: {
-        updateTitle() {
-            assetInsertion.setTitle(this.title)
-        },
-        updateOptionalId() {
-            assetInsertion.setOptionalId(this.optionalId)
+        updateStore() {
+            AssetInsertionStore.setObjectIdentification(this.ObjectIdentification)
         }
     },
     created() {
@@ -46,8 +45,3 @@ export default {
     }
 }
 </script>
-
-<style scoped>
-
-</style>
-

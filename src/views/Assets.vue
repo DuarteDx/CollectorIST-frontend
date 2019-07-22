@@ -1,11 +1,11 @@
 <template>
     <div>
         <!--SEARCH BAR-->
-        <SearchBar @searchBarParams="updateResults"/>
+        <!--<SearchBar @searchBarParams="updateResults"/>-->
         <v-layout class="mt">
             <!--SIDE PANEL-->
             <v-flex md3>
-                <SidePanel v-bind:categories="categoriesList" v-bind:collections="collectionsList"/>
+                <SidePanel v-if="modulesReady" v-bind:modules="modules" @sideBarParams="updateResults"/>
             </v-flex>
             <v-flex md9>
                 <!--TOP "NAVBAR"-->
@@ -13,11 +13,11 @@
                     <v-flex md8>
                         <v-btn color="info" style="margin-left: 40px;" @click="displayInsertionForm()">+ Inserir peça</v-btn>
                     </v-flex>
-                    <v-flex md2>
+                    <v-flex md2 v-if="numberOfResults/15 > 1">
                         <v-pagination
                         v-model="page"
                         @input="updatePage()"
-                        :length="10"
+                        :length="Math.ceil(numberOfResults/15)"
                         :total-visible="5"
                         ></v-pagination>
                     </v-flex>
@@ -36,11 +36,11 @@
                     <v-flex md8>
                         <v-btn color="info" style="margin-left: 40px;" @click="displayInsertionForm()">+ Inserir peça</v-btn>
                     </v-flex>
-                    <v-flex md2>
+                    <v-flex md2 v-if="numberOfResults/15 > 1">
                         <v-pagination
                         v-model="page"
                         @input="updatePage()"
-                        :length="10"
+                        :length="Math.ceil(numberOfResults/15)"
                         :total-visible="5"
                         ></v-pagination>
                     </v-flex>
@@ -54,21 +54,19 @@
 // Components
 import AssetsList from '@/components/assets/search/AssetsList'
 import SearchBar from '@/components/assets/search/SearchBar'
-import InsertSingleAsset from '@/components/assets/insertion/InsertSingleAsset'
 import InsertAsset from '@/components/assets/InsertAsset'
 import SidePanel from '@/components/assets/search/SidePanel'
 // Api
 import api from '@/api/api'
 import Credentials from '@/assets/scripts/login'
 // Store
-import assetsSearchParams from '@/assets/store/assetsSearchParams'
+import AssetsSearchParams from '@/assets/store/AssetsSearchParams'
 
 export default {
 	name: 'Assets',
 	components: {
         AssetsList,
         SearchBar,
-        InsertSingleAsset,
         InsertAsset,
         SidePanel
     },
@@ -77,9 +75,10 @@ export default {
             searchParams: {},
             displayInsertionFormButton: false,
             assetsList: [],
-            categoriesList: [],
-            collectionsList: [],
-            page: 1
+            modules: {},
+            modulesReady: false,
+            page: 1,
+            numberOfResults: 0
         }
     },
     methods: {
@@ -91,35 +90,34 @@ export default {
             const response = await api().get('/assets')
             this.assetsList = response.data
         },
-        async fetchCategories() {
-            const response = await api().get('/category')
-            this.categoriesList = response.data
-        },
-        async fetchCollections() {
-            const response = await api().get('/collection')
-            this.collectionsList = response.data
+        async fetchModules() {
+            const response = await api().get('/assets/modules')
+            this.modulesReady = true
+            this.modules = response.data
         },
         // UPDATE RESULTS
         async search() {
-            const response = await api().get('/assets/search', {
+            let response = await api().get('/assets/search', {
                 params: this.searchParams
             })
+            // Get and remove number of results from asset array
+            this.numberOfResults = response.data.shift()
             this.assetsList = response.data
         },
         updateResults() {
-            this.searchParams = assetsSearchParams.getSearchParams()
+            this.searchParams = AssetsSearchParams.getSearchParams()
+            console.log(this.searchParams)
             this.search()
         },
         updatePage() {
-            assetsSearchParams.setCurrentPage(this.page)
+            AssetsSearchParams.setCurrentPage(this.page)
             this.updateResults()
         }
     },
     created() {
-        this.searchParams = assetsSearchParams.getSearchParams()
+        this.searchParams = AssetsSearchParams.getSearchParams()
         this.search()
-        this.fetchCategories()
-        this.fetchCollections()
+        this.fetchModules()
     }
 }
 </script>

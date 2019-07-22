@@ -2,9 +2,10 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 // Views
-import Insert from '@/views/Insert'
 import Assets from '@/views/Assets'
 import Asset from '@/views/Asset'
+import EditAsset from '@/views/EditAsset'
+import ConfigureModules from '@/views/ConfigureModules'
 import Collections from '@/views/Collections'
 import Collection from '@/views/Collection'
 import Categories from '@/views/Categories'
@@ -35,6 +36,14 @@ const router = new Router({
       component: Asset
     },
     {
+      path: '/assets/:id/edit',
+      component: EditAsset
+    },
+    {
+      path: '/config',
+      component: ConfigureModules
+    },
+    {
       path: '/collections',
       component: Collections,
     },
@@ -51,10 +60,6 @@ const router = new Router({
       component: Category
     },
     {
-      path: '/insert',
-      component: Insert,
-    },
-    {
       path: '/login',
       name: 'login',
       component: Login
@@ -62,7 +67,7 @@ const router = new Router({
     {
       path: '/logout',
       name: 'logout',
-      beforeEnter() {location.href = 'id.tecnico.ulisboa.pt/cas/logout'} 
+      beforeEnter() {location.href = 'https://id.tecnico.ulisboa.pt/cas/logout'} 
     },
     {
       path: '/auth',

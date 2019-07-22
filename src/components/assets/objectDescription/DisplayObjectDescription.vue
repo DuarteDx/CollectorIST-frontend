@@ -7,11 +7,11 @@
                 <v-flex md6 class="category-name">
                     <span class="ml"> Categoria:</span> 
                 </v-flex>
-                <v-flex v-if="asset.category" md6 class="category-data">
-                    <span v-for="(category, key, index) in asset.category.path" class="ml" v-bind:key="index">{{category}} > </span>
-                    <span>{{asset.category.title}}</span>
+                <v-flex v-if="asset.ObjectDescription" md6 class="category-data">
+                    <!--<span v-for="(category, key, index) in asset.category.path" class="ml" v-bind:key="index">{{category}} > </span>-->
+                    <span class="ml">{{asset.ObjectDescription.category}}</span>
                 </v-flex>
-                <v-flex v-if="!asset.category" md12 class="category-data"><i class="ml">Esta peça não tem uma categoria associada</i></v-flex>
+                <v-flex v-if="!asset.ObjectDescription" md12 class="category-data"><i class="ml">Esta peça não tem uma categoria associada</i></v-flex>
             </v-layout>
         </v-flex>
     </v-layout>

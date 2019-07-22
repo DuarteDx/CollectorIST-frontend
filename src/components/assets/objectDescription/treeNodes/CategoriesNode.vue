@@ -1,10 +1,11 @@
 <template>
   <div>
     <v-select
-        :items="categoriesList"
-        v-model="selectedCategory"
+        :items="categories"
+        v-model="ObjectDescription.category"
         label="Categoria"
         v-on:change="getSubCategories()"
+        solo
     ></v-select>
 
     <CategoriesNode
@@ -17,31 +18,28 @@
 </template>
 
 <script>
-  import categoriesAssetInsert from '@/assets/store/selectedCategoryAssetInsertion.js'
-  import assetInsertion from '@/assets/store/assetInsertion'
+  import AssetInsertionStore from '@/assets/store/AssetInsertionStore'
 
   export default { 
     props: [ 'categories' ],
     name: 'CategoriesNode',
     data() {
         return {
-            categoriesList: [],
-            selectedCategory: '',
             selectedCategoryIndex: -1,
-            selectedCategory: '',
             childKey: 0,
-            hasChildren: false
+            hasChildren: false,
+            ObjectDescription: {
+              category: ''
+            }
         }
     },
     methods: {
         getSubCategories() {
-            // Gets the index of the selected category
-            this.selectedCategoryIndex = this.categories.findIndex(x => x.title == this.selectedCategory)
-
             // Define selected category in store
-            categoriesAssetInsert.setSelectedCategory(this.categories[this.selectedCategoryIndex])
-            assetInsertion.setCategory(categoriesAssetInsert.getSelectedCategory())
-            console.log(categoriesAssetInsert.getSelectedCategory())
+            AssetInsertionStore.setObjectDescription(this.ObjectDescription)
+
+            // Gets the index of the selected category
+            this.selectedCategoryIndex = this.categories.findIndex(x => x.title == this.ObjectDescription.category)
 
             // Check if there are child nodes
             let component = this
@@ -57,10 +55,7 @@
         }
     },
     created() {
-        var component = this
-        this.categories.forEach(function(category) {
-            component.categoriesList.push(category.title)
-        })
+    
     }
   }
 </script>

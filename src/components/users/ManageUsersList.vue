@@ -19,9 +19,9 @@
                             </v-flex>
                         </v-layout>
                         <span style="margin-bottom: 10px">Coleções:</span>
-                        <v-layout row wrap class="person-collections">
-                            <v-flex md2 class="single-collection" v-for="(collection, index) in person.role.collections" v-bind:key="index">
-                                    <span>{{ collection }}</span>
+                        <v-layout row wrap>
+                            <v-flex sm4 md2 v-for="(collection, index) in person.role.collections" v-bind:key="index">
+                                    <v-btn color="info">{{ collection }}</v-btn>
                             </v-flex>
                         </v-layout>
                     </v-flex>

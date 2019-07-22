@@ -5,7 +5,7 @@
             <!--TITLE-->
             <v-layout align-center justify-space-between row>
                 <v-flex md12 class="main-title">
-                    <h1 v-if="asset.title" class="ml">{{ asset.title }}</h1>
+                    <h1 v-if="asset.ObjectIdentification.title" class="ml">{{ asset.ObjectIdentification.title }}</h1>
                     <h1 v-else class="ml"><i>Peça sem título</i></h1>
                 </v-flex>
             </v-layout>
@@ -15,7 +15,7 @@
                     <span class="ml">ID opcional:</span>
                 </v-flex>
                 <v-flex md6 class="category-data">
-                    <span v-if="asset.optionalId">{{asset.optionalId}}</span>
+                    <span v-if="asset.ObjectIdentification.optionalId">{{asset.ObjectIdentification.optionalId}}</span>
                     <span v-else><i>Não especificado</i></span>
                 </v-flex>
             </v-layout>

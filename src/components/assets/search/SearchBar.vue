@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import assetsSearchParams from '@/assets/store/assetsSearchParams'
+import AssetsSearchParams from '@/assets/store/AssetsSearchParams'
 
 export default {
     name: 'SearchBar',
@@ -43,9 +43,9 @@ export default {
     },
     methods: {
         search() {
-            assetsSearchParams.setTitle(this.params.title)
-            assetsSearchParams.setId(this.params.id)
-            assetsSearchParams.setCreator(this.params.creator)
+            AssetsSearchParams.setTitle(this.params.title)
+            AssetsSearchParams.setId(this.params.id)
+            AssetsSearchParams.setCreator(this.params.creator)
             this.$emit('searchBarParams')
         },
         handleEnter(event) {
@@ -57,13 +57,13 @@ export default {
             this.advancedSearch = !this.advancedSearch
         },
         updateParams() {
-            let storedParams = assetsSearchParams.getSearchParams()
+            let storedParams = AssetsSearchParams.getSearchParams()
             this.params.title = storedParams.title
             this.params.id = storedParams.id
             this.params.creator = storedParams.creator
         },
         clear() {
-            assetsSearchParams.clear()
+            AssetsSearchParams.clear()
             this.updateParams()
             this.$emit('searchBarParams')
         }
