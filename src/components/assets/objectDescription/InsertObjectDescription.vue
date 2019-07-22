@@ -31,7 +31,7 @@ export default {
     },
     methods: {
         async fetchCategories() {
-            this.rawCategories = await api().get('/assets/object-description/categories/' + Credentials.getToken())
+            this.rawCategories = await api().get('/assets/object-description')
             this.rawCategories = this.rawCategories.data
         },
     },
