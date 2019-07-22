@@ -15,6 +15,9 @@
 import api from '@/api/api'
 // Components
 import CategoriesNode from './treeNodes/CategoriesNode'
+// Stores
+import Credentials from '@/assets/scripts/login.js'
+
 
 export default {
     name: 'InsertObjectDescription',
@@ -28,7 +31,7 @@ export default {
     },
     methods: {
         async fetchCategories() {
-            this.rawCategories = await api().get('/category')
+            this.rawCategories = await api().get('/assets/object-description/categories/' + Credentials.getToken())
             this.rawCategories = this.rawCategories.data
         },
     },

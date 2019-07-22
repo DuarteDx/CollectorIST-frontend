@@ -10,6 +10,7 @@
                 </router-link>
             </v-flex>
         </v-layout>
+        {{ showClassModule() }}
         <!--Object components-->
         <DisplayObjectIdentification v-if="dataIsLoaded" v-bind:asset="asset.data"/>
         <DisplayObjectDescription v-if="dataIsLoaded" v-bind:asset="asset.data"/>
@@ -49,6 +50,9 @@ export default {
         async getAssetInfo() {
             this.asset = await api().get('/assets/' + this.$route.params.id + '/' + Credentials.getToken())
             this.dataIsLoaded = true
+        },
+        showClassModule() {
+            return this.asset.data
         }
     },
     created() {
