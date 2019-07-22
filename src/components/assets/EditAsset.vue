@@ -16,6 +16,7 @@
         <EditObjectDescription v-if="dataIsLoaded" v-bind:asset="asset.data.ObjectDescription"/>
         <EditObjectLocation v-if="dataIsLoaded" v-bind:asset="asset.data.ObjectLocation"/>
         <EditObjectHistory v-if="dataIsLoaded" v-bind:asset="asset.data.ObjectHistory"/>
+        <EditObjectCollection v-if="dataIsLoaded" v-bind:asset="asset.data.ObjectCollection"/>
     </v-container>
 </template>
 
@@ -27,6 +28,7 @@ import EditObjectIdentification from '@/components/assets/objectIdentification/E
 import EditObjectDescription from '@/components/assets/objectDescription/EditObjectDescription'
 import EditObjectLocation from '@/components/assets/objectLocation/EditObjectLocation'
 import EditObjectHistory from '@/components/assets/objectHistory/EditObjectHistory'
+import EditObjectCollection from '@/components/assets/objectCollection/EditObjectCollection'
 
 import api from '@/api/api'
 import Credentials from '@/assets/scripts/login'
@@ -37,7 +39,8 @@ export default {
         EditObjectIdentification,
         EditObjectDescription,
         EditObjectLocation,
-        EditObjectHistory
+        EditObjectHistory,
+        EditObjectCollection
     },
     data() {
         return {
