@@ -1,8 +1,8 @@
 <template>
-    <div>
+    <div style="margin-bottom: 20px;">
         <v-layout justify-center>
-            <v-flex sm12 md5>
-                <h3 class="title">Inserir nova coleção</h3>
+            <v-flex sm12 md12>
+                <h3 class="title text-md-center">Inserir nova coleção</h3>
             </v-flex>
         </v-layout>
         <v-layout justify-center>
@@ -25,13 +25,13 @@
             </v-flex>
         </v-layout>
         <v-layout justify-center>
-            <v-flex sm5 md3>
-                <v-btn @click="insertCollection">Inserir</v-btn>
+            <v-flex sm12 md12 class="text-md-center">
+                <v-btn @click="insertCollection()">Inserir</v-btn>
             </v-flex>
         </v-layout>
         <v-layout justify-center>
-            <v-flex md5>
-                <h3 class="title">Coleções existentes:</h3>
+            <v-flex sm12 md12>
+                <h3 class="title text-md-center">Coleções existentes:</h3>
             </v-flex>
         </v-layout>
         <v-layout v-for="(collection, index) in listOfCollections" v-bind:key="index">

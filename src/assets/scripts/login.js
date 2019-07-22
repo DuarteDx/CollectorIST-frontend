@@ -24,6 +24,10 @@ var Credentials = {
             .catch(function() {
                 return false
             })
+    },
+    async checkIfCanEdit(assetId) {
+        let response = await api().get('users/checkIfCanEdit/' + assetId + '/' + Credentials.getToken())
+        return response.data
     }
 }
 

@@ -38,36 +38,11 @@ import Credentials from '@/assets/scripts/login.js'
                         path: '/config',
                         index: 2
                     },
-                    /*{
-                        title: 'COLEÇÕES',
-                        path: '/collections',
-                        index: 2
-                    },
-                    {
-                        title: 'CATEGORIAS',
-                        path: '/categories',
-                        index: 3
-                    },
-                    {
-                        title: 'INSERIR',
-                        path: '/insert',
-                        index: 4
-                    },
-                    {
-                        title: 'LOGIN',
-                        path: '/auth',
-                        index: 4
-                    },*/
                     {
                         title: 'UTILIZADORES',
                         path: '/users/manage',
                         index: 3
                     },
-                    /*{
-                        title: 'LOGS',
-                        path: '/logs',
-                        index: 5
-                    },*/
                     {
                         title: 'LOGOUT',
                         path: '/logout',
@@ -80,11 +55,19 @@ import Credentials from '@/assets/scripts/login.js'
         methods: {
             changeUnderlining(newIndex) {
                 this.currentMenuOnDisplay = newIndex
+            },
+            sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms))
             }
         },
         async created() {
+            // Wait until frontend has token before checking if user is admin
+            while(await Credentials.checkIfAdmin() === '403 Forbidden!') {
+                await this.sleep(15)
+            }
+            // Remove admin paths if user is not admin (after waiting for token)
             if(!await Credentials.checkIfAdmin()) {
-                this.navBarItems.splice(3, 2)
+                this.navBarItems.splice(1, 2)
             }
         }
     }
