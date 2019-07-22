@@ -29,7 +29,7 @@
                     <v-layout>
                         <v-flex md6>
                             <v-select
-                            :items="categoriesList"
+                            :items="listOfCollections"
                             label="Nome da categoria"
                             v-model="newCollection"
                             solo
@@ -68,7 +68,7 @@ export default {
             },
             newCollection: null,
             updateRoles: 0,
-            categoriesList: []
+            listOfCollections: []
         }
     },
     methods: {
@@ -83,10 +83,10 @@ export default {
                     console.log(error)
                 })
         },
-        async fetchCategories() {
-            let response = await api().get('/assets/object-description')
-            response.data.forEach((categoryNode) => {
-                this.categoriesList.push(categoryNode.title)
+        async fetchCollections() {
+            let response = await api().get('/assets/object-collection/collections')
+            response.data.forEach((collection) => {
+                this.listOfCollections.push(collection.title)
             })
         },
         async deleteCollection(collection) {
@@ -131,7 +131,7 @@ export default {
     },
     created() {
         this.fetchUser()
-        this.fetchCategories()
+        this.fetchCollections()
     }
 
 }

@@ -19,7 +19,7 @@
                 <v-textarea
                 solo
                 name="input-7-4"
-                label="Desrição"
+                label="Descrição"
                 v-model="newCollection.description"
                 ></v-textarea>
             </v-flex>
