@@ -13,7 +13,8 @@
         <v-layout row justify-center>
             <v-flex sm6 md6>
                 <v-card>
-                    <ConfigObjectDescription v-if="selectedModule === 'Descrição'" style="padding: 40px;"/>
+                    <ConfigObjectDescription v-if="selectedModule === 'Categorias'" style="padding: 40px;"/>
+                    <ConfigObjectCollection v-if="selectedModule === 'Coleções'" style="padding: 40px;"/>
                 </v-card>
             </v-flex>
         </v-layout>
@@ -22,16 +23,18 @@
 
 <script>
 import ConfigObjectDescription from '@/components/assets/objectDescription/ConfigObjectDescription'
+import ConfigObjectCollection from '@/components/assets/objectCollection/ConfigObjectCollection'
 
 export default {
 	name: 'ConfigureModules',
 	components: {
-        ConfigObjectDescription
+        ConfigObjectDescription,
+        ConfigObjectCollection
     },
     data() {
         return {
-            selectedModule: 'Descrição',
-            modules: ['Descrição']
+            selectedModule: 'Coleções',
+            modules: ['Categorias', 'Coleções']
         }
     },
     methods: {

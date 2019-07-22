@@ -1,7 +1,7 @@
 <template>
     <form style="margin: 90px;">
         <v-layout row justify-center>
-            <v-flex md12>
+            <v-flex sm12 md12>
                 <h2>Importar ficheiro com árvore de categorias</h2>
                 <br>
             </v-flex>
@@ -12,7 +12,7 @@
             </v-flex>
         </v-layout>
         <v-layout row justify-center>
-            <v-flex md12>
+            <v-flex sm4 md3>
                 <v-btn @click="uploadFile()">Submeter</v-btn>
             </v-flex>
         </v-layout>
