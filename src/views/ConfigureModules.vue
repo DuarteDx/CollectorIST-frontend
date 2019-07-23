@@ -36,8 +36,8 @@ export default {
     },
     data() {
         return {
-            selectedModule: 'Coleções',
-            modules: ['Categorias', 'Coleções', 'Ids opcionais']
+            selectedModule: 'Ids opcionais',
+            modules: ['Ids opcionais', 'Coleções', 'Categorias']
         }
     },
     methods: {

@@ -6,7 +6,7 @@
                     <v-flex sm12 md12>
                         <router-link :to="'/assets/' + asset._id" class="text--no-decoration single-asset-link">
                             <v-layout wrap v-resize="onResize">
-                                <v-flex sm12 md2 v-if="windowWidth > 958">
+                                <v-flex sm12 md2 v-if="windowWidth > 958" style="min-width: 150px;">
                                    <v-img width="150px" :src="require('@/assets/images/image-placeholder.jpg')"></v-img> 
                                 </v-flex>
                                 <v-flex sm12 md9>

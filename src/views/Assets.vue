@@ -4,14 +4,18 @@
         <!--<SearchBar @searchBarParams="updateResults"/>-->
         <v-layout class="mt">
             <!--SIDE PANEL-->
-            <v-flex md3>
+            <v-flex md3 style="margin-bottom: 30px;">
                 <SidePanel v-if="modulesReady" v-bind:modules="modules" @sideBarParams="updateResults"/>
+                <span style="margin-left:20px;">Resultados: {{ numberOfResults }}</span>
             </v-flex>
             <v-flex md9>
                 <!--TOP "NAVBAR"-->
                 <v-layout row>
-                    <v-flex md8>
+                    <v-flex md2 style="min-width: 180px;">
                         <v-btn color="info" style="margin-left: 40px;" @click="displayInsertionForm()">+ Inserir peça</v-btn>
+                    </v-flex>
+                    <v-flex md6>
+                        
                     </v-flex>
                     <v-flex md2 v-if="numberOfResults/15 > 1">
                         <v-pagination
@@ -115,6 +119,7 @@ export default {
         }
     },
     created() {
+        this.page = AssetsSearchParams.getCurrentPage()
         this.searchParams = AssetsSearchParams.getSearchParams()
         this.search()
         this.fetchModules()

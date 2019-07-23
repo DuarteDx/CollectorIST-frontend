@@ -32,7 +32,7 @@
                     <span>Ids opcionais</span>
                 </v-flex>
             </v-layout>
-            <v-layout v-for="(object, index) in objectIdentification.selectedOptionalIds" v-bind:key="index">
+            <v-layout v-for="(object, index) in objectIdentification.optionalIds" v-bind:key="index">
                 <v-flex sm5 md5 offset-md1>
                     <v-select
                     :items="listOfOptionalIds"
@@ -72,7 +72,7 @@ export default {
         return {
             objectIdentification: {
                 title: null,
-                selectedOptionalIds: [],
+                optionalIds: [],
             },
             active: false,
             currentModuleIndex: -1,
@@ -105,16 +105,16 @@ export default {
             this.listOfNonPickedOptionalIds = response.data
         },
         addOptionalIdInput() {
-            this.objectIdentification.selectedOptionalIds.push({})
+            this.objectIdentification.optionalIds.push({})
         },
         removeOptionalIdInput() {
-            this.objectIdentification.selectedOptionalIds[this.objectIdentification.selectedOptionalIds.length-1] = {}
-            this.idsKeys[this.objectIdentification.selectedOptionalIds.length-1] = null
-            this.idsValues[this.objectIdentification.selectedOptionalIds.length-1] = null
-            this.objectIdentification.selectedOptionalIds.splice(this.objectIdentification.selectedOptionalIds.length-1, 1)
+            this.objectIdentification.optionalIds[this.objectIdentification.optionalIds.length-1] = {}
+            this.idsKeys[this.objectIdentification.optionalIds.length-1] = null
+            this.idsValues[this.objectIdentification.optionalIds.length-1] = null
+            this.objectIdentification.optionalIds.splice(this.objectIdentification.optionalIds.length-1, 1)
         },
         updateListOfSelectedOptionalIds(idIndex) {
-            this.objectIdentification.selectedOptionalIds[idIndex][this.idsKeys[idIndex]] = this.idsValues[idIndex]
+            this.objectIdentification.optionalIds[idIndex][this.idsKeys[idIndex]] = this.idsValues[idIndex]
             this.updateStore()
         },
     },

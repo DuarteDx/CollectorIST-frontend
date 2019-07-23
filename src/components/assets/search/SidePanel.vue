@@ -60,7 +60,7 @@ export default {
 <style scoped>
 
     .template {
-        margin: 60px 0 80px 20px;
+        margin: 60px 0 10px 20px;
     }
 
     .title {

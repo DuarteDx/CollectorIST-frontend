@@ -38,6 +38,10 @@ var AssetsSearchParams = {
         this.searchParams.nResultsPerPage = newNResultsPerPage
     },
 
+    getCurrentPage: function() {
+        return this.searchParams.currentPage
+    },
+
     setCurrentPage: function(newCurrentPage) {
         this.searchParams.currentPage = newCurrentPage
     },
