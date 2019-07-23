@@ -29,7 +29,7 @@
                 :items="listOfNonPickedOptionalIds"
                 v-model="idsKeys[index]"
                 label="Id opcional..."
-                v-on:input="updateListOfNonPickedOptionalIds(index)"
+                v-on:input="updateListOfSelectedOptionalIds(index)"
                 solo
                 ></v-select>
             </v-flex>
@@ -38,7 +38,7 @@
                 v-model="idsValues[index]"
                 label="Valor"
                 required
-                v-on:input="updateListOfNonPickedOptionalIds(index)"
+                v-on:input="updateListOfSelectedOptionalIds(index)"
                 solo
                 ></v-text-field>
             </v-flex>
@@ -98,7 +98,7 @@ export default {
             this.idsValues[this.selectedOptionalIds.length-1] = null
             this.selectedOptionalIds.splice(this.selectedOptionalIds.length-1, 1)
         },
-        updateListOfNonPickedOptionalIds(idIndex) {
+        updateListOfSelectedOptionalIds(idIndex) {
             this.selectedOptionalIds[idIndex][this.idsKeys[idIndex]] = this.idsValues[idIndex]
         },
         initializeVariables() {

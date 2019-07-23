@@ -10,34 +10,55 @@
                 <h3>Identificação</h3>
             </v-flex>
         </v-layout>
-        <!-- MODULE SEARCH INPUTS -->
-        <v-layout v-if="active" row wrap>
-            <!-- TITLE -->
-            <v-flex sm10 md10 offset-sm1 offset-md1>
-                <span>Título</span>
-            </v-flex>
-            <v-flex sm10 md10 offset-sm1 offset-md1>
-                <v-text-field
-                label="Inserir título..."
-                v-model="objectIdentification.title"
-                v-on:input="updateStore()"
-                solo
-            ></v-text-field>
-            </v-flex>
+        <div v-if="active">
+            <!-- MODULE SEARCH INPUTS -->
+            <v-layout row wrap>
+                <!-- TITLE -->
+                <v-flex sm10 md10 offset-sm1 offset-md1>
+                    <span>Título</span>
+                </v-flex>
+                <v-flex sm10 md10 offset-sm1 offset-md1>
+                    <v-text-field
+                    label="Inserir título..."
+                    v-model="objectIdentification.title"
+                    v-on:input="updateStore()"
+                    solo
+                    ></v-text-field>
+                </v-flex>
+            </v-layout>
             <!-- OPTIONAL ID -->
-            <v-flex sm10 md10 offset-sm1 offset-md1>
-                <span>Id opcional</span>
-            </v-flex>
-            <v-flex sm10 md10 offset-sm1 offset-md1>
-                <v-select
-                :items="optionalIdArray"
-                label="Selecionar id..."
-                v-model="objectIdentification.optionalId"
-                v-on:input="updateStore()"
-                solo
-                ></v-select>
-            </v-flex>
-        </v-layout>
+            <v-layout>
+                <v-flex sm10 md10 offset-sm1 offset-md1>
+                    <span>Ids opcionais</span>
+                </v-flex>
+            </v-layout>
+            <v-layout v-for="(object, index) in objectIdentification.selectedOptionalIds" v-bind:key="index">
+                <v-flex sm5 md5 offset-md1>
+                    <v-select
+                    :items="listOfOptionalIds"
+                    v-model="idsKeys[index]"
+                    label="Id opcional..."
+                    v-on:input="updateListOfSelectedOptionalIds(index)"
+                    solo
+                    ></v-select>
+                </v-flex>
+                <v-flex sm5 md4 offset-md1>
+                    <v-text-field
+                    v-model="idsValues[index]"
+                    label="Valor"
+                    required
+                    v-on:input="updateListOfSelectedOptionalIds(index)"
+                    solo
+                    ></v-text-field>
+                </v-flex>
+            </v-layout>
+            <v-layout>
+                <v-flex sm12 md11 offset-md1>
+                    <v-icon large @click="addOptionalIdInput()">add_circle_outline</v-icon>
+                    <v-icon large @click="removeOptionalIdInput()">remove_circle_outline</v-icon>
+                </v-flex>
+            </v-layout>
+        </div>
     </div>
 </template>
 
@@ -51,12 +72,14 @@ export default {
         return {
             objectIdentification: {
                 title: null,
-                optionalId: null,
+                selectedOptionalIds: [],
             },
             active: false,
             currentModuleIndex: -1,
             dataAlreadyLoaded: false,
-            optionalIdArray: []
+            listOfOptionalIds: [],
+            idsKeys: [],
+            idsValues: []
         }
     },
     methods: {
@@ -66,17 +89,34 @@ export default {
                 // Get index of current module
                 this.currentModuleIndex = this.modules.findIndex(x => x.moduleName === 'objectIdentification')
 
-                // Convert object into array
-                this.optionalIdArray = Object.keys(this.modules[this.currentModuleIndex].optionalId.values).map((key) => {
-                    return this.modules[this.currentModuleIndex].optionalId.values[key]
-                })
+                // Get list of optional ids
+                this.listOfOptionalIds = this.modules[this.currentModuleIndex].optionalId.values
+
                 // Making sure these operations are only executed once
                 this.dataAlreadyLoaded = true
             }
         },
         updateStore() {
             AssetsSearchParams.setObjectIdentification(this.objectIdentification)
-        }
+        },
+        async fetchOptionalIds() {
+            let response = await api().get('/assets/object-identification/optional-id')
+            this.listOfOptionalIds = response.data
+            this.listOfNonPickedOptionalIds = response.data
+        },
+        addOptionalIdInput() {
+            this.objectIdentification.selectedOptionalIds.push({})
+        },
+        removeOptionalIdInput() {
+            this.objectIdentification.selectedOptionalIds[this.objectIdentification.selectedOptionalIds.length-1] = {}
+            this.idsKeys[this.objectIdentification.selectedOptionalIds.length-1] = null
+            this.idsValues[this.objectIdentification.selectedOptionalIds.length-1] = null
+            this.objectIdentification.selectedOptionalIds.splice(this.objectIdentification.selectedOptionalIds.length-1, 1)
+        },
+        updateListOfSelectedOptionalIds(idIndex) {
+            this.objectIdentification.selectedOptionalIds[idIndex][this.idsKeys[idIndex]] = this.idsValues[idIndex]
+            this.updateStore()
+        },
     },
     created() {
 
