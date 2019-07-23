@@ -1,18 +1,18 @@
 <template>
     <form style="margin: 90px;">
         <v-layout row justify-center>
-            <v-flex md12>
-                <h2>Importar ficheiro com árvore de categorias</h2>
+            <v-flex sm12 md12>
+                <h2 class="text-md-center">Importar ficheiro com árvore de categorias</h2>
                 <br>
             </v-flex>
         </v-layout>
         <v-layout row justify-center>
-            <v-flex md12>
+            <v-flex md12 class="text-md-center">
                 <input type="file" id="file" ref="file" class="file-input" v-on:change="handleFileUpload()"/>
             </v-flex>
         </v-layout>
         <v-layout row justify-center>
-            <v-flex md12>
+            <v-flex sm4 md3>
                 <v-btn @click="uploadFile()">Submeter</v-btn>
             </v-flex>
         </v-layout>

@@ -13,7 +13,9 @@
         <v-layout row justify-center>
             <v-flex sm6 md6>
                 <v-card>
-                    <ConfigObjectDescription v-if="selectedModule === 'Descrição'" style="padding: 40px;"/>
+                    <ConfigObjectDescription v-if="selectedModule === 'Categorias'" style="padding: 40px;"/>
+                    <ConfigObjectCollection v-if="selectedModule === 'Coleções'" style="padding: 40px;"/>
+                    <ConfigObjectIdentification v-if="selectedModule === 'Ids opcionais'" style="padding: 40px;"/>
                 </v-card>
             </v-flex>
         </v-layout>
@@ -22,16 +24,20 @@
 
 <script>
 import ConfigObjectDescription from '@/components/assets/objectDescription/ConfigObjectDescription'
+import ConfigObjectCollection from '@/components/assets/objectCollection/ConfigObjectCollection'
+import ConfigObjectIdentification from '@/components/assets/objectIdentification/ConfigObjectIdentification'
 
 export default {
 	name: 'ConfigureModules',
 	components: {
-        ConfigObjectDescription
+        ConfigObjectDescription,
+        ConfigObjectCollection,
+        ConfigObjectIdentification
     },
     data() {
         return {
-            selectedModule: 'Descrição',
-            modules: ['Descrição']
+            selectedModule: 'Ids opcionais',
+            modules: ['Ids opcionais', 'Coleções', 'Categorias']
         }
     },
     methods: {

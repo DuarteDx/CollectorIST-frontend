@@ -7,14 +7,15 @@
             <!--MODULES-->
             <v-list class="bg full-width">
                 <SearchObjectIdentification v-bind:modules="modules"/>
+                <SearchObjectCollection v-bind:modules="modules"/>
                 <SearchObjectDescription v-bind:modules="modules"/>
                 <SearchObjectLocation v-bind:modules="modules"/>
                 <SearchObjectHistory v-bind:modules="modules"/>
             </v-list>
-            <v-flex md6>
+            <v-flex md12>
                 <v-btn color="warning" @click="clear()">Limpar filtros</v-btn>
             </v-flex>
-            <v-flex md6>
+            <v-flex md12>
                 <v-btn color="info" @click="$emit('sideBarParams')">Pesquisar</v-btn>
             </v-flex>
         </v-layout>
@@ -26,6 +27,7 @@
 import AssetsSearchParams from '@/assets/store/AssetsSearchParams'
 // Modules
 import SearchObjectIdentification from '@/components/assets/objectIdentification/SearchObjectIdentification'
+import SearchObjectCollection from '@/components/assets/objectCollection/SearchObjectCollection'
 import SearchObjectDescription from '@/components/assets/objectDescription/SearchObjectDescription'
 import SearchObjectLocation from '@/components/assets/objectLocation/SearchObjectLocation'
 import SearchObjectHistory from '@/components/assets/objectHistory/SearchObjectHistory'
@@ -35,6 +37,7 @@ export default {
     props: ['modules'],
     components: {
         SearchObjectIdentification,
+        SearchObjectCollection,
         SearchObjectDescription,
         SearchObjectLocation,
         SearchObjectHistory
@@ -57,7 +60,7 @@ export default {
 <style scoped>
 
     .template {
-        margin: 60px 0 80px 20px;
+        margin: 60px 0 10px 20px;
     }
 
     .title {

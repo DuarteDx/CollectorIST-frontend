@@ -195,8 +195,12 @@
 </template>
 
 <script>
+// Tree nodes
+import UsualLocationNode from './treeNodes/UsualLocationNode'
+import CurrentLocationNode from './treeNodes/CurrentLocationNode'
 // Api
 import api from '@/api/api'
+import axios from 'axios'
 // Store
 import Credentials from '@/assets/scripts/login.js'
 import AssetInsertionLocationStore from './store/AssetInsertionLocationStore.js'
@@ -205,6 +209,10 @@ import AssetInsertionStore from '@/assets/store/AssetInsertionStore'
 export default {
     name: 'EditObjectLocation',
     props: ['asset'],
+    components: {
+        UsualLocationNode,
+        CurrentLocationNode
+    },
     data() {
         return {
             rawLocations: [],
@@ -218,6 +226,8 @@ export default {
             usualLocationSelectedButton: 0,
             currentLocationSelectedButton: 1,
             selectedButton: 1,
+            istUsualSpacesPath: [],
+            istCurrentSpacesPath: [],
             location: {
                 usual: {
                     coordinates: {
@@ -254,14 +264,47 @@ export default {
     },
     methods: {
             async getLocations() {
-                var component = this
-                await axios.get('https://fenix.tecnico.ulisboa.pt/api/fenix/v1/spaces')
-                    .then((response) => {
-                        this.rawLocations = response.data
-                        this.rawLocations.forEach((subLocation) => {
-                            this.locationsList.push(subLocation.name)
-                        })
-                    })
+                let response = await axios.get('https://fenix.tecnico.ulisboa.pt/api/fenix/v1/spaces')
+                this.rawLocations = response.data
+                this.rawLocations.forEach((location) => {
+                    this.locationsList.push(location.name)
+                })
+            },
+            async fetchLocationsTree() {
+                const spacesUrl = 'https://fenix.tecnico.ulisboa.pt/api/fenix/v1/spaces/'
+                var parentId = null
+                // USUAL LOCATION
+                if(this.asset.usual.istSpace.room) {
+                    var spaceInfo = await axios.get(spacesUrl + this.asset.usual.istSpace.room)
+                    this.istUsualSpacesPath.push(spaceInfo.data.name)
+                    while(spaceInfo.data.parentSpace) {
+                        this.istUsualSpacesPath.push(spaceInfo.data.parentSpace.name)
+                        try {
+                            parentId = spaceInfo.data.parentSpace.id
+                            spaceInfo = await axios.get(spacesUrl + parentId)
+                        }
+                        catch {
+                            //No more parents
+                        }
+                    }
+                    this.istUsualSpacesPath.reverse()
+                }
+                // CURRENT LOCATION
+                if(this.asset.current.istSpace.room) {
+                    var spaceInfo = await axios.get(spacesUrl + this.asset.current.istSpace.room)
+                    this.istCurrentSpacesPath.push(spaceInfo.data.name)
+                    while(spaceInfo.data.parentSpace) {
+                        this.istCurrentSpacesPath.push(spaceInfo.data.parentSpace.name)
+                        try {
+                            parentId = spaceInfo.data.parentSpace.id
+                            spaceInfo = await axios.get(spacesUrl + parentId)
+                        }
+                        catch {
+                            //No more parents
+                        }
+                    }
+                    this.istCurrentSpacesPath.reverse()
+                }
             },
             getUsualLocationId() {
                 // Get id of selected location
@@ -323,6 +366,7 @@ export default {
             updateStoreCurrentLocation() {
                 if(this.selectedButton === 0) {
                     let usualLocation = AssetInsertionLocationStore.getUsualLocation()
+                    AssetInsertionLocationStore.setCurrentIstId(usualLocation.istSpace.room)
                     AssetInsertionLocationStore.setCurrentCoordinates(usualLocation.coordinates.lat, usualLocation.coordinates.long)
                     AssetInsertionLocationStore.setCurrentIstSubLocation(usualLocation.istSpace.cabinet, usualLocation.istSpace.drawer, usualLocation.istSpace.position)
                     AssetInsertionLocationStore.setCurrentAddress(usualLocation.address.name)
@@ -342,7 +386,8 @@ export default {
             }
     },
     created() {
-
+        this.getLocations()
+        this.fetchLocationsTree()
     }
 }
 </script>

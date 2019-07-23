@@ -5,7 +5,8 @@ var AssetInsertionStore = {
         ObjectDescription: {},
         ObjectLocation: {},
         ObjectHistory: {},
-        ObjectDocumentation: {}
+        ObjectDocumentation: {},
+        ObjectCollection: {}
     },
 
     getNewAsset: function() {
@@ -55,6 +56,15 @@ var AssetInsertionStore = {
 
     getObjectDocumentation: function() {
         return this.newAsset.ObjectDocumentation
+    },
+
+    // OBJECT COLLECTION
+    setObjectCollection: function(object) {
+        this.newAsset.ObjectCollection = object
+    },
+
+    getObjectCollection: function() {
+        return this.newAsset.ObjectCollection
     },
 
     clear: function() {

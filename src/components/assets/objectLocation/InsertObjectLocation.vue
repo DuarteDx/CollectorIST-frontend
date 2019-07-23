@@ -16,6 +16,7 @@
                     v-model="location.usual.coordinates.lat"
                     label="Latitude"
                     v-on:input="updateStoreUsualLocation()"
+                    solo
                     ></v-text-field>
                 </v-flex>
                 <v-flex md5>
@@ -23,36 +24,51 @@
                     v-model="location.usual.coordinates.long"
                     label="Longitude"
                     v-on:input="updateStoreUsualLocation()"
+                    solo
                     ></v-text-field>
                 </v-flex>
             </v-layout>
             <!--Room-->
             <template v-if="usualLocationSelectedButton == 0">
+                <v-layout>
+                    <v-flex sm12 md12>
+                        <span>Localização IST</span>
+                    </v-flex>
+                </v-layout>
                 <!--Dropdown-->
                 <v-select
                 :items="locationsList"
                 v-model="usualSelectedLocation"
                 label="Espaço"
                 v-on:change="getUsualLocationId()"
+                solo
                 ></v-select>
                 <!--ChildNode-->
                 <UsualLocationNode v-if="usualSelectedLocation.length > 0" :parentId="usualSelectedLocationId" :key="currentLocationChildKey"/>
                 <!--Cabinet-->
                 <template v-if="usualSelectedLocation.length > 0">
+                    <v-layout>
+                    <v-flex sm12 md12>
+                        <span>Sub-localização (opcional)</span>
+                    </v-flex>
+                </v-layout>
                     <v-text-field
                     v-model="location.usual.istSpace.cabinet"
                     label="Armário"
                     v-on:input="updateStoreUsualLocation()"
+                    solo
                     ></v-text-field>
                     <v-text-field
                     v-model="location.usual.istSpace.drawer"
                     label="Prateleira/Gaveta"
                     v-on:input="updateStoreUsualLocation()"
+                    solo
                     ></v-text-field>
                     <v-text-field
                     v-model="location.usual.istSpace.position"
                     label="Posição"
                     v-on:input="updateStoreUsualLocation()"
+                    solo
                     ></v-text-field>
                 </template>
             </template>
@@ -62,6 +78,7 @@
                 v-model="location.usual.address.name"
                 label="Morada"
                 v-on:input="updateStoreUsualLocation()"
+                solo
                 ></v-text-field>
             </template>
             <!--CURRENT LOCATION-->
@@ -70,32 +87,53 @@
             <v-btn :color="currentLocationSelectedButton == 1 ? 'success' : 'info'" style="margin-left: 0px;" @click="toggleCurrentLocationButton(1)">Localização IST</v-btn>
             <v-btn :color="currentLocationSelectedButton == 2 ? 'success' : 'info'" style="margin-left: 0px;" @click="toggleCurrentLocationButton(2)">Coordenadas</v-btn>
             <v-btn :color="currentLocationSelectedButton == 3 ? 'success' : 'info'" style="margin-left: 0px;" @click="toggleCurrentLocationButton(3)">Outra Localização</v-btn>
+            <template v-if="currentLocationSelectedButton == 0">
+                <v-layout>
+                    <v-flex sm12 md12>
+                        <span>A localização atual é a mesma que a localização habitual.</span>
+                    </v-flex>
+                </v-layout>
+            </template>
             <template v-if="currentLocationSelectedButton == 1">
+                <v-layout>
+                    <v-flex sm12 md12>
+                        <span>Localização IST</span>
+                    </v-flex>
+                </v-layout>
                 <!--Dropdown-->
                 <v-select
                 :items="locationsList"
                 v-model="currentSelectedLocation"
                 label="Espaço"
                 v-on:change="getCurrentLocationId()"
+                solo
                 ></v-select>
                 <!--Recursive ist current location-->
                 <CurrentLocationNode v-if="currentSelectedLocation.length > 0" :parentId="currentSelectedLocationId" :key="usualLocationChildKey"/>
                 <!--Cabinet-->
                 <template v-if="currentSelectedLocation.length > 0">
+                    <v-layout>
+                        <v-flex sm12 md12>
+                            <span>Sub-localização (opcional)</span>
+                        </v-flex>
+                    </v-layout>
                     <v-text-field
                     v-model="location.current.istSpace.cabinet"
                     label="Armário"
                     v-on:input="updateStoreCurrentLocation()"
+                    solo
                     ></v-text-field>
                     <v-text-field
                     v-model="location.current.istSpace.drawer"
                     label="Prateleira/Gaveta"
                     v-on:input="updateStoreCurrentLocation()"
+                    solo
                     ></v-text-field>
                     <v-text-field
                     v-model="location.current.istSpace.position"
                     label="Posição"
                     v-on:input="updateStoreCurrentLocation()"
+                    solo
                     ></v-text-field>
                 </template>
             </template>
@@ -106,6 +144,7 @@
                     v-model="location.current.coordinates.lat"
                     label="Latitude"
                     v-on:input="updateStoreCurrentLocation()"
+                    solo
                     ></v-text-field>
                 </v-flex>
                 <v-flex md5>
@@ -113,6 +152,7 @@
                     v-model="location.current.coordinates.long"
                     label="Longitude"
                     v-on:input="updateStoreCurrentLocation()"
+                    solo
                     ></v-text-field>
                 </v-flex>
             </v-layout>
@@ -121,6 +161,7 @@
                 v-model="location.current.address.name"
                 label="Morada"
                 v-on:input="updateStoreCurrentLocation()"
+                solo
                 ></v-text-field>
             </template>
         </div>

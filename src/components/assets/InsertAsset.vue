@@ -4,6 +4,8 @@
 
         <InsertObjectIdentification/>
         <br>
+        <InsertObjectCollection/>
+        <br>
         <InsertObjectDescription/>
         <br>
         <InsertObjectLocation/>
@@ -31,6 +33,7 @@ import InsertObjectIdentification from '@/components/assets/objectIdentification
 import InsertObjectDescription from '@/components/assets/objectDescription/InsertObjectDescription'
 import InsertObjectLocation from '@/components/assets/objectLocation/InsertObjectLocation'
 import InsertObjectHistory from '@/components/assets/objectHistory/InsertObjectHistory'
+import InsertObjectCollection from '@/components/assets/objectCollection/InsertObjectCollection'
 
 
 export default {
@@ -39,7 +42,8 @@ export default {
         InsertObjectIdentification,
         InsertObjectDescription,
         InsertObjectLocation,
-        InsertObjectHistory
+        InsertObjectHistory,
+        InsertObjectCollection
     },
     data() {
         return {

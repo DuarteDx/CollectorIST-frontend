@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-select
-        :items="categories"
+        :items="listOfCategoriesStrings"
         v-model="ObjectDescription.category"
         label="Categoria"
         v-on:change="getSubCategories()"
@@ -28,6 +28,7 @@
             selectedCategoryIndex: -1,
             childKey: 0,
             hasChildren: false,
+            listOfCategoriesStrings: [],
             ObjectDescription: {
               category: ''
             }
@@ -55,7 +56,9 @@
         }
     },
     created() {
-    
+      this.categories.forEach((category) => {
+        this.listOfCategoriesStrings.push(category.title)
+      })
     }
   }
 </script>

@@ -41,7 +41,11 @@ const router = new Router({
     },
     {
       path: '/config',
-      component: ConfigureModules
+      component: ConfigureModules,
+      async beforeEnter(to, from, next) {
+        if(await Credentials.checkIfAdmin()) {next()}
+        else {next('/')}
+        }
     },
     {
       path: '/collections',
