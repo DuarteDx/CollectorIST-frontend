@@ -5,12 +5,12 @@
                     
                     <v-flex sm12 md12>
                         <router-link :to="'/assets/' + asset._id" class="text--no-decoration single-asset-link">
-                            <v-layout wrap>
-                                <v-flex md2>
+                            <v-layout wrap v-resize="onResize">
+                                <v-flex sm12 md2 v-if="windowWidth > 958">
                                    <v-img width="150px" :src="require('@/assets/images/image-placeholder.jpg')"></v-img> 
                                 </v-flex>
-                                <v-flex sm5 md9>
-                                    <v-layout row wrap>
+                                <v-flex sm12 md9>
+                                    <v-layout row wrap class="pd">
                                         <v-flex class="asset-title" xs12 sm12 md12>
                                             <p v-if="asset.ObjectIdentification.title">{{ asset.ObjectIdentification.title }}</p>
                                             <p v-else><i>Peça sem título</i></p>
@@ -38,12 +38,16 @@ export default {
     props: ['assetsList'],
     data() {
         return {
+            windowWidth: 0
         }
     },
     methods: {
-
+        onResize() {
+            this.windowWidth = window.innerWidth
+        }
     },
-    created() {
+    mounted() {
+        this.onResize()
     }
 }
 
@@ -72,6 +76,10 @@ export default {
 
     .asset-category {
         font-size: 21px;
+    }
+
+    .pd {
+        padding-left: 20px;
     }
 
 </style>

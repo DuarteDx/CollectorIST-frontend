@@ -10,12 +10,12 @@
                 </v-flex>
             </v-layout>
             <!--OPTIONAL ID-->
-            <v-layout>
+            <v-layout v-for="(optionalId, index) in asset.ObjectIdentification.optionalIds" v-bind:key="index">
                 <v-flex md6 class="category-name">
-                    <span class="ml">ID opcional:</span>
+                    <span class="ml">{{ Object.keys(optionalId)[0] }}</span>
                 </v-flex>
                 <v-flex md6 class="category-data">
-                    <span v-if="asset.ObjectIdentification.optionalId">{{asset.ObjectIdentification.optionalId}}</span>
+                    <span v-if="optionalId[Object.keys(optionalId)[0]]">{{ optionalId[Object.keys(optionalId)[0]] }}</span>
                     <span v-else><i>Não especificado</i></span>
                 </v-flex>
             </v-layout>

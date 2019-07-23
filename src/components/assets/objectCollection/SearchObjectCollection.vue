@@ -19,7 +19,7 @@
             <v-flex sm10 md10 offset-sm1 offset-md1>
                 <v-select
                 :items="listOfCollections"
-                label="Selecionar id..."
+                label="Selecionar coleção..."
                 v-model="objectCollection.collection"
                 v-on:input="updateStore()"
                 solo
