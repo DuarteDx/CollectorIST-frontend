@@ -12,10 +12,10 @@
                 <SearchObjectLocation v-bind:modules="modules"/>
                 <SearchObjectHistory v-bind:modules="modules"/>
             </v-list>
-            <v-flex md6>
+            <v-flex md12>
                 <v-btn color="warning" @click="clear()">Limpar filtros</v-btn>
             </v-flex>
-            <v-flex md6>
+            <v-flex md12>
                 <v-btn color="info" @click="$emit('sideBarParams')">Pesquisar</v-btn>
             </v-flex>
         </v-layout>
