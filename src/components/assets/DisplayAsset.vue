@@ -19,10 +19,10 @@
         </v-layout>
         <!--Object components-->
         <DisplayObjectIdentification v-if="dataIsLoaded" v-bind:asset="asset.data"/>
+        <DisplayObjectCollection v-if="dataIsLoaded" v-bind:asset="asset.data"/>
         <DisplayObjectDescription v-if="dataIsLoaded" v-bind:asset="asset.data"/>
         <DisplayObjectLocation v-if="dataIsLoaded" v-bind:asset="asset.data"/>
         <DisplayObjectHistory v-if="dataIsLoaded" v-bind:asset="asset.data"/>
-        <DisplayObjectCollection v-if="dataIsLoaded" v-bind:asset="asset.data"/>
     </v-container>
 </template>
 

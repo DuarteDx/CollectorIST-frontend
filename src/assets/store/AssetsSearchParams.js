@@ -5,6 +5,7 @@ var AssetsSearchParams = {
         objectDescription: {},
         objectLocation: {},
         objectHistory: {},
+        objectCollection: {},
         nResultsPerPage: 15,
         currentPage: 1
     },
@@ -29,6 +30,10 @@ var AssetsSearchParams = {
         this.searchParams.objectHistory = newObjectHistory
     },
 
+    setObjectCollection: function(newObjectCollection) {
+        this.searchParams.objectCollection = newObjectCollection
+    },
+
     setNResultsPerPage: function(newNResultsPerPage) {
         this.searchParams.nResultsPerPage = newNResultsPerPage
     },
@@ -42,7 +47,8 @@ var AssetsSearchParams = {
             objectIdentification: {},
             objectDescription: {},
             objectLocation: {},
-            objectHistory: {}
+            objectHistory: {},
+            objectCollection: {}
         }
     }
 

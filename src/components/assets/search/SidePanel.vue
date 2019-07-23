@@ -7,6 +7,7 @@
             <!--MODULES-->
             <v-list class="bg full-width">
                 <SearchObjectIdentification v-bind:modules="modules"/>
+                <SearchObjectCollection v-bind:modules="modules"/>
                 <SearchObjectDescription v-bind:modules="modules"/>
                 <SearchObjectLocation v-bind:modules="modules"/>
                 <SearchObjectHistory v-bind:modules="modules"/>
@@ -26,6 +27,7 @@
 import AssetsSearchParams from '@/assets/store/AssetsSearchParams'
 // Modules
 import SearchObjectIdentification from '@/components/assets/objectIdentification/SearchObjectIdentification'
+import SearchObjectCollection from '@/components/assets/objectCollection/SearchObjectCollection'
 import SearchObjectDescription from '@/components/assets/objectDescription/SearchObjectDescription'
 import SearchObjectLocation from '@/components/assets/objectLocation/SearchObjectLocation'
 import SearchObjectHistory from '@/components/assets/objectHistory/SearchObjectHistory'
@@ -35,6 +37,7 @@ export default {
     props: ['modules'],
     components: {
         SearchObjectIdentification,
+        SearchObjectCollection,
         SearchObjectDescription,
         SearchObjectLocation,
         SearchObjectHistory

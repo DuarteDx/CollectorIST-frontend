@@ -2,7 +2,7 @@
 	<v-toolbar app>
 
         <v-toolbar-title class="headline text-uppercase">
-            <router-link :to="navBarItems[0].path" @click.native="currentMenuOnDisplay = 1">
+            <router-link :to="'/assets'" @click.native="currentMenuOnDisplay = 1">
                 <img class="logo-ist" src="@/assets/images/logo-tecnico.svg" alt="Logo IST">
             </router-link>
         </v-toolbar-title>
@@ -67,7 +67,7 @@ import Credentials from '@/assets/scripts/login.js'
             }
             // Remove admin paths if user is not admin (after waiting for token)
             if(!await Credentials.checkIfAdmin()) {
-                this.navBarItems.splice(1, 2)
+                this.navBarItems.splice(0, 3)
             }
         }
     }

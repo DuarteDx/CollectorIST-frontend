@@ -1,5 +1,5 @@
 <template>
-    <v-layout wrap style="background-color: rgb(240, 209, 138);">
+    <v-layout wrap style="background-color: #a13d3d4f;">
         <h1 style="color: red;">Object Collection</h1>
         <v-flex xs12 md12>
             <!--COLLECTION-->

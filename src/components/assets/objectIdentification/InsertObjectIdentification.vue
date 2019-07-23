@@ -8,6 +8,7 @@
         label="Título"
         required
         v-on:input="updateStore()"
+        solo
         ></v-text-field>
 
         <!--OLD IDs-->
@@ -17,6 +18,7 @@
             v-model="ObjectIdentification.optionalId"
             label="Id opcional"
             v-on:input="updateStore()"
+            solo
             ></v-text-field>
          </div>
     </div>
