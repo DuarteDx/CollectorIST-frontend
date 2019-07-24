@@ -52,16 +52,18 @@ export default {
         },
         async deleteOptionalId(optionalIdIndex) {
             if(confirm('Tem a certeza que pretende apagar este parâmetro ' + this.listOfOptionalIds[optionalIdIndex] + '?')) {
-                let response = await api().delete('/assets/object-identification/optional-id' + Credentials.getToken(), {data: this.listOfOptionalIds[optionalIdIndex]})
+                let response = await api().delete('/assets/object-identification/optional-id/' + Credentials.getToken(), {data: this.listOfOptionalIds[optionalIdIndex]})
                 if(response.status === 200) {
                     this.listOfOptionalIds.splice(optionalIdIndex, 1)
                 }
             }
         },
         async insertOptionalId() {
-            let response = await api().post('/assets/object-collection/collections/' + Credentials.getToken(), this.newCollection)
+            let response = await api().put('/assets/config/object-identification/' + Credentials.getToken(), {
+                optionalId: this.newOptionalId
+            })
             if(response.status === 200) {
-                this.listOfCollections.push(this.newCollection)
+                this.listOfOptionalIds.push(this.newOptionalId)
             }
         }
     },
