@@ -23,6 +23,7 @@
         <DisplayObjectDescription v-if="dataIsLoaded" v-bind:asset="asset.data"/>
         <DisplayObjectLocation v-if="dataIsLoaded" v-bind:asset="asset.data"/>
         <DisplayObjectHistory v-if="dataIsLoaded" v-bind:asset="asset.data"/>
+        <!--<component :is="idComponent" v-bind:asset="asset.data" v-bind="idComponent.props"/>-->
     </v-container>
 </template>
 
@@ -52,7 +53,8 @@ export default {
         return {
             asset: {},
             dataIsLoaded: false,
-            authorized: false
+            authorized: false,
+            //idComponent: "DisplayObjectIdentification"
         }
     },
     methods: {
