@@ -110,12 +110,15 @@ export default {
         },
         updateResults() {
             this.searchParams = AssetsSearchParams.getSearchParams()
+            this.searchParams.currentPage = 1
+            this.page = 1
             console.log(this.searchParams)
             this.search()
         },
         updatePage() {
             AssetsSearchParams.setCurrentPage(this.page)
-            this.updateResults()
+            this.searchParams = AssetsSearchParams.getSearchParams()
+            this.search()
         }
     },
     created() {
