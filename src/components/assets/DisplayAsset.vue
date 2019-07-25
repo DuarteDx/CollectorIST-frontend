@@ -23,19 +23,23 @@
         <DisplayObjectDescription v-if="dataIsLoaded" v-bind:asset="asset.data"/>
         <DisplayObjectLocation v-if="dataIsLoaded" v-bind:asset="asset.data"/>
         <DisplayObjectHistory v-if="dataIsLoaded" v-bind:asset="asset.data"/>
-        <!--<component :is="idComponent" v-bind:asset="asset.data" v-bind="idComponent.props"/>-->
+        <template v-if="dataIsLoaded">
+            <component v-for="(component, index) in asset.data.ObjectDescription.category" :is="component.toLowerCase()+'Display'" v-bind:asset="asset.data" v-bind:key="index"/>
+        </template>
     </v-container>
 </template>
 
 <script>
-import AssetGlobal from '@/components/assets/singleAsset/AssetGlobal'
-import AssetSpecific from '@/components/assets/singleAsset/AssetSpecific'
-
+// General modules
 import DisplayObjectIdentification from '@/components/assets/objectIdentification/DisplayObjectIdentification'
 import DisplayObjectDescription from '@/components/assets/objectDescription/DisplayObjectDescription'
 import DisplayObjectLocation from '@/components/assets/objectLocation/DisplayObjectLocation'
 import DisplayObjectHistory from '@/components/assets/objectHistory/DisplayObjectHistory'
 import DisplayObjectCollection from '@/components/assets/objectCollection/DisplayObjectCollection'
+// Specific modules
+import pinturasDisplay from '@/components/assets/specificModules/pinturas/pinturasDisplay'
+import serigrafiaDisplay from '@/components/assets/specificModules/serigrafia/serigrafiaDisplay'
+import mineraisDisplay from '@/components/assets/specificModules/minerais/mineraisDisplay'
 
 import api from '@/api/api'
 import Credentials from '@/assets/scripts/login'
@@ -43,18 +47,22 @@ import Credentials from '@/assets/scripts/login'
 export default {
     name: 'DisplayAsset',
     components: {
+        // General modules
         DisplayObjectIdentification,
         DisplayObjectDescription,
         DisplayObjectLocation,
         DisplayObjectHistory,
-        DisplayObjectCollection
+        DisplayObjectCollection,
+        // Specific modules
+        pinturasDisplay,
+        serigrafiaDisplay,
+        mineraisDisplay
     },
     data() {
         return {
             asset: {},
             dataIsLoaded: false,
-            authorized: false,
-            //idComponent: "DisplayObjectIdentification"
+            authorized: false
         }
     },
     methods: {
