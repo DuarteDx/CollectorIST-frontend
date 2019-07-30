@@ -15,9 +15,14 @@
                                             <p v-if="asset.ObjectIdentification.title">{{ asset.ObjectIdentification.title }}</p>
                                             <p v-else><i>Peça sem título</i></p>
                                         </v-flex>
-                                        <v-flex class="asset-category" sx12 sm12 md12>
-                                            <p v-if="asset.ObjectDescription.category">{{ asset.ObjectDescription.category }}</p>
-                                            <p v-else><i>Peça sem categoria</i></p>
+                                        <v-flex v-if="asset.ObjectDescription" class="asset-category" sx12 sm12 md12>
+                                            <span v-for="(category, index) in asset.ObjectDescription.category" class="ml" v-bind:key="index">
+                                                {{category}}
+                                                <span v-if="index+1 < asset.ObjectDescription.category.length"> > </span>
+                                            </span>
+                                        </v-flex>
+                                        <v-flex v-if="!asset.ObjectDescription" class="asset-category" sx12 sm12 md12>
+                                            <p><i>Peça sem categoria</i></p>
                                         </v-flex>
                                     </v-layout>
                                 </v-flex>

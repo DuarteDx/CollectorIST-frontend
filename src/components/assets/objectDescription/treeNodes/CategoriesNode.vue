@@ -2,7 +2,7 @@
   <div>
     <v-select
         :items="listOfCategoriesStrings"
-        v-model="ObjectDescription.category"
+        v-model="selectedCategory"
         label="Categoria"
         v-on:change="getSubCategories()"
         solo
@@ -11,6 +11,8 @@
     <CategoriesNode
         v-if="hasChildren"
         :categories="categories[selectedCategoryIndex].subCategories"
+        :nodeIndex="nodeIndex+1"
+        :resultArray="resultArray"
         :key="childKey"
     ></CategoriesNode>
 
@@ -21,7 +23,7 @@
   import AssetInsertionStore from '@/assets/store/AssetInsertionStore'
 
   export default { 
-    props: [ 'categories' ],
+    props: [ 'categories', 'nodeIndex', 'resultArray' ],
     name: 'CategoriesNode',
     data() {
         return {
@@ -29,18 +31,22 @@
             childKey: 0,
             hasChildren: false,
             listOfCategoriesStrings: [],
-            ObjectDescription: {
-              category: ''
-            }
+            selectedCategory: null
         }
     },
     methods: {
         getSubCategories() {
-            // Define selected category in store
-            AssetInsertionStore.setObjectDescription(this.ObjectDescription)
+            // Clear child nodes (20 just to guarantee it removes all children)
+            this.resultArray.splice(this.nodeIndex+1, 20)
+
+            // Add selected category to final array
+            this.resultArray[this.nodeIndex] = this.selectedCategory
+
+            // Define category path in store
+            AssetInsertionStore.setObjectDescription({category: this.resultArray})
 
             // Gets the index of the selected category
-            this.selectedCategoryIndex = this.categories.findIndex(x => x.title == this.ObjectDescription.category)
+            this.selectedCategoryIndex = this.categories.findIndex(x => x.title == this.selectedCategory)
 
             // Check if there are child nodes
             let component = this

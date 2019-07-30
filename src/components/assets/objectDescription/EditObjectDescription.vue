@@ -8,7 +8,10 @@
                     <span class="ml"> Categoria atual:</span> 
                 </v-flex>
                 <v-flex v-if="asset.category" md6 class="category-data">
-                    <span class="ml">{{asset.category}}</span>
+                    <span v-for="(category, index) in asset.category" class="ml" v-bind:key="index">
+                        {{category}}
+                        <span v-if="index+1 < asset.category.length"> > </span>
+                    </span>
                 </v-flex>
                 <v-flex v-if="!asset.category" md12 class="category-data"><i class="ml">Esta peça não tem uma categoria associada</i></v-flex>
             </v-layout>
@@ -16,7 +19,7 @@
         <v-flex md8 offset-md1>
             <h3>Nova categoria:</h3>
             <!-- Select category dropdown | Recursive component -->
-            <CategoriesNode v-if="rawCategories.length > 0" :categories="rawCategories"/>
+            <CategoriesNode v-if="rawCategories.length > 0" :categories="rawCategories" :nodeIndex="0" :resultArray="[]"/>
         </v-flex>
         <v-flex md12>
             <v-btn @click="submit()" color="info">Editar</v-btn>

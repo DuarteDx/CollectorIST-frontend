@@ -20,7 +20,7 @@
                 </v-layout>
                 <span class="collections-key">Coleções:</span>
                 <v-layout row wrap class="person-collections">
-                    <v-flex sm4 md2 v-for="(collection, index) in userInfo.role.collections" v-bind:key="index">
+                    <v-flex sm6 md4 v-for="(collection, index) in userInfo.role.collections" v-bind:key="index">
                             <v-btn color="info" @click.stop="deleteCollection(collection)">{{ collection }} X</v-btn>
                     </v-flex>
                 </v-layout>

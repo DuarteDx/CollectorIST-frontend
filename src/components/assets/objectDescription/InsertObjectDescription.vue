@@ -5,7 +5,7 @@
         <div class="mb">
             <h3>Categoria</h3>
             <!-- Select category dropdown | Recursive component -->
-            <CategoriesNode v-if="rawCategories.length > 0" :categories="rawCategories"/>
+            <CategoriesNode v-if="rawCategories.length > 0" :categories="rawCategories" :nodeIndex="0" :resultArray="[]"/>
         </div>
     </div>
 </template>

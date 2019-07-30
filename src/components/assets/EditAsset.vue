@@ -21,18 +21,23 @@
         <EditObjectLocation v-if="dataIsLoaded" v-bind:asset="asset.data.ObjectLocation"/>
         <EditObjectHistory v-if="dataIsLoaded" v-bind:asset="asset.data.ObjectHistory"/>
         <EditObjectCollection v-if="dataIsLoaded" v-bind:asset="asset.data.ObjectCollection"/>
+        <template v-if="dataIsLoaded">
+            <component v-for="(component, index) in asset.data.ObjectDescription.category" :is="component.toLowerCase()+'Edit'" v-bind:asset="asset.data" v-bind:key="index"/>
+        </template>
     </v-container>
 </template>
 
 <script>
-import AssetGlobal from '@/components/assets/singleAsset/AssetGlobal'
-import AssetSpecific from '@/components/assets/singleAsset/AssetSpecific'
-
+// General modules
 import EditObjectIdentification from '@/components/assets/objectIdentification/EditObjectIdentification'
 import EditObjectDescription from '@/components/assets/objectDescription/EditObjectDescription'
 import EditObjectLocation from '@/components/assets/objectLocation/EditObjectLocation'
 import EditObjectHistory from '@/components/assets/objectHistory/EditObjectHistory'
 import EditObjectCollection from '@/components/assets/objectCollection/EditObjectCollection'
+// Specific modules
+import pinturasEdit from '@/components/assets/specificModules/pinturas/pinturasEdit'
+import serigrafiaEdit from '@/components/assets/specificModules/serigrafia/serigrafiaEdit'
+import mineraisEdit from '@/components/assets/specificModules/minerais/mineraisEdit'
 
 import api from '@/api/api'
 import Credentials from '@/assets/scripts/login'
@@ -40,11 +45,16 @@ import Credentials from '@/assets/scripts/login'
 export default {
     name: 'EditAssetComponent',
     components: {
+        // General modules
         EditObjectIdentification,
         EditObjectDescription,
         EditObjectLocation,
         EditObjectHistory,
-        EditObjectCollection
+        EditObjectCollection,
+        // Specific modules
+        pinturasEdit,
+        serigrafiaEdit,
+        mineraisEdit
     },
     data() {
         return {
