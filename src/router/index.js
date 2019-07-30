@@ -80,7 +80,7 @@ const router = new Router({
           location.href = 'https://fenix.tecnico.ulisboa.pt/oauth/userdialog?client_id=1414440104755271&redirect_uri=http://localhost:8080/login'
         }
         else {
-          location.href = 'https://fenix.tecnico.ulisboa.pt/oauth/userdialog?client_id=1414440104755277&redirect_uri=http://146.193.41.162:81/login'
+          location.href = 'https://fenix.tecnico.ulisboa.pt/oauth/userdialog?client_id=1414440104755277&redirect_uri=http://146.193.41.162:10443/login'
         }
       } 
     },
