@@ -40,7 +40,7 @@ export default {
             else {
                 getTokenUrl = 'https://fenix.tecnico.ulisboa.pt/oauth/access_token?client_id=1414440104755277&client_secret=tVJg4TeYMF4VwG%2B0hTjh9dlz8sc4h5Hb0oYT5VbtcIUwRt1NAzYfbgfKpwuIYOSm65X8CmNgCTO8UxvpQfnNNA==&redirect_uri=http://146.193.41.162:10443/login&code=' + this.code + '&grant_type=authorization_code'
             }
-            var response = await axios.post(getTokenUrl, { crossdomain: true })
+            var response = await axios.post(getTokenUrl,  { headers: { crossdomain: true }})
                 .then(function(response) {
                     // console.log('Got token!')
                     // console.log('access_token: ' + response.data.access_token)
