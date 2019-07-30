@@ -31,7 +31,15 @@ export default {
     methods: {
         async getToken() {
             var component = this
-            var getTokenUrl = 'https://fenix.tecnico.ulisboa.pt/oauth/access_token?client_id=1414440104755271&client_secret=%2Bpf629QqjGx35YhJHoOuQPKiNzFIloF7KmPSv5I6AUIv5gWiPX1k3%2B5jlud0%2B2XuVUl6WmVYv/AKaCVyWmNBBw==&redirect_uri=http://localhost:8080/login&code=' + this.code + '&grant_type=authorization_code'
+            var getTokenUrl = ''
+            // If development
+            if(location.href.includes('localhost')) {
+                getTokenUrl = 'https://fenix.tecnico.ulisboa.pt/oauth/access_token?client_id=1414440104755271&client_secret=%2Bpf629QqjGx35YhJHoOuQPKiNzFIloF7KmPSv5I6AUIv5gWiPX1k3%2B5jlud0%2B2XuVUl6WmVYv/AKaCVyWmNBBw==&redirect_uri=http://localhost:8080/login&code=' + this.code + '&grant_type=authorization_code'
+            }
+            // If production
+            else {
+                getTokenUrl = 'https://fenix.tecnico.ulisboa.pt/oauth/access_token?client_id=1414440104755277&client_secret=tVJg4TeYMF4VwG%2B0hTjh9dlz8sc4h5Hb0oYT5VbtcIUwRt1NAzYfbgfKpwuIYOSm65X8CmNgCTO8UxvpQfnNNA==&redirect_uri=http://146.193.41.162:81/login&code=' + this.code + '&grant_type=authorization_code'
+            }
             var response = await axios.post(getTokenUrl)
                 .then(function(response) {
                     // console.log('Got token!')
