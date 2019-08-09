@@ -15,7 +15,9 @@
     <SearchCategoriesNode
         v-if="hasChildren"
         :categories="categories[selectedCategoryIndex].subCategories"
+        :selectedCategoriesPath="categoriesPath"
         :key="childKey"
+        @updateSidePanelCategory="updateParentComponent"
     ></SearchCategoriesNode>
 
   </div>
@@ -25,7 +27,7 @@
   import AssetsSearchParams from '@/assets/store/AssetsSearchParams'
 
   export default { 
-    props: [ 'categories' ],
+    props: [ 'categories', 'selectedCategoriesPath' ],
     name: 'SearchCategoriesNode',
     data() {
         return {
@@ -33,15 +35,23 @@
             selectedCategoryIndex: -1,
             childKey: 0,
             hasChildren: false,
+            categoriesPath: [],
             ObjectDescription: {
               category: ''
-            }
+            },
+            categoryIndex: 0
         }
     },
     methods: {
         getSubCategories() {
             // Define selected category in store
             AssetsSearchParams.setObjectDescription(this.ObjectDescription)
+
+            // Update category in parent SidePanel.vue component
+            this.categoriesPath[this.categoryIndex] = this.ObjectDescription.category
+            this.categoriesPath.splice(this.categoryIndex + 1, 20)
+            this.$emit('updateSidePanelCategory', this.categoriesPath)
+            console.log(this.categoriesList)
 
             // Gets the index of the selected category
             this.selectedCategoryIndex = this.categories.findIndex(x => x.title == this.ObjectDescription.category)
@@ -57,12 +67,17 @@
 
             // Update child nodes
             this.childKey += 1
+        },
+        updateParentComponent(categoriesPath) {
+          this.$emit('updateSidePanelCategory', categoriesPath)
         }
     },
     created() {
         this.categories.forEach((category) => {
             this.categoriesList.push(category.title)
         })
+        this.categoriesPath = this.selectedCategoriesPath
+        this.categoryIndex = this.categoriesPath.length
     }
   }
 </script>

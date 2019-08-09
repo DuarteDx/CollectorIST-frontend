@@ -18,7 +18,7 @@
                     <span>Categoria</span>
                 </v-flex>
             </v-layout>
-            <SearchCategoriesNode v-if="dataAlreadyLoaded" :categories="modules[currentModuleIndex].categories.value"/>
+            <SearchCategoriesNode v-if="dataAlreadyLoaded" :categories="modules[currentModuleIndex].categories.value" :selectedCategoriesPath="[]" @updateSidePanelCategory="updateSidePanelCategory"/>
         </template>
     </div>
 </template>
@@ -57,6 +57,10 @@ export default {
         },
         updateStore() {
             AssetsSearchParams.setObjectDescription(this.objectDescription)
+        },
+        updateSidePanelCategory(selectedCategoriesPath) {
+            this.$emit('updateSidePanelCategory', selectedCategoriesPath)
+            console.log(selectedCategoriesPath)
         }
     },
     created() {

@@ -8,7 +8,12 @@
             <v-list class="bg full-width">
                 <SearchObjectIdentification v-bind:modules="modules"/>
                 <SearchObjectCollection v-bind:modules="modules"/>
-                <SearchObjectDescription v-bind:modules="modules"/>
+                <SearchObjectDescription v-bind:modules="modules" @updateSidePanelCategory="updateCategory"/>
+                <div :key="updateSpecificModules">
+                    <template v-for="(component, index) in selectedCategoriesPath">
+                        <component :is="component.toLowerCase()+'Search'" v-bind:modules="modules" v-bind:key="index" v-if="Object.keys($options.components).includes(component.toLowerCase()+'Search')"/>
+                    </template>
+                </div>
                 <SearchObjectLocation v-bind:modules="modules"/>
                 <SearchObjectHistory v-bind:modules="modules"/>
             </v-list>
@@ -25,31 +30,44 @@
 <script>
 // Store
 import AssetsSearchParams from '@/assets/store/AssetsSearchParams'
-// Modules
+// General modules
 import SearchObjectIdentification from '@/components/assets/objectIdentification/SearchObjectIdentification'
 import SearchObjectCollection from '@/components/assets/objectCollection/SearchObjectCollection'
 import SearchObjectDescription from '@/components/assets/objectDescription/SearchObjectDescription'
 import SearchObjectLocation from '@/components/assets/objectLocation/SearchObjectLocation'
 import SearchObjectHistory from '@/components/assets/objectHistory/SearchObjectHistory'
+// Specific modules
+import pinturasSearch from '@/components/assets/specificModules/pinturas/pinturasSearch'
+import gravurasSearch from '@/components/assets/specificModules/pinturas/gravuras/gravurasSearch'
 
 export default {
     name: 'SidePanel',
     props: ['modules'],
     components: {
+        // General modules
         SearchObjectIdentification,
         SearchObjectCollection,
         SearchObjectDescription,
         SearchObjectLocation,
-        SearchObjectHistory
+        SearchObjectHistory,
+        // Specific modules
+        pinturasSearch,
+        gravurasSearch
     },
     data() {
         return {
-
+            selectedCategoriesPath: [],
+            updateSpecificModules: 0
         }
     },
     methods: {
         clear() {
             AssetsSearchParams.clear()
+        },
+        updateCategory(selectedCategoriesPath) {
+            this.selectedCategoriesPath = selectedCategoriesPath
+            console.log(selectedCategoriesPath)
+            this.updateSpecificModules += 1
         }
     },
     created() {

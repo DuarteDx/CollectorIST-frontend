@@ -7,7 +7,7 @@
                 <v-icon v-if="active" large>keyboard_arrow_down</v-icon>
             </v-flex>
             <v-flex sm10 md10>
-                <h3>Descrição</h3>
+                <h3>Pinturas</h3>
             </v-flex>
         </v-layout>
         <!-- MODULE SEARCH INPUTS -->
