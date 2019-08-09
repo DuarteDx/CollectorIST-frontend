@@ -75,6 +75,34 @@ var AssetInsertionStore = {
             ObjectHistory: {},
             ObjectDocumentation: {}
         }
+    },
+
+    // SPECIFIC MODULES
+
+    // Pinturas
+    setPinturas: function(object) {
+        this.newAsset.pinturas = object
+    },
+
+    getPinturas: function() {
+        return this.newAsset.pinturas
+    },
+
+    // Gravuras
+    setGravuras: function(object) {
+        this.newAsset.gravuras = object
+    },
+
+    getGravuras: function() {
+        return this.newAsset.gravuras
+    },
+
+
+
+
+    clearSpecificModules: function() {
+        delete this.newAsset.pinturas
+        delete this.newAsset.gravuras
     }
 
 }

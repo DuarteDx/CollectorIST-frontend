@@ -5,7 +5,7 @@
         <div class="mb">
             <h3>Categoria</h3>
             <!-- Select category dropdown | Recursive component -->
-            <CategoriesNode v-if="rawCategories.length > 0" :categories="rawCategories" :nodeIndex="0" :resultArray="[]"/>
+            <CategoriesNode v-if="rawCategories.length > 0" :categories="rawCategories" :nodeIndex="0" :resultArray="[]" @categoriesChange="categoriesChange"/>
         </div>
     </div>
 </template>
@@ -34,6 +34,9 @@ export default {
             this.rawCategories = await api().get('/assets/object-description')
             this.rawCategories = this.rawCategories.data
         },
+        categoriesChange() {
+            this.$emit('categoriesChange')
+        }
     },
     created() {
         this.fetchCategories()

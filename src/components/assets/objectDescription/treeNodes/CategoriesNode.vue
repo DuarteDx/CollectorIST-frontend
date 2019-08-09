@@ -14,6 +14,7 @@
         :nodeIndex="nodeIndex+1"
         :resultArray="resultArray"
         :key="childKey"
+        @categoriesChange="categoriesChange"
     ></CategoriesNode>
 
   </div>
@@ -59,6 +60,12 @@
 
             // Update child nodes
             this.childKey += 1
+
+            // Update categories in parent insert component
+            this.categoriesChange()
+        },
+        categoriesChange() {
+            this.$emit('categoriesChange')
         }
     },
     created() {

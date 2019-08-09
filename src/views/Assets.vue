@@ -126,7 +126,6 @@ export default {
         this.searchParams = AssetsSearchParams.getSearchParams()
         this.search()
         this.fetchModules()
-        console.log(location.href)
     }
 }
 </script>
