@@ -1,8 +1,8 @@
 <template>
-    <div style="background-color: rgba(0, 128, 0, 0.226)">
+    <div>
         <v-layout>
-            <v-flex sm12 md12>
-                <h1 style="color: red;">Pintura (componente específico)</h1>
+            <v-flex>
+                <h1 style="color: red;">Pinturas</h1>
             </v-flex>
         </v-layout>
         <!--AUTOR-->
@@ -15,6 +15,7 @@
                 v-model="pinturas.author"
                 label="Autor"
                 required
+                v-on:input="updateStore()"
                 solo
                 ></v-text-field>
             </v-flex>
@@ -29,6 +30,7 @@
                 v-model="pinturas.year"
                 label="Ano"
                 required
+                v-on:input="updateStore()"
                 solo
                 ></v-text-field>
             </v-flex>
@@ -44,10 +46,10 @@
                 label="Matéria"
                 required
                 solo
-                v-on:keyup.enter="pinturas.materia.push(auxMateria); updateMaterias++"
+                v-on:keyup.enter="pinturas.materia.push(auxMateria); updateStore(); updateMaterias++"
                 ></v-text-field>
             </v-flex>
-            <v-flex md2><v-btn color="success" @click="pinturas.materia.push(auxMateria); updateMaterias++">+</v-btn></v-flex>
+            <v-flex md2><v-btn color="success" @click="pinturas.materia.push(auxMateria); updateStore(); updateMaterias++">+</v-btn></v-flex>
         </v-layout>
         <v-layout wrap :key="updateMaterias">
             <v-flex v-for="(materia, index) in pinturas.materia" v-bind:key="index">
@@ -64,6 +66,7 @@
                 v-model="pinturas.suporte"
                 label="Suporte"
                 required
+                v-on:input="updateStore()"
                 solo
                 ></v-text-field>
             </v-flex>
@@ -78,28 +81,20 @@
                 v-model="pinturas.tecnica"
                 label="Técnica"
                 required
+                v-on:input="updateStore()"
                 solo
                 ></v-text-field>
-            </v-flex>
-        </v-layout>
-
-        <v-layout>
-            <v-flex>
-                <v-btn color="info" @click="submit()">Editar</v-btn>
             </v-flex>
         </v-layout>
     </div>
 </template>
 
 <script>
-// Api
+import AssetInsertionStore from '@/assets/store/AssetInsertionStore'
 import api from '@/api/api'
-// Stores
-import Credentials from '@/assets/scripts/login.js'
 
 export default {
-    name: 'pinturasEdit',
-    props: ['asset'],
+    name: 'pinturasInsert',
     data() {
         return {
             pinturas: {
@@ -114,19 +109,12 @@ export default {
         }
     },
     methods: {
-        async submit() {
-            await api().put('/assets/' + this.$route.params.id + '/pinturas/edit/' + Credentials.getToken(), {
-                pinturas: this.pinturas
-            })
+        updateStore() {
+            AssetInsertionStore.setPinturas(this.pinturas)
         }
     },
     created() {
-        this.pinturas = this.asset.pinturas
+        
     }
 }
 </script>
-
-<style scoped>
-    
-</style>
-

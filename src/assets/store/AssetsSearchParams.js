@@ -54,6 +54,16 @@ var AssetsSearchParams = {
             objectHistory: {},
             objectCollection: {}
         }
+    },
+
+    // Specific modules
+
+    setPinturas: function(object) {
+        this.searchParams.pinturas = object
+    },
+
+    setGravuras: function(object) {
+        this.searchParams.gravuras = object
     }
 
 }

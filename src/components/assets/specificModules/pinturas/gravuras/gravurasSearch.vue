@@ -7,41 +7,60 @@
                 <v-icon v-if="active" large>keyboard_arrow_down</v-icon>
             </v-flex>
             <v-flex sm10 md10>
-                <h3>Descrição</h3>
+                <h3>Gravuras</h3>
             </v-flex>
         </v-layout>
         <!-- MODULE SEARCH INPUTS -->
         <template v-if="active">
+            <!-- QUANTITY OF COPIES -->
             <v-layout row wrap>
-                <!-- CATEGORY -->
                 <v-flex sm10 md10 offset-sm1 offset-md1>
-                    <span>Categoria</span>
+                    <span>Quantidade de cópias</span>
+                </v-flex>
+                <v-flex sm10 md10 offset-sm1 offset-md1>
+                    <v-text-field
+                    label="Inserir valor..."
+                    v-model="gravuras.amountOfCopies"
+                    v-on:input="updateStore()"
+                    solo
+                    ></v-text-field>
                 </v-flex>
             </v-layout>
-            <SearchCategoriesNode v-if="dataAlreadyLoaded" :categories="modules[currentModuleIndex].categories.value" :selectedCategoriesPath="[]" @updateSidePanelCategory="updateSidePanelCategory"/>
+            <!-- COPY NUMBER -->
+            <v-layout row wrap>
+                <v-flex sm10 md10 offset-sm1 offset-md1>
+                    <span>Número da cópia</span>
+                </v-flex>
+                <v-flex sm10 md10 offset-sm1 offset-md1>
+                    <v-text-field
+                    label="Inserir valor..."
+                    v-model="gravuras.copyNumber"
+                    v-on:input="updateStore()"
+                    solo
+                    ></v-text-field>
+                </v-flex>
+            </v-layout>
         </template>
     </div>
 </template>
 
 <script>
 import AssetsSearchParams from '@/assets/store/AssetsSearchParams'
-import SearchCategoriesNode from './treeNodes/SearchCategoriesNode'
 
 export default {
-    name: 'SearchObjectDescription',
+    name: 'gravurasSearch',
     props: ['modules'],
     components: {
-        SearchCategoriesNode
     },
     data() {
         return {
-            objectDescription: {
-                category: null
+            gravuras: {
+                amountOfCopies: null,
+                copyNumber: null
             },
             active: false,
             currentModuleIndex: -1,
-            dataAlreadyLoaded: false,
-            optionalIdArray: []
+            dataAlreadyLoaded: false
         }
     },
     methods: {
@@ -49,18 +68,14 @@ export default {
             this.active = !this.active
             if(!this.dataAlreadyLoaded) {
                 // Get index of current module
-                this.currentModuleIndex = this.modules.findIndex(x => x.moduleName === 'objectDescription')
+                this.currentModuleIndex = this.modules.findIndex(x => x.moduleName === 'gravuras')
 
                 // Making sure this operation is only executed once
                 this.dataAlreadyLoaded = true
             }
         },
         updateStore() {
-            AssetsSearchParams.setObjectDescription(this.objectDescription)
-        },
-        updateSidePanelCategory(selectedCategoriesPath) {
-            this.$emit('updateSidePanelCategory', selectedCategoriesPath)
-            console.log(selectedCategoriesPath)
+            AssetsSearchParams.setGravuras(this.gravuras)
         }
     },
     created() {

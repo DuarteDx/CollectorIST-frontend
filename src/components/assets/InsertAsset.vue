@@ -6,7 +6,13 @@
         <br>
         <InsertObjectCollection/>
         <br>
-        <InsertObjectDescription/>
+        <InsertObjectDescription @categoriesChange="updateCategories"/>
+        <br>
+        <div :key="updateSpecificModules">
+            <template v-for="(component, index) in selectedCategories">
+                <component :is="component.toLowerCase()+'Insert'" v-bind:key="index" v-if="Object.keys($options.components).includes(component.toLowerCase()+'Insert')"/>
+            </template>
+        </div>
         <br>
         <InsertObjectLocation/>
         <br>
@@ -28,26 +34,34 @@ import axios from 'axios'
 // Stores
 import Credentials from '@/assets/scripts/login.js'
 import AssetInsertionStore from '@/assets/store/AssetInsertionStore'
-// Components
+// General Modules
 import InsertObjectIdentification from '@/components/assets/objectIdentification/InsertObjectIdentification'
 import InsertObjectDescription from '@/components/assets/objectDescription/InsertObjectDescription'
 import InsertObjectLocation from '@/components/assets/objectLocation/InsertObjectLocation'
 import InsertObjectHistory from '@/components/assets/objectHistory/InsertObjectHistory'
 import InsertObjectCollection from '@/components/assets/objectCollection/InsertObjectCollection'
-
+// Specific Modules
+import pinturasInsert from '@/components/assets/specificModules/pinturas/pinturasInsert'
+import gravurasInsert from '@/components/assets/specificModules/pinturas/gravuras/gravurasInsert'
 
 export default {
     name: 'InsertAsset',
     components: {
+        // General Modules
         InsertObjectIdentification,
         InsertObjectDescription,
         InsertObjectLocation,
         InsertObjectHistory,
-        InsertObjectCollection
+        InsertObjectCollection,
+        // Specific Modules
+        pinturasInsert,
+        gravurasInsert
     },
     data() {
         return {
-            inserted: false
+            inserted: false,
+            selectedCategories: [],
+            updateSpecificModules: 0
         }
     },
     methods: {
@@ -61,6 +75,11 @@ export default {
                 this.inserted = true
                 // AssetInsertionStore.clear()
             }
+        },
+        updateCategories() {
+            this.selectedCategories = AssetInsertionStore.getObjectDescription()
+            this.selectedCategories = this.selectedCategories.category
+            this.updateSpecificModules += 1
         }
     },
     created() {

@@ -18,12 +18,12 @@
         <!--Object components-->
         <EditObjectIdentification v-if="dataIsLoaded" v-bind:asset="asset.data.ObjectIdentification"/>
         <EditObjectDescription v-if="dataIsLoaded" v-bind:asset="asset.data.ObjectDescription"/>
-        <EditObjectLocation v-if="dataIsLoaded" v-bind:asset="asset.data.ObjectLocation"/>
-        <EditObjectHistory v-if="dataIsLoaded" v-bind:asset="asset.data.ObjectHistory"/>
-        <EditObjectCollection v-if="dataIsLoaded" v-bind:asset="asset.data.ObjectCollection"/>
         <template v-if="dataIsLoaded">
             <component v-for="(component, index) in asset.data.ObjectDescription.category" :is="component.toLowerCase()+'Edit'" v-bind:asset="asset.data" v-bind:key="index"/>
         </template>
+        <EditObjectLocation v-if="dataIsLoaded" v-bind:asset="asset.data.ObjectLocation"/>
+        <EditObjectHistory v-if="dataIsLoaded" v-bind:asset="asset.data.ObjectHistory"/>
+        <EditObjectCollection v-if="dataIsLoaded" v-bind:asset="asset.data.ObjectCollection"/>
     </v-container>
 </template>
 
@@ -36,6 +36,7 @@ import EditObjectHistory from '@/components/assets/objectHistory/EditObjectHisto
 import EditObjectCollection from '@/components/assets/objectCollection/EditObjectCollection'
 // Specific modules
 import pinturasEdit from '@/components/assets/specificModules/pinturas/pinturasEdit'
+import gravurasEdit from '@/components/assets/specificModules/pinturas/gravuras/gravurasEdit'
 import serigrafiaEdit from '@/components/assets/specificModules/serigrafia/serigrafiaEdit'
 import mineraisEdit from '@/components/assets/specificModules/minerais/mineraisEdit'
 
@@ -53,6 +54,7 @@ export default {
         EditObjectCollection,
         // Specific modules
         pinturasEdit,
+        gravurasEdit,
         serigrafiaEdit,
         mineraisEdit
     },

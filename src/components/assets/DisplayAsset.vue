@@ -21,11 +21,11 @@
         <DisplayObjectIdentification v-if="dataIsLoaded" v-bind:asset="asset.data"/>
         <DisplayObjectCollection v-if="dataIsLoaded" v-bind:asset="asset.data"/>
         <DisplayObjectDescription v-if="dataIsLoaded" v-bind:asset="asset.data"/>
-        <DisplayObjectLocation v-if="dataIsLoaded" v-bind:asset="asset.data"/>
-        <DisplayObjectHistory v-if="dataIsLoaded" v-bind:asset="asset.data"/>
         <template v-if="dataIsLoaded">
             <component v-for="(component, index) in asset.data.ObjectDescription.category" :is="component.toLowerCase()+'Display'" v-bind:asset="asset.data" v-bind:key="index"/>
         </template>
+        <DisplayObjectLocation v-if="dataIsLoaded" v-bind:asset="asset.data"/>
+        <DisplayObjectHistory v-if="dataIsLoaded" v-bind:asset="asset.data"/>
     </v-container>
 </template>
 
@@ -38,6 +38,7 @@ import DisplayObjectHistory from '@/components/assets/objectHistory/DisplayObjec
 import DisplayObjectCollection from '@/components/assets/objectCollection/DisplayObjectCollection'
 // Specific modules
 import pinturasDisplay from '@/components/assets/specificModules/pinturas/pinturasDisplay'
+import gravurasDisplay from '@/components/assets/specificModules/pinturas/gravuras/gravurasDisplay'
 import serigrafiaDisplay from '@/components/assets/specificModules/serigrafia/serigrafiaDisplay'
 import mineraisDisplay from '@/components/assets/specificModules/minerais/mineraisDisplay'
 
@@ -55,6 +56,7 @@ export default {
         DisplayObjectCollection,
         // Specific modules
         pinturasDisplay,
+        gravurasDisplay,
         serigrafiaDisplay,
         mineraisDisplay
     },
@@ -76,7 +78,7 @@ export default {
     },
     async created() {
         this.getAssetInfo()
-        console.log(await Credentials.checkIfCanEdit(this.$route.params.id))
+        console.log('Can edit asset: ' + await Credentials.checkIfCanEdit(this.$route.params.id))
         this.authorized = await Credentials.checkIfCanEdit(this.$route.params.id)
     }
 }
